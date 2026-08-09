@@ -51,50 +51,6 @@
     transform: scale(1.02);
 }
 
-/* ─── Full-Page Scrolling Background Bands (puzzle) ─── */
-#bg-bands {
-    position: absolute;
-    inset-inline: 0;
-    top: 0;
-    z-index: 0;
-}
-
-.bg-band {
-    height: 100vh;
-    height: 100dvh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-/* Default: desktop landscape (16:9) */
-.bg-band:nth-child(1) { background-image: url('img/bg/wide/banda-1.webp'); }
-.bg-band:nth-child(2) { background-image: url('img/bg/wide/banda-2.webp'); }
-.bg-band:nth-child(3) { background-image: url('img/bg/wide/banda-3.webp'); }
-.bg-band:nth-child(4) { background-image: url('img/bg/wide/banda-4.webp'); }
-.bg-band:nth-child(5) { background-image: url('img/bg/wide/banda-5.webp'); }
-.bg-band:nth-child(6) { background-image: url('img/bg/wide/banda-6.webp'); }
-
-/* Portrait phones / narrow screens (9:16) */
-@media (max-aspect-ratio: 3/4) {
-    .bg-band:nth-child(1) { background-image: url('img/bg/tall/banda-1.webp'); }
-    .bg-band:nth-child(2) { background-image: url('img/bg/tall/banda-2.webp'); }
-    .bg-band:nth-child(3) { background-image: url('img/bg/tall/banda-3.webp'); }
-    .bg-band:nth-child(4) { background-image: url('img/bg/tall/banda-4.webp'); }
-    .bg-band:nth-child(5) { background-image: url('img/bg/tall/banda-5.webp'); }
-    .bg-band:nth-child(6) { background-image: url('img/bg/tall/banda-6.webp'); }
-}
-
-/* Square / tablet / small landscape (4:3) */
-@media (min-aspect-ratio: 3/4) and (max-aspect-ratio: 4/3) {
-    .bg-band:nth-child(1) { background-image: url('img/bg/tablet/banda-1.webp'); }
-    .bg-band:nth-child(2) { background-image: url('img/bg/tablet/banda-2.webp'); }
-    .bg-band:nth-child(3) { background-image: url('img/bg/tablet/banda-3.webp'); }
-    .bg-band:nth-child(4) { background-image: url('img/bg/tablet/banda-4.webp'); }
-    .bg-band:nth-child(5) { background-image: url('img/bg/tablet/banda-5.webp'); }
-    .bg-band:nth-child(6) { background-image: url('img/bg/tablet/banda-6.webp'); }
-}
-
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
     .hero-title-urban:hover {
@@ -464,16 +420,6 @@ a, button, [role="button"] {
 .hero-animate-logo {
     opacity: 0;
     animation: heroFadeInUp 0.6s var(--ease-out) 0.1s forwards;
-}
-
-/* ─── Hero overlay (legibility over band 1) ─── */
-#hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(ellipse at center, rgba(11, 11, 11, 0.25) 0%, rgba(11, 11, 11, 0.6) 100%);
-    pointer-events: none;
 }
 
 .hero-animate-subtitle {
