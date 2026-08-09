@@ -67,6 +67,34 @@
     background-repeat: no-repeat;
 }
 
+/* Default: desktop landscape (16:9) */
+.bg-band:nth-child(1) { background-image: url('img/bg/wide/banda-1.webp'); }
+.bg-band:nth-child(2) { background-image: url('img/bg/wide/banda-2.webp'); }
+.bg-band:nth-child(3) { background-image: url('img/bg/wide/banda-3.webp'); }
+.bg-band:nth-child(4) { background-image: url('img/bg/wide/banda-4.webp'); }
+.bg-band:nth-child(5) { background-image: url('img/bg/wide/banda-5.webp'); }
+.bg-band:nth-child(6) { background-image: url('img/bg/wide/banda-6.webp'); }
+
+/* Portrait phones / narrow screens (9:16) */
+@media (max-aspect-ratio: 3/4) {
+    .bg-band:nth-child(1) { background-image: url('img/bg/tall/banda-1.webp'); }
+    .bg-band:nth-child(2) { background-image: url('img/bg/tall/banda-2.webp'); }
+    .bg-band:nth-child(3) { background-image: url('img/bg/tall/banda-3.webp'); }
+    .bg-band:nth-child(4) { background-image: url('img/bg/tall/banda-4.webp'); }
+    .bg-band:nth-child(5) { background-image: url('img/bg/tall/banda-5.webp'); }
+    .bg-band:nth-child(6) { background-image: url('img/bg/tall/banda-6.webp'); }
+}
+
+/* Square / tablet / small landscape (4:3) */
+@media (min-aspect-ratio: 3/4) and (max-aspect-ratio: 4/3) {
+    .bg-band:nth-child(1) { background-image: url('img/bg/tablet/banda-1.webp'); }
+    .bg-band:nth-child(2) { background-image: url('img/bg/tablet/banda-2.webp'); }
+    .bg-band:nth-child(3) { background-image: url('img/bg/tablet/banda-3.webp'); }
+    .bg-band:nth-child(4) { background-image: url('img/bg/tablet/banda-4.webp'); }
+    .bg-band:nth-child(5) { background-image: url('img/bg/tablet/banda-5.webp'); }
+    .bg-band:nth-child(6) { background-image: url('img/bg/tablet/banda-6.webp'); }
+}
+
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
     .hero-title-urban:hover {
