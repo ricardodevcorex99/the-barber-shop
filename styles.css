@@ -51,6 +51,22 @@
     transform: scale(1.02);
 }
 
+/* ─── Full-Page Scrolling Background Bands (puzzle) ─── */
+#bg-bands {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    z-index: 0;
+}
+
+.bg-band {
+    height: 100vh;
+    height: 100dvh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
     .hero-title-urban:hover {
@@ -102,6 +118,7 @@ h1, h2, h3, h4, p {
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
     --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    --ease-spring: cubic-bezier(1.00, 0.50, 0.20, 1.80);
     --duration-fast: 160ms;
     --duration-normal: 200ms;
     --duration-slow: 300ms;
@@ -184,6 +201,16 @@ a, button, [role="button"] {
 
 .service-checkbox-card.checked .custom-check-icon i {
     display: block !important;
+    animation: checkPop 0.4s var(--ease-spring);
+}
+
+@keyframes checkPop {
+    0% {
+        transform: scale(0) rotate(-45deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
 }
 
 /* ─── Hover gated for pointer devices (Emil Kowalski) ─── */
@@ -278,7 +305,7 @@ a, button, [role="button"] {
 #confirmation-modal > div {
     transform: scale(0.95);
     opacity: 0;
-    transition: transform var(--duration-slow) var(--ease-out),
+    transition: transform var(--duration-slow) var(--ease-spring),
                 opacity var(--duration-slow) var(--ease-out);
 }
 
@@ -310,7 +337,7 @@ a, button, [role="button"] {
     overflow: hidden;
     border: 5px solid #fff;
     box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-    transition: transform 0.5s var(--ease-out);
+    transition: transform 0.5s var(--ease-spring);
     top: 50%;
     left: 50%;
     background: #18181B;
@@ -409,6 +436,16 @@ a, button, [role="button"] {
 .hero-animate-logo {
     opacity: 0;
     animation: heroFadeInUp 0.6s var(--ease-out) 0.1s forwards;
+}
+
+/* ─── Hero overlay (legibility over band 1) ─── */
+#hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at center, rgba(11, 11, 11, 0.25) 0%, rgba(11, 11, 11, 0.6) 100%);
+    pointer-events: none;
 }
 
 .hero-animate-subtitle {
@@ -634,6 +671,9 @@ a, button, [role="button"] {
     background-color: #d4af37;
     border-color: #d4af37;
     transform: scale(1.1);
+    transition: transform var(--duration-normal) var(--ease-spring),
+                background-color var(--duration-normal) var(--ease-out),
+                border-color var(--duration-normal) var(--ease-out);
 }
 
 .barber-card.checked .barber-check-icon i {
