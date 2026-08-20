@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/agenda/(.*)",
+      "destination": "/agenda/index.html"
+    }
+  ]
+}
