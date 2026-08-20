@@ -87,7 +87,7 @@
 
             <!-- CTA Header Button -->
             <div class="hidden sm:flex items-center space-x-4">
-                <a href="#reservas" class="magnetic-btn relative inline-flex items-center justify-center px-6 py-2.5 text-xs md:text-sm font-sedgwick font-bold uppercase tracking-wider text-[#fffffe] bg-gold-500 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.7)] active:scale-95 transition-shadow duration-300 transition-transform duration-200">
+                <a href="#reservas" class="magnetic-btn relative inline-flex items-center justify-center px-6 py-2.5 text-xs md:text-sm font-sedgwick font-bold uppercase tracking-wider text-dark-900 bg-gold-500 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.7)] active:scale-95 transition-all duration-300">
                     <i class="fa-solid fa-cut mr-2"></i> Reservar Cita
                 </a>
             </div>
@@ -107,7 +107,7 @@
                 <a href="#servicios" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Servicios y Precios</a>
                 <a href="#reservas" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Reservar Cita</a>
                 <div class="pt-2">
-                    <a href="#reservas" class="mobile-nav-link w-full inline-block py-3 text-center text-sm font-sedgwick font-bold uppercase tracking-wider text-[#fffffe] bg-gold-500 rounded-lg shadow-md">
+                    <a href="#reservas" class="mobile-nav-link w-full inline-block py-3 text-center text-sm font-sedgwick font-bold uppercase tracking-wider text-dark-900 bg-gold-500 rounded-lg shadow-md">
                         <i class="fa-solid fa-cut mr-2"></i> Reservar Cita Ahora
                     </a>
                 </div>
@@ -116,16 +116,57 @@
     </header>
 
     <!-- 3. HERO SECTION -->
-    <section id="hero" class="relative min-h-[100dvh] flex items-center justify-center py-20">
+    <section id="hero" class="relative min-h-[100dvh] flex items-center justify-center py-20 overflow-hidden" style="background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.12) 0%, rgba(11, 11, 11, 0.95) 75%);">
 
-        <div class="container mx-auto px-4 md:px-8 text-center max-w-4xl">
+        <!-- Background Ambient Elements -->
+        <div class="absolute top-1/4 left-10 w-72 h-72 bg-gold-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-10 w-96 h-96 bg-gold-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-4 md:px-8 text-center max-w-5xl relative z-10">
+
+            <!-- Top Luxury Badge -->
+            <div class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-dark-800/80 border border-gold-500/40 backdrop-blur-md mb-8 shadow-[0_0_20px_rgba(212,175,55,0.15)] animate-pulse">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                <span class="text-gold-400 font-sedgwick text-xs uppercase tracking-[0.2em] font-bold">Barbería Premium & Corte de Autor · Quito</span>
+            </div>
 
             <!-- Title -->
-            <h1 class="hero-animate-logo">
-                <span class="hero-title-urban block text-[#fffffe] text-7xl sm:text-8xl md:text-9xl lg:text-[7rem] xl:text-[8rem] text-center leading-none">
+            <h1 class="hero-animate-logo mb-6">
+                <span class="hero-title-urban block text-[#fffffe] text-6xl sm:text-8xl md:text-9xl lg:text-[7rem] xl:text-[8rem] text-center leading-none">
                     THE BARBER SHOP
                 </span>
             </h1>
+
+            <!-- Subtitle -->
+            <p class="hero-animate-subtitle text-[#fffffe]/90 text-lg sm:text-xl md:text-2xl font-oregano max-w-3xl mx-auto mb-10 leading-relaxed">
+                Donde la tradición artesanal a navaja abierta se encuentra con el diseño contemporáneo masculino. Experimenta el auténtico ritual de cuidado personal.
+            </p>
+
+            <!-- Hero Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <a href="#reservas" class="btn-gold-primary w-full sm:w-auto px-8 py-4 text-sm rounded-2xl inline-flex items-center justify-center gap-3 text-dark-900 shadow-xl">
+                    <i class="fa-solid fa-calendar-check text-lg"></i> Reservar Cita en Línea
+                </a>
+                <a href="#servicios" class="w-full sm:w-auto px-8 py-4 text-sm font-sedgwick font-bold uppercase tracking-wider text-gold-400 bg-dark-800/80 border border-gold-500/30 hover:bg-gold-500/10 hover:border-gold-500 rounded-2xl transition-all duration-300 backdrop-blur-md inline-flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-concierge-bell"></i> Ver Servicios & Precios
+                </a>
+            </div>
+
+            <!-- Hero Metrics Grid (Social Proof) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                <div class="stat-counter-card p-4 rounded-2xl text-center">
+                    <span class="font-cinzel text-3xl md:text-4xl font-extrabold text-gold-500 block">+1,500</span>
+                    <span class="text-xs text-[#fffffe]/80 uppercase font-oregano tracking-wider">Cortes de Autor Realizados</span>
+                </div>
+                <div class="stat-counter-card p-4 rounded-2xl text-center">
+                    <span class="font-cinzel text-3xl md:text-4xl font-extrabold text-gold-500 block">5.0 ★</span>
+                    <span class="text-xs text-[#fffffe]/80 uppercase font-oregano tracking-wider">Calificación Excelente</span>
+                </div>
+                <div class="stat-counter-card p-4 rounded-2xl text-center">
+                    <span class="font-cinzel text-3xl md:text-4xl font-extrabold text-gold-500 block">100%</span>
+                    <span class="text-xs text-[#fffffe]/80 uppercase font-oregano tracking-wider">Garantía de Satisfacción</span>
+                </div>
+            </div>
 
         </div>
     </section>
@@ -638,6 +679,110 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </section>
+
+    <!-- 7.5 SECCIÓN DE TESTIMONIOS Y RESEÑAS VIP -->
+    <section id="opiniones" class="py-20 md:py-24 bg-dark-900 relative">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14 scroll-reveal">
+                <span class="text-gold-400 font-sedgwick text-xs uppercase tracking-[0.3em] font-bold block mb-2">EXPERIENCIAS REALES</span>
+                <h2 class="font-rockabye text-3xl md:text-5xl font-extrabold text-[#fffffe] mb-4">LO QUE DICEN NUESTROS CLIENTES</h2>
+                <div class="w-16 h-px bg-gold-500/70 mx-auto mb-6"></div>
+                <p class="text-[#fffffe]/80 text-sm md:text-base">La mejor recomendación es la satisfacción de quienes nos visitan en cada sesión.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-children">
+                <!-- Reseña 1 -->
+                <div class="review-card p-6 md:p-8 flex flex-col justify-between scroll-reveal">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex text-gold-500 text-sm gap-1">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="text-[10px] font-sedgwick uppercase text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30 flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check"></i> Cliente Verificado
+                            </span>
+                        </div>
+                        <p class="text-[#fffffe]/90 text-sm italic font-oregano leading-relaxed mb-6">
+                            "Llevo 6 meses cortándome con Douglas y el nivel de detalle en el fade a navaja es incomparable. La atención con la bebida de cortesía y la toalla caliente te hacen sentir como un rey."
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                        <div class="w-10 h-10 rounded-full bg-gold-500/20 border border-gold-500/40 flex items-center justify-center font-bold text-gold-400 text-sm font-cinzel">
+                            MA
+                        </div>
+                        <div>
+                            <h4 class="font-sedgwick text-sm font-bold text-[#fffffe]">Mateo Andrade</h4>
+                            <span class="text-[11px] text-[#fffffe]/60 block font-oregano">Quito · Cliente Frecuente</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reseña 2 -->
+                <div class="review-card p-6 md:p-8 flex flex-col justify-between scroll-reveal">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex text-gold-500 text-sm gap-1">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="text-[10px] font-sedgwick uppercase text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30 flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check"></i> Cliente Verificado
+                            </span>
+                        </div>
+                        <p class="text-[#fffffe]/90 text-sm italic font-oregano leading-relaxed mb-6">
+                            "Puntualidad total con el sistema de reserva en línea. Llegué y Cristopher ya tenía todo listo. El perfilado de barba quedó impecable. 100% recomendado."
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                        <div class="w-10 h-10 rounded-full bg-gold-500/20 border border-gold-500/40 flex items-center justify-center font-bold text-gold-400 text-sm font-cinzel">
+                            SG
+                        </div>
+                        <div>
+                            <h4 class="font-sedgwick text-sm font-bold text-[#fffffe]">Santiago Guerrero</h4>
+                            <span class="text-[11px] text-[#fffffe]/60 block font-oregano">Carapungo · Cliente VIP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reseña 3 -->
+                <div class="review-card p-6 md:p-8 flex flex-col justify-between scroll-reveal">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex text-gold-500 text-sm gap-1">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="text-[10px] font-sedgwick uppercase text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30 flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check"></i> Cliente Verificado
+                            </span>
+                        </div>
+                        <p class="text-[#fffffe]/90 text-sm italic font-oregano leading-relaxed mb-6">
+                            "Excelente ambiente, buena música y un servicio verdaderamente profesional. El combo total vale cada centavo. Sin duda la mejor barbería del sector."
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                        <div class="w-10 h-10 rounded-full bg-gold-500/20 border border-gold-500/40 flex items-center justify-center font-bold text-gold-400 text-sm font-cinzel">
+                            DV
+                        </div>
+                        <div>
+                            <h4 class="font-sedgwick text-sm font-bold text-[#fffffe]">Diego Valencia</h4>
+                            <span class="text-[11px] text-[#fffffe]/60 block font-oregano">Quito · Cliente VIP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
