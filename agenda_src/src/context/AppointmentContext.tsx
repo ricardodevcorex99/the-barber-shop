@@ -38,7 +38,7 @@ export function AppointmentProvider({ children }: { children: ReactNode }) {
           },
           date: data.date || new Date().toISOString().split('T')[0],
           time: data.time || '00:00',
-          status: (data.status as Appointment['status']) || 'pending'
+          status: (data.status as Appointment['status']) || 'Pending'
         };
       });
       setAppointments(appointmentsData);
