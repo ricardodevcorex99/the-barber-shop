@@ -85,27 +85,44 @@
                 <a href="#reservas" class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">Reservar Cita</a>
             </nav>
 
-            <!-- CTA Header Button -->
-            <div class="hidden sm:flex items-center space-x-4">
-                <a href="#reservas" class="magnetic-btn relative inline-flex items-center justify-center px-6 py-2.5 text-xs md:text-sm font-sedgwick font-bold uppercase tracking-wider text-dark-900 bg-gold-500 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.7)] active:scale-95 transition-all duration-300">
+            <!-- CTA Header Button & Auth Menu -->
+            <div class="flex items-center space-x-2 md:space-x-4">
+                <a href="#reservas" class="hidden sm:inline-flex magnetic-btn relative items-center justify-center px-6 py-2.5 text-xs md:text-sm font-sedgwick font-bold uppercase tracking-wider text-dark-900 bg-gold-500 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.7)] active:scale-95 transition-all duration-300">
                     <i class="fa-solid fa-cut mr-2"></i> Reservar Cita
                 </a>
+                
+                <!-- New Auth Hamburger Menu -->
+                <div class="relative">
+                    <button id="auth-menu-btn" class="text-[#fffffe] hover:text-gold-500 focus:outline-none p-2 rounded-lg transition-colors flex items-center justify-center" aria-label="Opciones de cuenta">
+                        <i class="fa-solid fa-bars text-xl md:text-2xl"></i>
+                    </button>
+                    <!-- Auth Dropdown Panel -->
+                    <div id="auth-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-dark-900 border border-gold-500/30 rounded-lg shadow-[0_5px_25px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col py-2 z-50 transform opacity-0 scale-95 transition-all duration-200 origin-top-right font-oregano">
+                        <a href="/agenda/" class="px-4 py-2.5 text-sm md:text-base text-[#fffffe] hover:bg-gold-500/10 hover:text-gold-400 transition-colors flex items-center">
+                            <i class="fa-solid fa-right-to-bracket mr-3 w-4 text-center"></i> Iniciar sesión
+                        </a>
+                        <a href="#registro" class="px-4 py-2.5 text-sm md:text-base text-[#fffffe] hover:bg-gold-500/10 hover:text-gold-400 transition-colors flex items-center">
+                            <i class="fa-solid fa-user-plus mr-3 w-4 text-center"></i> Registrarse
+                        </a>
+                    </div>
+                </div>
             </div>
 
-            <!-- Hamburger Button Mobile -->
-            <button id="mobile-menu-btn" class="lg:hidden text-[#fffffe] hover:text-[#fffffe] focus:outline-none p-2 rounded-lg" aria-label="Abrir menú">
+            <!-- Main Hamburger Button Mobile (Keep existing) -->
+            <button id="mobile-menu-btn" class="lg:hidden text-[#fffffe] hover:text-[#fffffe] focus:outline-none p-2 rounded-lg ml-2" aria-label="Abrir menú">
                 <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
             </button>
         </div>
 
         <!-- Mobile Navigation Menu -->
-            <div id="mobile-menu" class="hidden lg:hidden bg-dark-900/95 border-b border-gold-500/20 px-6 py-6 duration-300">
+        <div id="mobile-menu" class="hidden lg:hidden bg-dark-900/95 border-b border-gold-500/20 px-6 py-6 duration-300">
             <div class="flex flex-col space-y-4 font-oregano text-base text-center">
                 <a href="#hero" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Inicio</a>
                 <a href="#nosotros" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Nosotros</a>
                 <a href="#galeria" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Galería</a>
                 <a href="#servicios" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Servicios y Precios</a>
                 <a href="#reservas" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Reservar Cita</a>
+                <a href="/agenda/" class="mobile-nav-link text-gold-400 hover:text-gold-500 py-2 border-b border-gray-800"><i class="fa-solid fa-lock mr-2"></i> Iniciar Sesión (Staff)</a>
                 <div class="pt-2">
                     <a href="#reservas" class="mobile-nav-link w-full inline-block py-3 text-center text-sm font-sedgwick font-bold uppercase tracking-wider text-dark-900 bg-gold-500 rounded-lg shadow-md">
                         <i class="fa-solid fa-cut mr-2"></i> Reservar Cita Ahora

@@ -334,6 +334,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // -------------------------------------------------------------
+    // 6.5 MENÚ HAMBURGUESA DE AUTENTICACIÓN (AUTH MENU)
+    // -------------------------------------------------------------
+    const authMenuBtn = document.getElementById('auth-menu-btn');
+    const authDropdown = document.getElementById('auth-dropdown');
+
+    if (authMenuBtn && authDropdown) {
+        // Toggle the menu
+        authMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isHidden = authDropdown.classList.contains('hidden');
+            
+            if (isHidden) {
+                authDropdown.classList.remove('hidden');
+                // Small timeout to allow display:block to apply before transition
+                setTimeout(() => {
+                    authDropdown.classList.remove('opacity-0', 'scale-95');
+                    authDropdown.classList.add('opacity-100', 'scale-100');
+                    authMenuBtn.classList.add('text-gold-500');
+                }, 10);
+            } else {
+                closeAuthMenu();
+            }
+        });
+
+        const closeAuthMenu = () => {
+            authDropdown.classList.remove('opacity-100', 'scale-100');
+            authDropdown.classList.add('opacity-0', 'scale-95');
+            authMenuBtn.classList.remove('text-gold-500');
+            // Wait for transition to finish before hiding
+            setTimeout(() => {
+                authDropdown.classList.add('hidden');
+            }, 200);
+        };
+
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!authDropdown.classList.contains('hidden') && 
+                !authDropdown.contains(e.target) && 
+                !authMenuBtn.contains(e.target)) {
+                closeAuthMenu();
+            }
+        });
+
+        // Close when selecting an option
+        authDropdown.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                closeAuthMenu();
+            });
+        });
+    }
+
+    // -------------------------------------------------------------
     // 7. LIGHTBOX DE GALERÍA DE FOTOS
     // -------------------------------------------------------------
     const galleryItems = document.querySelectorAll('.gallery-item');
