@@ -37,14 +37,17 @@ const userEmailText = document.getElementById('auth-user-email');
 onAuthStateChanged(auth, (user) => {
     if (user) {
         // Usuario logueado
-        if (guestView) guestView.classList.add('hidden');
-        if (userView) userView.classList.remove('hidden');
-        
-        // Mostrar datos del usuario
-        const name = user.displayName || user.email.split('@')[0];
-        
-        if (userNameText) userNameText.textContent = name;
-        if (userEmailText) userEmailText.textContent = user.email;
+        if (document.getElementById('auth-user-view')) document.getElementById('auth-user-view').classList.remove('hidden');
+        if (document.getElementById('auth-guest-view')) document.getElementById('auth-guest-view').classList.add('hidden');
+        if (document.getElementById('mobile-user-view')) {
+            document.getElementById('mobile-user-view').classList.remove('hidden');
+            document.getElementById('mobile-user-view').style.display = 'flex';
+        }
+        if (document.getElementById('mobile-guest-view')) document.getElementById('mobile-guest-view').classList.add('hidden');
+
+        if (document.getElementById('auth-user-name')) document.getElementById('auth-user-name').textContent = user.displayName || 'Usuario';
+        if (document.getElementById('auth-user-email')) document.getElementById('auth-user-email').textContent = user.email;
+        if (document.getElementById('mobile-user-name')) document.getElementById('mobile-user-name').textContent = user.displayName || user.email || 'Usuario';
 
         // Guardar el user_id globalmente para que booking.js lo use al hacer una reserva
         window.currentUserId = user.uid;
@@ -59,9 +62,14 @@ onAuthStateChanged(auth, (user) => {
             saveUserProfile(user); 
         }
     } else {
-        // Usuario no logueado (Invitado)
-        if (guestView) guestView.classList.remove('hidden');
-        if (userView) userView.classList.add('hidden');
+        // UI de Usuario Desconectado
+        if (document.getElementById('auth-user-view')) document.getElementById('auth-user-view').classList.add('hidden');
+        if (document.getElementById('auth-guest-view')) document.getElementById('auth-guest-view').classList.remove('hidden');
+        if (document.getElementById('mobile-user-view')) {
+            document.getElementById('mobile-user-view').classList.add('hidden');
+            document.getElementById('mobile-user-view').style.display = 'none';
+        }
+        if (document.getElementById('mobile-guest-view')) document.getElementById('mobile-guest-view').classList.remove('hidden');
         window.currentUserId = null;
     }
 });

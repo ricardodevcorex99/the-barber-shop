@@ -3,7 +3,7 @@
  * Cache-first for static assets, network-first for API + pages.
  */
 
-const CACHE_NAME = 'tbs-cache-v3';
+const CACHE_NAME = 'tbs-cache-v4';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
