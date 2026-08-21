@@ -34,20 +34,39 @@ const userNameText = document.getElementById('auth-user-name');
 const userEmailText = document.getElementById('auth-user-email');
 
 // Escuchar cambios en la autenticación (Login / Logout)
+// ==========================================
+// FUNCIÓN GLOBAL: handleMiPerfilClick
+// ==========================================
+window.handleMiPerfilClick = function() {
+    if (window.currentUserId) {
+        // Está logueado: Cerramos menú móvil y abrimos el modal
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu) mobileMenu.classList.add('hidden');
+        
+        const modal = document.getElementById('mi-perfil-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+            modal.classList.remove('hidden');
+        }
+    } else {
+        // NO está logueado: Redirige al login de Google inmediatamente
+        window.loginWithGoogle();
+    }
+};
+
 onAuthStateChanged(auth, (user) => {
     if (user) {
         // Usuario logueado
         if (document.getElementById('auth-user-view')) document.getElementById('auth-user-view').classList.remove('hidden');
         if (document.getElementById('auth-guest-view')) document.getElementById('auth-guest-view').classList.add('hidden');
-        if (document.getElementById('mobile-user-view')) {
-            document.getElementById('mobile-user-view').classList.remove('hidden');
-            document.getElementById('mobile-user-view').style.display = 'flex';
-        }
-        if (document.getElementById('mobile-guest-view')) document.getElementById('mobile-guest-view').classList.add('hidden');
+        
+        // Mobile menu specific toggles (ocultar login options, mostrar logout)
+        if (document.getElementById('mobile-btn-google')) document.getElementById('mobile-btn-google').classList.add('hidden');
+        if (document.getElementById('mobile-btn-email')) document.getElementById('mobile-btn-email').classList.add('hidden');
+        if (document.getElementById('mobile-btn-logout')) document.getElementById('mobile-btn-logout').classList.remove('hidden');
 
         if (document.getElementById('auth-user-name')) document.getElementById('auth-user-name').textContent = user.displayName || 'Usuario';
         if (document.getElementById('auth-user-email')) document.getElementById('auth-user-email').textContent = user.email;
-        if (document.getElementById('mobile-user-name')) document.getElementById('mobile-user-name').textContent = user.displayName || user.email || 'Usuario';
 
         // Guardar el user_id globalmente para que booking.js lo use al hacer una reserva
         window.currentUserId = user.uid;
@@ -65,11 +84,12 @@ onAuthStateChanged(auth, (user) => {
         // UI de Usuario Desconectado
         if (document.getElementById('auth-user-view')) document.getElementById('auth-user-view').classList.add('hidden');
         if (document.getElementById('auth-guest-view')) document.getElementById('auth-guest-view').classList.remove('hidden');
-        if (document.getElementById('mobile-user-view')) {
-            document.getElementById('mobile-user-view').classList.add('hidden');
-            document.getElementById('mobile-user-view').style.display = 'none';
-        }
-        if (document.getElementById('mobile-guest-view')) document.getElementById('mobile-guest-view').classList.remove('hidden');
+        
+        // Mobile menu specific toggles (mostrar login options, ocultar logout)
+        if (document.getElementById('mobile-btn-google')) document.getElementById('mobile-btn-google').classList.remove('hidden');
+        if (document.getElementById('mobile-btn-email')) document.getElementById('mobile-btn-email').classList.remove('hidden');
+        if (document.getElementById('mobile-btn-logout')) document.getElementById('mobile-btn-logout').classList.add('hidden');
+
         window.currentUserId = null;
     }
 });
