@@ -80,6 +80,7 @@
             <nav class="hidden lg:flex items-center space-x-8 text-sm font-oregano font-medium tracking-wide">
                 <a href="#hero" class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">Inicio</a>
                 <a href="#nosotros" class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">Nosotros</a>
+                <a href="#conocenos" class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">Conócenos</a>
                 <a href="#galeria" class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">Galería</a>
                 <a href="#servicios" class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">Servicios y Precios</a>
                 <a href="#reservas" class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">Reservar Cita</a>
@@ -138,6 +139,7 @@
             <div class="flex flex-col space-y-4 font-oregano text-base text-center">
                 <a href="#hero" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Inicio</a>
                 <a href="#nosotros" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Nosotros</a>
+                <a href="#conocenos" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Conócenos</a>
                 <a href="#galeria" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Galería</a>
                 <a href="#servicios" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Servicios y Precios</a>
                 <a href="#reservas" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Reservar Cita</a>
@@ -298,6 +300,64 @@
                             <div class="font-cinzel text-xl font-bold text-[#fffffe]">100% Satisfacción</div>
                             <div class="text-xs text-[#fffffe] font-oregano uppercase">Garantía en cada corte</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5.5 SECCIÓN CONÓCENOS -->
+    <section id="conocenos" class="py-24 md:py-28 bg-dark-800 relative">
+        <div class="container mx-auto px-4 md:px-8 max-w-6xl">
+            <div class="text-center max-w-3xl mx-auto mb-16 scroll-reveal">
+                <span class="text-[#fffffe] font-sedgwick text-xs uppercase tracking-[0.3em] font-bold block mb-2">NUESTROS EXPERTOS</span>
+                <h2 class="font-rockabye text-3xl md:text-5xl font-extrabold text-[#fffffe] mb-4">CONÓCENOS</h2>
+                <div class="w-16 h-px bg-gold-500/70 mx-auto mb-6"></div>
+                <p class="text-[#fffffe] text-sm md:text-base">Conoce a los maestros barberos detrás de THE BARBER SHOP. Cada uno con su estilo único para darte el mejor servicio.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Perfil Douglas -->
+                <div class="glass-panel rounded-3xl overflow-hidden border border-dark-600 hover:border-gold-500/30 transition-all duration-300">
+                    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80" alt="Douglas Tapia" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <i class="fa-solid fa-crown text-gold-500"></i>
+                            <span class="text-gold-500 font-sedgwick text-xs uppercase tracking-widest">Barbero Máster</span>
+                        </div>
+                        <h3 class="font-rockabye text-3xl text-[#fffffe] mb-4">DOUGLAS TAPIA</h3>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+                            Con más de 12 años dedicados al arte de la barbería tradicional y vanguardista, Douglas es reconocido por su técnica impecable en degradados a navaja (Skin Fades) y diseño de barba a mano alzada.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="px-3 py-1 bg-dark-900 border border-dark-700 rounded-lg text-xs text-gray-300">Skin Fades</span>
+                            <span class="px-3 py-1 bg-dark-900 border border-dark-700 rounded-lg text-xs text-gray-300">Barba Spa</span>
+                        </div>
+                        <button onclick="handleBarberBookingClick('douglas.html')" class="w-full btn-gold-primary py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-transform hover:scale-105">
+                            <i class="fa-solid fa-calendar-check"></i> Reservar con Douglas
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Perfil Cristopher -->
+                <div class="glass-panel rounded-3xl overflow-hidden border border-dark-600 hover:border-gold-500/30 transition-all duration-300">
+                    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=800&q=80" alt="Cristopher Tapia" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <i class="fa-solid fa-cut text-gold-500"></i>
+                            <span class="text-gold-500 font-sedgwick text-xs uppercase tracking-widest">Barbero Sénior</span>
+                        </div>
+                        <h3 class="font-rockabye text-3xl text-[#fffffe] mb-4">CRISTOPHER TAPIA</h3>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+                            Especialista en cortes urbanos modernos, texturas y tendencias internacionales. Cristopher combina la precisión clásica con la creatividad contemporánea.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="px-3 py-1 bg-dark-900 border border-dark-700 rounded-lg text-xs text-gray-300">Cortes Urbanos</span>
+                            <span class="px-3 py-1 bg-dark-900 border border-dark-700 rounded-lg text-xs text-gray-300">Colorimetría</span>
+                        </div>
+                        <button onclick="handleBarberBookingClick('cristopher.html')" class="w-full btn-gold-primary py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-transform hover:scale-105">
+                            <i class="fa-solid fa-calendar-check"></i> Reservar con Cristopher
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1070,6 +1130,28 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barber Booking Auth Modal -->
+    <div id="barber-auth-modal" class="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 font-oregano">
+        <div class="glass-panel rounded-3xl p-8 md:p-12 text-center max-w-lg mx-auto border-2 border-gold-500/20 shadow-2xl relative w-[90%] md:w-full">
+            <button onclick="document.getElementById('barber-auth-modal').classList.add('hidden'); document.getElementById('barber-auth-modal').classList.remove('opacity-100')" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+            <div class="w-16 h-16 bg-dark-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-gold-500/30">
+                <i class="fa-solid fa-lock text-2xl text-gold-500"></i>
+            </div>
+            <h3 class="font-sedgwick text-2xl text-[#fffffe] mb-3">Inicio de Sesión Requerido</h3>
+            <p id="barber-auth-message" class="text-gray-400 mb-8 text-lg">Para reservar cita con este barbero, créate una cuenta o inicia sesión.</p>
+            <div class="flex flex-col gap-3">
+                <button onclick="loginWithGoogle()" class="btn-gold-primary px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-3 transition-transform hover:scale-105">
+                    <i class="fa-brands fa-google text-lg"></i> Iniciar sesión con Google
+                </button>
+                <button onclick="loginWithEmail()" class="bg-dark-800 border border-gray-600 text-[#fffffe] hover:border-gold-500 hover:text-gold-500 px-6 py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-envelope text-lg"></i> Iniciar con Email
+                </button>
             </div>
         </div>
     </div>

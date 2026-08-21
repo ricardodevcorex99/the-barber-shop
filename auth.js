@@ -55,6 +55,32 @@ window.handleMiPerfilClick = function() {
     }
 };
 
+window.handleBarberBookingClick = function(barberUrl) {
+    if (window.currentUserId) {
+        // User is logged in, redirect directly to the booking form of the barber
+        window.location.href = barberUrl + '#booking-form';
+    } else {
+        // Set pending redirect to the barber's page
+        sessionStorage.setItem('pendingRedirect', barberUrl);
+        // Determine the barber name for the message
+        let barberName = barberUrl.includes('douglas') ? 'Douglas' : 'Cristopher';
+        
+        const modal = document.getElementById('barber-auth-modal');
+        const message = document.getElementById('barber-auth-message');
+        if (modal && message) {
+            message.textContent = `Para reservar cita con ${barberName}, créate una cuenta o inicia sesión.`;
+            modal.classList.remove('hidden');
+            // Timeout to allow display:block before opacity transition
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+            }, 10);
+        } else {
+            // Fallback just in case the modal doesn't exist
+            window.location.hash = '#reservas';
+        }
+    }
+};
+
 onAuthStateChanged(auth, (user) => {
     if (user) {
         // Usuario logueado
@@ -89,18 +115,22 @@ onAuthStateChanged(auth, (user) => {
         loadMiPerfilYHistorial(user);
 
         // Si venimos de un login explícito (ej. booking redirect), manejarlo
-        if (sessionStorage.getItem('pendingRedirect') === 'booking') {
+        let pending = sessionStorage.getItem('pendingRedirect');
+        if (pending) {
             sessionStorage.removeItem('pendingRedirect');
             saveUserProfile(user); // Asegura que se cree el perfil
-            // Scroll to reservas
-            if (window.location.pathname.includes('douglas.html') || window.location.pathname.includes('cristopher.html')) {
-                window.location.hash = '#booking-form';
-            } else {
-                window.location.hash = '#reservas';
+            
+            if (pending.endsWith('.html')) {
+                // They clicked a specific barber
+                window.location.href = pending + '#booking-form';
+            } else if (pending === 'booking') {
+                // Standard booking flow
+                if (window.location.pathname.includes('douglas.html') || window.location.pathname.includes('cristopher.html')) {
+                    window.location.hash = '#booking-form';
+                } else {
+                    window.location.hash = '#reservas';
+                }
             }
-        } else if (sessionStorage.getItem('pendingRedirect') === 'true') {
-            sessionStorage.removeItem('pendingRedirect');
-            saveUserProfile(user); 
         }
     } else {
         // UI de Usuario Desconectado
