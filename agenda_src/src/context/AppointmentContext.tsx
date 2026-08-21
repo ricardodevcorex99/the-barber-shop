@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Appointment } from '../types';
 import { db } from '../firebase';
-import { collection, onSnapshot, addDoc, doc, updateDoc, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { collection, onSnapshot, addDoc, doc, updateDoc, query, orderBy } from 'firebase/firestore';
 
 interface AppointmentContextType {
   appointments: Appointment[];
