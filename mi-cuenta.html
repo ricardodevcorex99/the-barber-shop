@@ -30,20 +30,27 @@
                     return;
                 }
                 
-                // Fetch User Profile
-                const userRef = doc(db, 'profiles', user.uid);
-                const docSnap = await getDoc(userRef);
-                
-                if (docSnap.exists()) {
-                    const profile = docSnap.data();
+                try {
+                    // Fetch User Profile
+                    const userRef = doc(db, 'profiles', user.uid);
+                    const docSnap = await getDoc(userRef);
                     
-                    document.getElementById('profile-avatar').src = profile.avatar_url || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(profile.full_name || 'User') + '&background=d4af37&color=0b0b0b';
-                    document.getElementById('profile-name').textContent = profile.full_name || 'Usuario';
-                    document.getElementById('profile-email').textContent = profile.email || '';
-                    document.getElementById('profile-username').textContent = '@' + (profile.username || 'user');
-                    
-                    document.getElementById('edit-full-name').value = profile.full_name || '';
-                    document.getElementById('edit-username').value = profile.username || '';
+                    if (docSnap.exists()) {
+                        const profile = docSnap.data();
+                        
+                        document.getElementById('profile-avatar').src = profile.avatar_url || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(profile.full_name || 'User') + '&background=d4af37&color=0b0b0b';
+                        document.getElementById('profile-name').textContent = profile.full_name || 'Usuario';
+                        document.getElementById('profile-email').textContent = profile.email || '';
+                        document.getElementById('profile-username').textContent = '@' + (profile.username || 'user');
+                        
+                        document.getElementById('edit-full-name').value = profile.full_name || '';
+                        document.getElementById('edit-username').value = profile.username || '';
+                    }
+                } catch (error) {
+                    console.error("Error al cargar perfil:", error);
+                    document.getElementById('profile-name').textContent = 'Error de Base de Datos';
+                    document.getElementById('profile-username').textContent = 'Faltan Permisos';
+                    alert("Error: No tienes acceso a Firestore. ¿Completaste el paso de pegar las Reglas de Seguridad en Firebase? Detalles: " + error.message);
                 }
 
                 // Load Appointments (using the global function we defined in auth.js)

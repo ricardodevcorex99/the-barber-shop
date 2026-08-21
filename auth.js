@@ -106,6 +106,11 @@ async function saveUserProfile(user) {
         }
     } catch (error) {
         console.error("Error guardando el perfil del usuario:", error);
+        alert("Error de base de datos: No tienes los permisos configurados en Firebase o no se ha creado la base de datos Firestore. Ve a la consola y pega las Reglas de Seguridad.\nDetalle: " + error.message);
+        // Aún así forzamos la redirección para que vea la página
+        if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+            window.location.href = '/mi-cuenta.html';
+        }
     }
 }
 
