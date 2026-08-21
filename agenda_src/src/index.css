@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #131313;
+  --color-surface-container: #201f1f;
+  --color-surface-container-low: #1c1b1b;
+  --color-surface-container-high: #2a2a2a;
+  --color-surface-container-highest: #353534;
+  --color-surface-bright: #3a3939;
+  --color-on-surface: #e5e2e1;
+  --color-on-surface-variant: #d0c5af;
+  --color-outline-variant: #4d4635;
+  --color-primary: #f2ca50;
+  --color-primary-dim: rgba(242, 202, 80, 0.1);
+  --color-on-primary: #3c2f00;
+  --color-background: #131313;
+  
+  --font-label-brand: "Sedgwick Ave", cursive;
+  --font-code-folio: "JetBrains Mono", monospace;
+  --font-label-ui: "Inter", sans-serif;
+  --font-body-md: "Oregano", cursive;
+  --font-headline-lg: "Cinzel", serif; 
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: var(--font-body-md);
+  -webkit-font-smoothing: antialiased;
+}
+
+.gold-glow {
+    box-shadow: 0 4px 30px rgba(212, 175, 55, 0.4);
+}
+
+.timeline-grid {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 16px;
+}
+
+.timeline-hour {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 16px;
+    position: relative;
+}
+
+.timeline-hour::after {
+    content: '';
+    position: absolute;
+    left: 80px;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: rgba(212, 175, 55, 0.1);
+    z-index: 0;
+}
