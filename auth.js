@@ -200,30 +200,52 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// Función: Login con Google (Usando Redirect para evitar bloqueos de popups)
+// Función: Login con Google
 window.loginWithGoogle = async function () {
   console.log(
     "Dominio actual detectado por el navegador:",
     window.location.hostname,
   );
   try {
-    sessionStorage.setItem("pendingRedirect", "true");
+    const { signInWithPopup } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js");
     const provider = new GoogleAuthProvider();
-    // Redirect clears the current page, so we don't await anything here
-    signInWithRedirect(auth, provider).catch((error) => {
+    
+    // Usamos Popup en lugar de Redirect porque algunos navegadores (Safari, Brave, Incógnito)
+    // bloquean las cookies cruzadas necesarias para que Redirect funcione correctamente.
+    const result = await signInWithPopup(auth, provider);
+    console.log("Login exitoso:", result.user.email);
+    
+    // Manejar el pendingRedirect visual
+    let pending = sessionStorage.getItem("pendingRedirect");
+    if (pending) {
       sessionStorage.removeItem("pendingRedirect");
-      console.error(
-        "Error al iniciar redirección con Google:",
-        error.code,
-        error.message,
-      );
-      alert(
-        `Error de Firebase [${error.code}]: ${error.message}\n\nAsegúrate de que el dominio ${window.location.hostname} está en Firebase > Auth > Settings > Authorized Domains.`,
-      );
-    });
+      
+      // Aseguramos que se guarde el perfil primero
+      await saveUserProfile(result.user);
+      
+      if (pending.endsWith(".html")) {
+        window.location.href = pending + "#booking-form";
+      } else if (pending === "booking") {
+        if (
+          window.location.pathname.includes("douglas.html") ||
+          window.location.pathname.includes("cristopher.html")
+        ) {
+          window.location.hash = "#booking-form";
+        } else {
+          window.location.hash = "#reservas";
+        }
+      }
+    } else {
+      await saveUserProfile(result.user);
+    }
+    
   } catch (error) {
-    sessionStorage.removeItem("pendingRedirect");
-    console.error("Excepción al iniciar sesión con Google:", error);
+    console.error("Error al iniciar sesión con Google:", error.code, error.message);
+    if (error.code !== 'auth/popup-closed-by-user') {
+        alert(
+          `Error de Google [${error.code}]:\nSi estás usando Safari, Brave o una ventana de Incógnito, intenta usar Chrome normal.\n\nDetalle: ${error.message}`
+        );
+    }
   }
 };
 
