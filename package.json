@@ -7,7 +7,6 @@
   "scripts": {
     "dev": "npx -y serve . -p 3000",
     "start": "npx -y serve . -p 3000",
-    "build": "cd agenda_src && npm install --no-audit --no-fund --legacy-peer-deps && npm run build && cp -r dist/* ../agenda/ || echo 'Build failed but continuing'",
     "test": "node --test tests/*.test.js",
     "test:watch": "node --test --watch tests/*.test.js",
     "lint": "node --check src/types/api.js && node --check src/components/index.js && node --check src/components/booking-form.js"
