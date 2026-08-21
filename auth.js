@@ -425,12 +425,10 @@ async function loadMiPerfilYHistorial(user) {
     listEl.innerHTML = html;
   } catch (error) {
     console.error("Error al cargar perfil o historial:", error);
-    const nameEl = document.getElementById("modal-profile-name");
-    if (nameEl) nameEl.textContent = "Error";
     const listEl = document.getElementById("modal-history-list");
-    if (listEl)
-      listEl.innerHTML =
-        '<p class="text-red-400 text-center">Faltan permisos. Verifica las reglas de Firestore.</p>';
+    if (listEl) {
+      listEl.innerHTML = `<div class="text-center text-red-400 py-4"><i class="fa-solid fa-triangle-exclamation mb-2"></i><br>Error técnico: ${error.message}<br><br><span class="text-xs text-gray-400">Si acabas de guardar las reglas, espera 1 minuto a que se apliquen en los servidores de Google.</span></div>`;
+    }
   }
 }
 
