@@ -49,10 +49,13 @@ onAuthStateChanged(auth, (user) => {
         // Guardar el user_id globalmente para que booking.js lo use al hacer una reserva
         window.currentUserId = user.uid;
 
+        // Cargar datos en el modal
+        loadMiPerfilYHistorial(user);
+
         // Si venimos de un login explícito, redirigir
         if (sessionStorage.getItem('pendingRedirect') === 'true') {
             sessionStorage.removeItem('pendingRedirect');
-            // Check if profile exists, if not create it, then redirect
+            // Check if profile exists, if not create it, then open modal
             saveUserProfile(user); 
         }
     } else {
@@ -110,16 +113,20 @@ async function saveUserProfile(user) {
             console.log("Nuevo perfil creado en la base de datos.");
         }
         
-        // Redirigir a Mi Cuenta si estamos en el inicio
-        if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-            window.location.href = '/mi-cuenta.html';
+        // Abrir el modal en lugar de redirigir
+        const modal = document.getElementById('mi-perfil-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+            modal.classList.remove('hidden');
         }
     } catch (error) {
         console.error("Error guardando el perfil del usuario:", error);
         alert("Error de base de datos: No tienes los permisos configurados en Firebase o no se ha creado la base de datos Firestore. Ve a la consola y pega las Reglas de Seguridad.\nDetalle: " + error.message);
-        // Aún así forzamos la redirección para que vea la página
-        if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-            window.location.href = '/mi-cuenta.html';
+        // Aún así abrimos el modal
+        const modal = document.getElementById('mi-perfil-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+            modal.classList.remove('hidden');
         }
     }
 }
@@ -136,6 +143,148 @@ getRedirectResult(auth)
         console.error("Error al regresar de Google Redirect:", error.code, error.message);
         alert(`Error al volver de Google [${error.code}]: ${error.message}\n\nDomino detectado: ${window.location.hostname}`);
     });
+// ==========================================
+// LÓGICA DEL PERFIL Y MIS CITAS (MODAL)
+// ==========================================
+async function loadMiPerfilYHistorial(user) {
+    if (!user) return;
+    
+    try {
+        const { doc, getDoc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+        
+        // Cargar Perfil
+        const userRef = doc(db, 'profiles', user.uid);
+        const docSnap = await getDoc(userRef);
+        
+        if (docSnap.exists()) {
+            const profile = docSnap.data();
+            const avatarImg = document.getElementById('modal-profile-avatar');
+            if (avatarImg) avatarImg.src = profile.avatar_url || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(profile.full_name || 'User') + '&background=d4af37&color=0b0b0b';
+            
+            const nameEl = document.getElementById('modal-profile-name');
+            if (nameEl) nameEl.textContent = profile.full_name || 'Usuario';
+            
+            const emailEl = document.getElementById('modal-profile-email');
+            if (emailEl) emailEl.textContent = profile.email || '';
+            
+            const usernameEl = document.getElementById('modal-profile-username');
+            if (usernameEl) usernameEl.textContent = '@' + (profile.username || 'user');
+            
+            const editName = document.getElementById('modal-edit-full-name');
+            if (editName) editName.value = profile.full_name || '';
+            
+            const editUsername = document.getElementById('modal-edit-username');
+            if (editUsername) editUsername.value = profile.username || '';
+        }
+        
+        // Cargar Historial
+        const listEl = document.getElementById('modal-history-list');
+        if (!listEl) return;
+        listEl.innerHTML = '<div class="text-center text-gold-500 py-6"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><p class="text-sm">Cargando...</p></div>';
+        
+        const q = query(collection(db, 'bookings'), where('user_id', '==', user.uid), orderBy('date', 'desc'));
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) {
+            listEl.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="w-16 h-16 rounded-full bg-dark-800 flex items-center justify-center mx-auto mb-3">
+                        <i class="fa-solid fa-calendar-xmark text-2xl text-gray-500"></i>
+                    </div>
+                    <p class="text-gray-400">Aún no tienes reservas.</p>
+                </div>
+            `;
+            return;
+        }
+
+        let html = '';
+        querySnapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            const statusColor = data.status === 'Confirmed' ? 'text-green-400' : (data.status === 'Pending' ? 'text-yellow-400' : 'text-gray-400');
+            const statusText = data.status === 'Confirmed' ? 'Confirmada' : (data.status === 'Pending' ? 'Pendiente' : 'Completada');
+            
+            html += `
+                <div class="bg-dark-800 border border-gold-500/10 rounded-xl p-4 hover:border-gold-500/30 transition-colors">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h4 class="font-bold text-white">${data.service || 'Servicio'}</h4>
+                            <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-scissors mr-1 text-gold-500"></i> ${data.barber || 'Sin asignar'}</p>
+                        </div>
+                        <span class="text-sm font-bold text-gold-500">$${data.price || '0.00'}</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-700">
+                        <span class="text-xs text-gray-300"><i class="fa-regular fa-calendar mr-1"></i> ${data.date || ''} - ${data.time || ''}</span>
+                        <span class="text-xs font-bold ${statusColor}">${statusText}</span>
+                    </div>
+                </div>
+            `;
+        });
+        listEl.innerHTML = html;
+        
+    } catch (error) {
+        console.error("Error al cargar perfil o historial:", error);
+        const nameEl = document.getElementById('modal-profile-name');
+        if (nameEl) nameEl.textContent = 'Error';
+        const listEl = document.getElementById('modal-history-list');
+        if (listEl) listEl.innerHTML = '<p class="text-red-400 text-center">Faltan permisos. Verifica las reglas de Firestore.</p>';
+    }
+}
+
+// Configurar el formulario de edición (solo una vez)
+document.addEventListener('DOMContentLoaded', () => {
+    const btnEdit = document.getElementById('modal-btn-edit-profile');
+    const btnCancel = document.getElementById('modal-btn-cancel-edit');
+    const formEdit = document.getElementById('modal-form-edit-profile');
+    const viewProfile = document.getElementById('modal-view-profile-info');
+    
+    if (btnEdit && formEdit && viewProfile && btnCancel) {
+        btnEdit.addEventListener('click', () => {
+            viewProfile.classList.add('hidden');
+            formEdit.classList.remove('hidden');
+        });
+        
+        btnCancel.addEventListener('click', () => {
+            formEdit.classList.add('hidden');
+            viewProfile.classList.remove('hidden');
+        });
+        
+        formEdit.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btnSave = document.getElementById('modal-btn-save-profile');
+            if (btnSave) {
+                btnSave.disabled = true;
+                btnSave.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            }
+            
+            try {
+                const { doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+                const newName = document.getElementById('modal-edit-full-name').value;
+                const newUsername = document.getElementById('modal-edit-username').value;
+                
+                const userRef = doc(db, 'profiles', window.currentUserId);
+                await updateDoc(userRef, {
+                    full_name: newName,
+                    username: newUsername
+                });
+                
+                document.getElementById('modal-profile-name').textContent = newName;
+                document.getElementById('modal-profile-username').textContent = '@' + newUsername;
+                
+                formEdit.classList.add('hidden');
+                viewProfile.classList.remove('hidden');
+                alert("¡Perfil actualizado!");
+            } catch (error) {
+                console.error(error);
+                alert("Error al actualizar perfil.");
+            } finally {
+                if (btnSave) {
+                    btnSave.disabled = false;
+                    btnSave.innerHTML = 'Guardar';
+                }
+            }
+        });
+    }
+});
 
 // Función: Login con Email (Magic Link)
 window.loginWithEmail = async function() {
