@@ -1,17 +1,24 @@
 {
-  "name": "the-barber-shop-landing",
-  "version": "1.1.0",
-  "description": "Landing page de lujo y sistema de reservas para THE BARBER SHOP (frontend estático + API serverless)",
+  "name": "the-barber-shop",
+  "version": "2.0.0",
+  "description": "Sistema de reservas de lujo para THE BARBER SHOP con Firebase Auth y Firestore",
   "main": "index.html",
   "type": "module",
   "scripts": {
     "dev": "npx -y serve . -p 3000",
-    "start": "npx -y serve . -p 3000",
-    "test": "node --test tests/*.test.js",
-    "test:watch": "node --test --watch tests/*.test.js",
-    "lint": "node --check src/types/api.js && node --check src/components/index.js && node --check src/components/booking-form.js"
+    "start": "npx -y serve . -p 3000"
   },
-  "keywords": ["barbershop", "landing-page", "tailwind", "calculator", "reservas", "pwa"],
+  "keywords": [
+    "barbershop",
+    "landing-page",
+    "tailwind",
+    "firebase",
+    "reservas",
+    "pwa"
+  ],
   "author": "Antigravity",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.9.6"
+  }
 }

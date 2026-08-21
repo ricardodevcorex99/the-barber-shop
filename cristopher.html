@@ -1,568 +1,1165 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cristopher Tapia | Barbero Sénior - THE BARBER SHOP</title>
-    <meta name="description" content="Cristopher Tapia — Barbero Sénior en THE BARBER SHOP. Perfil, galería de trabajos y reserva directa.">
-    <meta property="og:title" content="Cristopher Tapia | THE BARBER SHOP">
-    <meta property="og:description" content="Barbero Sénior especializado en cortes clásicos y estilo tradicional.">
-    <meta property="og:type" content="profile">
-    <meta name="theme-color" content="#0b0b0b">
-    <link rel="manifest" href="manifest.webmanifest">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%82%EF%B8%8F%3C/text%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="img/icon-192.png">
-    
+    <meta
+      name="description"
+      content="Cristopher Tapia — Barbero Sénior en THE BARBER SHOP. Perfil, galería de trabajos y reserva directa."
+    />
+    <meta property="og:title" content="Cristopher Tapia | THE BARBER SHOP" />
+    <meta
+      property="og:description"
+      content="Barbero Sénior especializado en cortes clásicos y estilo tradicional."
+    />
+    <meta property="og:type" content="profile" />
+    <meta name="theme-color" content="#0b0b0b" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%82%EF%B8%8F%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="apple-touch-icon" href="img/icon-192.png" />
+
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Sedgwick+Ave&family=Oregano:ital@0;1&display=swap" rel="stylesheet">
-            
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Sedgwick+Ave&family=Oregano:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        gold: {
-                            400: '#f0c75e',
-                            500: '#d4af37',
-                            600: '#b8960e',
-                            700: '#9a7d0c',
-                            glow: 'rgba(212, 175, 55, 0.4)'
-                        },
-                        dark: {
-                            900: '#0b0b0b',
-                            800: '#18181B',
-                            700: '#27272A',
-                            600: '#3F3F46'
-                        },
-                        urban: {
-                            purple: '#d4af37',
-                            blue: '#fffffe'
-                        }
-                    },
-                    fontFamily: {
-                        cinzel: ['Cinzel', 'serif'],
-                        sedgwick: ['Sedgwick Ave', 'cursive'],
-                        sans: ['Oregano', 'cursive'],
-                        oregano: ['Oregano', 'cursive'],
-                        chicanos: ['Chicanos', 'cursive'],
-                        rockabye: ['Rockabye', 'cursive'],
-                        quicksilver: ['QuicksilverFast', 'cursive'],
-                        urbanjungle: ['UrbanJungle', 'cursive']
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              gold: {
+                400: "#f0c75e",
+                500: "#d4af37",
+                600: "#b8960e",
+                700: "#9a7d0c",
+                glow: "rgba(212, 175, 55, 0.4)",
+              },
+              dark: {
+                900: "#0b0b0b",
+                800: "#18181B",
+                700: "#27272A",
+                600: "#3F3F46",
+              },
+              urban: {
+                purple: "#d4af37",
+                blue: "#fffffe",
+              },
+            },
+            fontFamily: {
+              cinzel: ["Cinzel", "serif"],
+              sedgwick: ["Sedgwick Ave", "cursive"],
+              sans: ["Oregano", "cursive"],
+              oregano: ["Oregano", "cursive"],
+              chicanos: ["Chicanos", "cursive"],
+              rockabye: ["Rockabye", "cursive"],
+              quicksilver: ["QuicksilverFast", "cursive"],
+              urbanjungle: ["UrbanJungle", "cursive"],
+            },
+          },
+        },
+      };
     </script>
-    <link rel="stylesheet" href="styles.css?v=17">
-</head>
-<body class="bg-dark-900 text-[#fffffe] font-oregano antialiased overflow-x-hidden">
-
+    <link rel="stylesheet" href="styles.css?v=17" />
+  </head>
+  <body
+    class="bg-dark-900 text-[#fffffe] font-oregano antialiased overflow-x-hidden"
+  >
     <!-- Skip to Content (Accessibility) -->
     <a href="#booking-form" class="skip-link">Saltar al contenido</a>
 
     <!-- HEADER -->
-    <header class="sticky top-0 z-40 bg-dark-900/70 backdrop-blur-md border-b border-gold-500/20 duration-300" id="main-header">
-        <div class="container mx-auto px-4 md:px-8 py-3.5 flex items-center justify-between">
-            <!-- Logo -->
-            <a href="index.html" class="font-quicksilver text-2xl text-[#fffffe] tracking-wider hover:text-gold-500 transition-colors">THE BARBER SHOP</a>
+    <header
+      class="sticky top-0 z-40 bg-dark-900/70 backdrop-blur-md border-b border-gold-500/20 duration-300"
+      id="main-header"
+    >
+      <div
+        class="container mx-auto px-4 md:px-8 py-3.5 flex items-center justify-between"
+      >
+        <!-- Logo -->
+        <a
+          href="index.html"
+          class="font-quicksilver text-2xl text-[#fffffe] tracking-wider hover:text-gold-500 transition-colors"
+          >THE BARBER SHOP</a
+        >
 
-            <!-- Menu Desktop -->
-            <nav class="hidden lg:flex items-center space-x-8 text-sm font-oregano font-medium tracking-wide">
-                <a href="index.html" class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">Inicio</a>
-                <a href="index.html#nosotros" class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">Nosotros</a>
-                <a href="index.html#conocenos" class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">Conócenos</a>
-                <a href="index.html#galeria" class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">Galería</a>
-                <a href="index.html#servicios" class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">Servicios y Precios</a>
-                <a href="#reservas" class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">Reservar Cita</a>
-            </nav>
+        <!-- Menu Desktop -->
+        <nav
+          class="hidden lg:flex items-center space-x-8 text-sm font-oregano font-medium tracking-wide"
+        >
+          <a
+            href="index.html"
+            class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500"
+            >Inicio</a
+          >
+          <a
+            href="index.html#nosotros"
+            class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500"
+            >Nosotros</a
+          >
+          <a
+            href="index.html#conocenos"
+            class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500"
+            >Conócenos</a
+          >
+          <a
+            href="index.html#galeria"
+            class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500"
+            >Galería</a
+          >
+          <a
+            href="index.html#servicios"
+            class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500"
+            >Servicios y Precios</a
+          >
+          <a
+            href="#reservas"
+            class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500"
+            >Reservar Cita</a
+          >
+        </nav>
 
-            <!-- CTA Header Button -->
-            <div class="hidden sm:flex items-center space-x-4">
-                <a href="#reservas" class="relative inline-flex items-center justify-center px-6 py-2.5 text-xs md:text-sm font-sedgwick font-bold uppercase tracking-wider text-[#fffffe] bg-gold-500 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.7)] hover:scale-105 active:scale-95 duration-300">
-                    <i class="fa-solid fa-cut mr-2"></i> Reservar con Cristopher
-                </a>
-            </div>
-
-            <!-- Hamburger Button Mobile -->
-            <button id="mobile-menu-btn" class="lg:hidden text-[#fffffe] hover:text-[#fffffe] focus:outline-none p-2 rounded-lg" aria-label="Abrir menú">
-                <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
-            </button>
+        <!-- CTA Header Button -->
+        <div class="hidden sm:flex items-center space-x-4">
+          <a
+            href="#reservas"
+            class="relative inline-flex items-center justify-center px-6 py-2.5 text-xs md:text-sm font-sedgwick font-bold uppercase tracking-wider text-[#fffffe] bg-gold-500 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.7)] hover:scale-105 active:scale-95 duration-300"
+          >
+            <i class="fa-solid fa-cut mr-2"></i> Reservar con Cristopher
+          </a>
         </div>
 
-        <!-- Mobile Navigation Menu -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-dark-900/95 border-b border-gold-500/20 px-6 py-6 duration-300">
-            <div class="flex flex-col space-y-4 font-oregano text-base text-center">
-                <a href="index.html" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Inicio</a>
-                <a href="index.html#nosotros" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Nosotros</a>
-                <a href="index.html#conocenos" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Conócenos</a>
-                <a href="index.html#galeria" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Galería</a>
-                <a href="index.html#servicios" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Servicios y Precios</a>
-                <a href="#reservas" class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800">Reservar Cita</a>
-                <div class="pt-2">
-                    <a href="#reservas" class="mobile-nav-link w-full inline-block py-3 text-center text-sm font-sedgwick font-bold uppercase tracking-wider text-[#fffffe] bg-gold-500 rounded-lg shadow-md">
-                        <i class="fa-solid fa-cut mr-2"></i> Reservar con Cristopher
-                    </a>
-                </div>
-            </div>
+        <!-- Hamburger Button Mobile -->
+        <button
+          id="mobile-menu-btn"
+          class="lg:hidden text-[#fffffe] hover:text-[#fffffe] focus:outline-none p-2 rounded-lg"
+          aria-label="Abrir menú"
+        >
+          <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Navigation Menu -->
+      <div
+        id="mobile-menu"
+        class="hidden lg:hidden bg-dark-900/95 border-b border-gold-500/20 px-6 py-6 duration-300"
+      >
+        <div class="flex flex-col space-y-4 font-oregano text-base text-center">
+          <a
+            href="index.html"
+            class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800"
+            >Inicio</a
+          >
+          <a
+            href="index.html#nosotros"
+            class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800"
+            >Nosotros</a
+          >
+          <a
+            href="index.html#conocenos"
+            class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800"
+            >Conócenos</a
+          >
+          <a
+            href="index.html#galeria"
+            class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800"
+            >Galería</a
+          >
+          <a
+            href="index.html#servicios"
+            class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800"
+            >Servicios y Precios</a
+          >
+          <a
+            href="#reservas"
+            class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800"
+            >Reservar Cita</a
+          >
+          <div class="pt-2">
+            <a
+              href="#reservas"
+              class="mobile-nav-link w-full inline-block py-3 text-center text-sm font-sedgwick font-bold uppercase tracking-wider text-[#fffffe] bg-gold-500 rounded-lg shadow-md"
+            >
+              <i class="fa-solid fa-cut mr-2"></i> Reservar con Cristopher
+            </a>
+          </div>
         </div>
+      </div>
     </header>
 
     <!-- HERO PROFILE -->
     <section class="py-16 md:py-24 bg-dark-800 relative overflow-hidden">
-        <div class="container mx-auto px-4 md:px-8 max-w-6xl">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <!-- Image -->
-                <div class="relative">
-                    <div class="relative z-10 rounded-3xl overflow-hidden border-2 border-gold-500/40 shadow-2xl">
-                        <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=80" alt="Cristopher Tapia Barbero" loading="lazy" width="800" height="600" class="w-full h-[480px] object-cover">
-                    </div>
-                    <div class="absolute -bottom-6 -left-6 bg-dark-900 border border-gold-500 p-5 rounded-2xl z-20 shadow-xl hidden sm:flex items-center space-x-4">
-                        <div class="w-12 h-12 rounded-full bg-gold-500 text-[#fffffe] flex items-center justify-center font-bold text-xl">
-                            <i class="fa-solid fa-cut"></i>
-                        </div>
-                        <div>
-                            <div class="font-cinzel text-lg font-bold text-[#fffffe]">Cristopher Tapia</div>
-                            <div class="text-xs text-[#fffffe] font-oregano uppercase">Barbero Sénior / Stylist</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bio Text -->
-                <div class="space-y-6">
-                    <span class="text-[#fffffe] font-sedgwick text-xs uppercase tracking-[0.3em] font-bold block">BARBERO SÉNIOR & CREATIVO</span>
-                    <h1 class="font-rockabye text-4xl md:text-6xl font-black text-[#fffffe]">CRISTOPHER TAPIA</h1>
-                    <div class="w-20 h-1 bg-gold-500"></div>
-                    <p class="text-[#fffffe] text-sm md:text-base leading-relaxed">
-                        Especialista en cortes urbanos modernos, pompadours estructurados, textura masculina y tendencias internacionales. Cristopher Tapia combina la precisión clásica con la creatividad contemporánea.
-                    </p>
-                    <p class="text-[#fffffe] text-xs md:text-sm leading-relaxed">
-                        Es reconocido por su paciencia en la atención al detalle, diseño personalizado de barbas juveniles y técnicas avanzadas de tinte y pigmentación temporal.
-                    </p>
-
-                    <!-- Specialty tags -->
-                    <div class="grid grid-cols-2 gap-3 pt-2">
-                        <div class="p-3 bg-dark-900 border border-dark-700 rounded-xl flex items-center space-x-3">
-                            <i class="fa-solid fa-cut text-[#fffffe]"></i>
-                            <span class="text-xs font-oregano text-[#fffffe]">Cortes Urbanos & Fades</span>
-                        </div>
-                        <div class="p-3 bg-dark-900 border border-dark-700 rounded-xl flex items-center space-x-3">
-                            <i class="fa-solid fa-paint-roller text-[#fffffe]"></i>
-                            <span class="text-xs font-oregano text-[#fffffe]">Colorimetría & Platinados</span>
-                        </div>
-                        <div class="p-3 bg-dark-900 border border-dark-700 rounded-xl flex items-center space-x-3">
-                            <i class="fa-solid fa-user-ninja text-[#fffffe]"></i>
-                            <span class="text-xs font-oregano text-[#fffffe]">Perfilado de Barba</span>
-                        </div>
-                        <div class="p-3 bg-dark-900 border border-dark-700 rounded-xl flex items-center space-x-3">
-                            <i class="fa-solid fa-wand-magic-sparkles text-[#fffffe]"></i>
-                            <span class="text-xs font-oregano text-[#fffffe]">Peinados Texturizados</span>
-                        </div>
-                    </div>
-                </div>
+      <div class="container mx-auto px-4 md:px-8 max-w-6xl">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <!-- Image -->
+          <div class="relative">
+            <div
+              class="relative z-10 rounded-3xl overflow-hidden border-2 border-gold-500/40 shadow-2xl"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=80"
+                alt="Cristopher Tapia Barbero"
+                loading="lazy"
+                width="800"
+                height="600"
+                class="w-full h-[480px] object-cover"
+              />
             </div>
+            <div
+              class="absolute -bottom-6 -left-6 bg-dark-900 border border-gold-500 p-5 rounded-2xl z-20 shadow-xl hidden sm:flex items-center space-x-4"
+            >
+              <div
+                class="w-12 h-12 rounded-full bg-gold-500 text-[#fffffe] flex items-center justify-center font-bold text-xl"
+              >
+                <i class="fa-solid fa-cut"></i>
+              </div>
+              <div>
+                <div class="font-cinzel text-lg font-bold text-[#fffffe]">
+                  Cristopher Tapia
+                </div>
+                <div class="text-xs text-[#fffffe] font-oregano uppercase">
+                  Barbero Sénior / Stylist
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bio Text -->
+          <div class="space-y-6">
+            <span
+              class="text-[#fffffe] font-sedgwick text-xs uppercase tracking-[0.3em] font-bold block"
+              >BARBERO SÉNIOR & CREATIVO</span
+            >
+            <h1
+              class="font-rockabye text-4xl md:text-6xl font-black text-[#fffffe]"
+            >
+              CRISTOPHER TAPIA
+            </h1>
+            <div class="w-20 h-1 bg-gold-500"></div>
+            <p class="text-[#fffffe] text-sm md:text-base leading-relaxed">
+              Especialista en cortes urbanos modernos, pompadours estructurados,
+              textura masculina y tendencias internacionales. Cristopher Tapia
+              combina la precisión clásica con la creatividad contemporánea.
+            </p>
+            <p class="text-[#fffffe] text-xs md:text-sm leading-relaxed">
+              Es reconocido por su paciencia en la atención al detalle, diseño
+              personalizado de barbas juveniles y técnicas avanzadas de tinte y
+              pigmentación temporal.
+            </p>
+
+            <!-- Specialty tags -->
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <div
+                class="p-3 bg-dark-900 border border-dark-700 rounded-xl flex items-center space-x-3"
+              >
+                <i class="fa-solid fa-cut text-[#fffffe]"></i>
+                <span class="text-xs font-oregano text-[#fffffe]"
+                  >Cortes Urbanos & Fades</span
+                >
+              </div>
+              <div
+                class="p-3 bg-dark-900 border border-dark-700 rounded-xl flex items-center space-x-3"
+              >
+                <i class="fa-solid fa-paint-roller text-[#fffffe]"></i>
+                <span class="text-xs font-oregano text-[#fffffe]"
+                  >Colorimetría & Platinados</span
+                >
+              </div>
+              <div
+                class="p-3 bg-dark-900 border border-dark-700 rounded-xl flex items-center space-x-3"
+              >
+                <i class="fa-solid fa-user-ninja text-[#fffffe]"></i>
+                <span class="text-xs font-oregano text-[#fffffe]"
+                  >Perfilado de Barba</span
+                >
+              </div>
+              <div
+                class="p-3 bg-dark-900 border border-dark-700 rounded-xl flex items-center space-x-3"
+              >
+                <i class="fa-solid fa-wand-magic-sparkles text-[#fffffe]"></i>
+                <span class="text-xs font-oregano text-[#fffffe]"
+                  >Peinados Texturizados</span
+                >
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- PORTFOLIO GALLERY -->
     <section class="py-20 bg-dark-900">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-[#fffffe] font-sedgwick text-xs uppercase tracking-[0.3em] font-bold block mb-2">PORTAFOLIO DE CRISTOPHER</span>
-                <h2 class="font-rockabye text-3xl md:text-4xl font-black text-[#fffffe]">ESTILOS DESTACADOS</h2>
-                <div class="w-16 h-px bg-gold-500/70 mx-auto mt-4"></div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="h-72 rounded-2xl overflow-hidden border border-dark-700 group">
-                    <img src="https://images.unsplash.com/photo-1517832606589-7150a6d828a2?auto=format&fit=crop&w=800&q=80" alt="Tinte Cristopher" loading="lazy" width="800" height="600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class="h-72 rounded-2xl overflow-hidden border border-dark-700 group">
-                    <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=800&q=80" alt="Pompadour Cristopher" loading="lazy" width="800" height="600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class="h-72 rounded-2xl overflow-hidden border border-dark-700 group">
-                    <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80" alt="Fade Cristopher" loading="lazy" width="800" height="600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                </div>
-            </div>
-
-            <!-- CTA Button (scroll to form) -->
-            <div class="text-center mt-12">
-                <a href="#reservas" class="inline-flex items-center justify-center px-10 py-5 text-sm sm:text-base font-sedgwick font-black uppercase tracking-wider text-dark-900 bg-gold-500 rounded-2xl shadow-[0_0_35px_rgba(212,175,55,0.6)] hover:shadow-[0_0_50px_rgba(212,175,55,0.9)] hover:scale-105 active:scale-95 duration-300">
-                    <i class="fa-solid fa-calendar-check text-xl mr-3"></i> Reservar Cita con Cristopher Tapia
-                </a>
-            </div>
+      <div class="container mx-auto px-4 md:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span
+            class="text-[#fffffe] font-sedgwick text-xs uppercase tracking-[0.3em] font-bold block mb-2"
+            >PORTAFOLIO DE CRISTOPHER</span
+          >
+          <h2
+            class="font-rockabye text-3xl md:text-4xl font-black text-[#fffffe]"
+          >
+            ESTILOS DESTACADOS
+          </h2>
+          <div class="w-16 h-px bg-gold-500/70 mx-auto mt-4"></div>
         </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+            class="h-72 rounded-2xl overflow-hidden border border-dark-700 group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1517832606589-7150a6d828a2?auto=format&fit=crop&w=800&q=80"
+              alt="Tinte Cristopher"
+              loading="lazy"
+              width="800"
+              height="600"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+          </div>
+          <div
+            class="h-72 rounded-2xl overflow-hidden border border-dark-700 group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=800&q=80"
+              alt="Pompadour Cristopher"
+              loading="lazy"
+              width="800"
+              height="600"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+          </div>
+          <div
+            class="h-72 rounded-2xl overflow-hidden border border-dark-700 group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80"
+              alt="Fade Cristopher"
+              loading="lazy"
+              width="800"
+              height="600"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+          </div>
+        </div>
+
+        <!-- CTA Button (scroll to form) -->
+        <div class="text-center mt-12">
+          <a
+            href="#reservas"
+            class="inline-flex items-center justify-center px-10 py-5 text-sm sm:text-base font-sedgwick font-black uppercase tracking-wider text-dark-900 bg-gold-500 rounded-2xl shadow-[0_0_35px_rgba(212,175,55,0.6)] hover:shadow-[0_0_50px_rgba(212,175,55,0.9)] hover:scale-105 active:scale-95 duration-300"
+          >
+            <i class="fa-solid fa-calendar-check text-xl mr-3"></i> Reservar
+            Cita con Cristopher Tapia
+          </a>
+        </div>
+      </div>
     </section>
 
     <!-- BOOKING FORM SECTION -->
     <section id="reservas" class="py-24 md:py-28 bg-dark-900 relative">
-        <div class="container mx-auto px-4 md:px-8 max-w-5xl">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-[#fffffe] font-sedgwick text-xs uppercase tracking-[0.3em] font-bold block mb-2">RESERVA CON CRISTOPHER TAPIA</span>
-                <h2 class="font-rockabye text-3xl md:text-5xl font-extrabold text-[#fffffe] mb-4">AGENDA TU CITA AHORA</h2>
-                <div class="w-16 h-px bg-gold-500/70 mx-auto mb-6"></div>
-                <p class="text-[#fffffe] text-sm md:text-base">Selecciona tus servicios, elige horario y completa tus datos para reservar con Cristopher.</p>
-            </div>
-
-            <!-- Auth Overlay for Guests (Hides Form until Logged In) -->
-            <div id="booking-auth-overlay" class="bg-dark-800 border-2 border-gold-500/30 rounded-3xl p-10 md:p-16 text-center max-w-2xl mx-auto shadow-[0_0_50px_rgba(0,0,0,0.8)] hidden">
-                <div class="w-20 h-20 bg-dark-900 rounded-full flex items-center justify-center mx-auto mb-6 border border-gold-500/30">
-                    <i class="fa-solid fa-lock text-3xl text-gold-500"></i>
-                </div>
-                <h3 class="font-sedgwick text-2xl md:text-3xl text-[#fffffe] mb-3">Necesitas iniciar sesión para reservar tu cita</h3>
-                <p class="text-gray-400 mb-8 font-oregano text-lg">Crea tu cuenta en segundos para agendar tu cita con Cristopher.</p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <button onclick="sessionStorage.setItem('pendingRedirect', 'booking'); loginWithGoogle()" class="btn-gold-primary px-6 py-3.5 rounded-xl font-bold flex items-center justify-center gap-3 transition-transform hover:scale-105">
-                        <i class="fa-brands fa-google text-lg"></i> Iniciar sesión con Google
-                    </button>
-                    <button onclick="sessionStorage.setItem('pendingRedirect', 'booking'); loginWithEmail()" class="bg-dark-900 border border-gray-600 text-[#fffffe] hover:border-gold-500 hover:text-gold-500 px-6 py-3.5 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-3">
-                        <i class="fa-solid fa-envelope text-lg"></i> Iniciar con Email
-                    </button>
-                </div>
-            </div>
-
-            <form id="booking-form" class="bg-dark-800 border-2 border-gold-500/30 rounded-3xl p-6 md:p-12 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative overflow-hidden hidden">
-                <div class="absolute top-0 right-0 w-40 h-40 bg-gold-500/5 rounded-bl-full pointer-events-none"></div>
-
-                <!-- Barber Confirmation (fixed) -->
-                <div class="mb-8 p-4 bg-dark-700/80 border border-gold-500/40 rounded-2xl flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-full bg-gold-500/20 border border-gold-500 flex items-center justify-center text-[#fffffe] font-bold text-lg">
-                        <i class="fa-solid fa-cut"></i>
-                    </div>
-                    <div class="flex-1">
-                        <h4 class="font-oregano font-bold text-[#fffffe] text-sm">Barbero: Cristopher Tapia <i class="fa-solid fa-check text-[#fffffe] text-xs ml-1"></i></h4>
-                        <p class="text-xs text-[#fffffe]">Barbero Sénior / Creativo</p>
-                    </div>
-                </div>
-
-                <!-- Hidden barber inputs for WhatsApp logic -->
-                <input type="hidden" id="hidden-barber-name" value="Cristopher Tapia">
-                <input type="hidden" id="hidden-barber-phone" value="593991794503">
-
-                <!-- PASO 1: SELECTOR MODULAR -->
-                <div class="mb-12">
-                    <div class="flex items-center space-x-3 mb-6">
-                        <span class="w-8 h-8 rounded-full bg-gold-500 text-[#fffffe] font-bold font-cinzel flex items-center justify-center text-sm shadow-md">1</span>
-                        <h3 class="font-sedgwick text-xl md:text-2xl font-bold text-[#fffffe]">Selecciona tus Servicios</h3>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="services-checkbox-grid">
-                        <!-- Option 1 -->
-                        <div class="service-checkbox-card relative cursor-pointer block p-5 rounded-2xl bg-dark-700/80 border-2 border-dark-600 hover:border-gold-500/50 select-none">
-                            <input type="checkbox" name="services" value="Corte de Cabello General" data-price="6" class="service-checkbox hidden" checked>
-                            <div class="card-content flex flex-col justify-between h-full pointer-events-none">
-                                <div>
-                                    <div class="flex items-center justify-between mb-3">
-                                        <i class="fa-solid fa-cut text-[#fffffe] text-xl"></i>
-                                        <div class="custom-check-icon w-6 h-6 rounded-full border border-gray-500 flex items-center justify-center transition-colors">
-                                            <i class="fa-solid fa-check text-xs text-[#fffffe] hidden"></i>
-                                        </div>
-                                    </div>
-                                    <h4 class="font-oregano font-bold text-[#fffffe] text-sm mb-1">Corte de Cabello General</h4>
-                                    <p class="text-xs text-[#fffffe]">Lavado + Asesoría + Peinado</p>
-                                </div>
-                                <div class="mt-4 pt-3 border-t border-dark-600 flex justify-between items-baseline">
-                                    <span class="text-[10px] text-[#fffffe] uppercase font-oregano">Precio</span>
-                                    <span class="font-cinzel font-bold text-[#fffffe] text-lg">$6 USD</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Option 2 -->
-                        <div class="service-checkbox-card relative cursor-pointer block p-5 rounded-2xl bg-dark-700/80 border-2 border-dark-600 hover:border-gold-500/50 select-none">
-                            <input type="checkbox" name="services" value="Perfilado / Afeitado de Barba" data-price="2" class="service-checkbox hidden">
-                            <div class="card-content flex flex-col justify-between h-full pointer-events-none">
-                                <div>
-                                    <div class="flex items-center justify-between mb-3">
-                                        <i class="fa-solid fa-user-ninja text-[#fffffe] text-xl"></i>
-                                        <div class="custom-check-icon w-6 h-6 rounded-full border border-gray-500 flex items-center justify-center transition-colors">
-                                            <i class="fa-solid fa-check text-xs text-[#fffffe] hidden"></i>
-                                        </div>
-                                    </div>
-                                    <h4 class="font-oregano font-bold text-[#fffffe] text-sm mb-1">Perfilado / Afeitado de Barba</h4>
-                                    <p class="text-xs text-[#fffffe]">Toalla Caliente + Aceites</p>
-                                </div>
-                                <div class="mt-4 pt-3 border-t border-dark-600 flex justify-between items-baseline">
-                                    <span class="text-[10px] text-[#fffffe] uppercase font-oregano">Precio</span>
-                                    <span class="font-cinzel font-bold text-[#fffffe] text-lg">$2 USD</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Option 3 -->
-                        <div class="service-checkbox-card relative cursor-pointer block p-5 rounded-2xl bg-dark-700/80 border-2 border-dark-600 hover:border-gold-500/50 select-none">
-                            <input type="checkbox" name="services" value="Perfilado / Depilado de Cejas" data-price="2" class="service-checkbox hidden">
-                            <div class="card-content flex flex-col justify-between h-full pointer-events-none">
-                                <div>
-                                    <div class="flex items-center justify-between mb-3">
-                                        <i class="fa-solid fa-eye text-[#fffffe] text-xl"></i>
-                                        <div class="custom-check-icon w-6 h-6 rounded-full border border-gray-500 flex items-center justify-center transition-colors">
-                                            <i class="fa-solid fa-check text-xs text-[#fffffe] hidden"></i>
-                                        </div>
-                                    </div>
-                                    <h4 class="font-oregano font-bold text-[#fffffe] text-sm mb-1">Perfilado / Depilado de Cejas</h4>
-                                    <p class="text-xs text-[#fffffe]">Diseño simétrico facial</p>
-                                </div>
-                                <div class="mt-4 pt-3 border-t border-dark-600 flex justify-between items-baseline">
-                                    <span class="text-[10px] text-[#fffffe] uppercase font-oregano">Precio</span>
-                                    <span class="font-cinzel font-bold text-[#fffffe] text-lg">$2 USD</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Option 4 -->
-                        <div class="service-checkbox-card relative cursor-pointer block p-5 rounded-2xl bg-dark-700/80 border-2 border-dark-600 hover:border-gold-500/50 select-none">
-                            <input type="checkbox" name="services" value="Pintado / Tinte" data-price="20" class="service-checkbox hidden">
-                            <div class="card-content flex flex-col justify-between h-full pointer-events-none">
-                                <div>
-                                    <div class="flex items-center justify-between mb-3">
-                                        <i class="fa-solid fa-paint-roller text-[#fffffe] text-xl"></i>
-                                        <div class="custom-check-icon w-6 h-6 rounded-full border border-gray-500 flex items-center justify-center transition-colors">
-                                            <i class="fa-solid fa-check text-xs text-[#fffffe] hidden"></i>
-                                        </div>
-                                    </div>
-                                    <h4 class="font-oregano font-bold text-[#fffffe] text-sm mb-1">Pintado / Tinte Capilar</h4>
-                                    <p class="text-xs text-[#fffffe]">Colorimetría & Pigmentación</p>
-                                </div>
-                                <div class="mt-4 pt-3 border-t border-dark-600 flex justify-between items-baseline">
-                                    <span class="text-[10px] text-[#fffffe] uppercase font-oregano">Precio</span>
-                                    <span class="font-cinzel font-bold text-[#fffffe] text-lg">$20 USD</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- LIVE CALCULATOR -->
-                    <div class="mt-6 p-5 bg-gradient-to-r from-dark-900 via-dark-700 to-dark-900 rounded-2xl border border-gold-500/40 flex flex-col sm:flex-row items-center justify-between shadow-inner">
-                        <div class="flex items-center space-x-3 mb-3 sm:mb-0">
-                            <i class="fa-solid fa-calculator text-[#fffffe] text-2xl"></i>
-                            <div>
-                                <span class="text-xs text-[#fffffe] font-oregano uppercase tracking-wider block">Resumen en Tiempo Real</span>
-                                <span id="selected-count-text" class="text-xs font-semibold text-[#fffffe]" aria-live="polite">1 servicio seleccionado</span>
-                            </div>
-                        </div>
-                        <div class="flex items-baseline space-x-3">
-                            <span class="text-sm font-oregano uppercase text-[#fffffe]">Total a Pagar:</span>
-                            <span id="total-price-display" class="font-cinzel text-3xl md:text-4xl font-black text-[#fffffe]" aria-live="polite">$6.00 <span class="text-sm font-sans font-normal text-[#fffffe]">USD</span></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PASO 2: DATOS DEL CLIENTE -->
-                <div class="mb-10">
-                    <div class="flex items-center space-x-3 mb-6">
-                        <span class="w-8 h-8 rounded-full bg-gold-500 text-[#fffffe] font-bold font-cinzel flex items-center justify-center text-sm shadow-md">2</span>
-                        <h3 class="font-sedgwick text-xl md:text-2xl font-bold text-[#fffffe]">Ingresa tus Datos y Agenda Horario</h3>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                        <!-- Nombre -->
-                        <div>
-                            <label for="client-name" class="block text-xs font-oregano font-bold text-[#fffffe] uppercase mb-2">Nombre Completo *</label>
-                            <div class="relative">
-                                <i class="fa-solid fa-user absolute left-4 top-3.5 text-[#fffffe] text-sm"></i>
-                                <input type="text" id="client-name" name="client-name" required placeholder="Carlos Mendoza…" autocomplete="name" class="w-full bg-dark-900 border border-dark-600 rounded-xl py-3 pl-11 pr-4 text-sm text-[#fffffe] focus:outline-none focus:border-gold-500 transition-colors">
-                            </div>
-                        </div>
-
-                        <!-- Teléfono/WhatsApp -->
-                        <div>
-                            <label for="client-phone" class="block text-xs font-oregano font-bold text-[#fffffe] uppercase mb-2">Teléfono / WhatsApp *</label>
-                            <div class="relative">
-                                <i class="fa-brands fa-whatsapp absolute left-4 top-3.5 text-[#fffffe] text-sm"></i>
-                                <input type="tel" id="client-phone" name="client-phone" required placeholder="098 326 7552…" autocomplete="tel" inputmode="tel" class="w-full bg-dark-900 border border-dark-600 rounded-xl py-3 pl-11 pr-4 text-sm text-[#fffffe] focus:outline-none focus:border-gold-500 transition-colors">
-                            </div>
-                        </div>
-
-                        <!-- Correo Electrónico -->
-                        <div>
-                            <label for="client-email" class="block text-xs font-oregano font-bold text-[#fffffe] uppercase mb-2">Correo Electrónico *</label>
-                            <div class="relative">
-                                <i class="fa-solid fa-envelope absolute left-4 top-3.5 text-[#fffffe] text-sm"></i>
-                                <input type="email" id="client-email" name="client-email" required placeholder="correo@ejemplo.com…" autocomplete="email" spellcheck="false" class="w-full bg-dark-900 border border-dark-600 rounded-xl py-3 pl-11 pr-4 text-sm text-[#fffffe] focus:outline-none focus:border-gold-500 transition-colors">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- Fecha de Cita -->
-                        <div>
-                            <label for="client-date" class="block text-xs font-oregano font-bold text-[#fffffe] uppercase mb-2">Fecha de la Cita *</label>
-                            <div class="relative">
-                                <i class="fa-solid fa-calendar-day absolute left-4 top-3.5 text-[#fffffe] text-sm"></i>
-                                <input type="date" id="client-date" name="client-date" required autocomplete="off" class="w-full bg-dark-900 border border-dark-600 rounded-xl py-3 pl-11 pr-4 text-sm text-[#fffffe] focus:outline-none focus:border-gold-500 transition-colors">
-                            </div>
-                        </div>
-
-                        <!-- Selector de Horas -->
-                        <div class="md:col-span-2">
-                            <label class="block text-xs font-oregano font-bold text-[#fffffe] uppercase mb-2">Selecciona un Bloque de Hora *</label>
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="time-slots-container">
-                                <button type="button" class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl" data-time="09:00 AM">09:00 AM</button>
-                                <button type="button" class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl" data-time="10:30 AM">10:30 AM</button>
-                                <button type="button" class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl" data-time="12:00 PM">12:00 PM</button>
-                                <button type="button" class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl" data-time="02:00 PM">02:00 PM</button>
-                                <button type="button" class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl" data-time="03:30 PM">03:30 PM</button>
-                                <button type="button" class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl" data-time="05:00 PM">05:00 PM</button>
-                                <button type="button" class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl" data-time="06:30 PM">06:30 PM</button>
-                                <button type="button" class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl" data-time="08:00 PM">08:00 PM</button>
-                            </div>
-                            <input type="hidden" id="selected-time" name="selected-time" value="">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Inline Form Error -->
-                <div id="form-error" class="form-error-msg hidden" role="alert" aria-live="assertive">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    <span></span>
-                </div>
-
-                <!-- Submit Button -->
-                <div id="submit-section" class="pt-4 border-t border-dark-700 flex justify-end hidden">
-                    <button type="submit" disabled id="submit-btn" class="w-full sm:w-auto px-10 py-4 text-sm font-sedgwick font-bold uppercase tracking-wider text-[#fffffe] bg-gray-700 cursor-not-allowed rounded-2xl duration-300 flex items-center justify-center">
-                        <i class="fa-solid fa-check-circle mr-2 text-base"></i> Confirmar Cita con Cristopher
-                    </button>
-                </div>
-            </form>
+      <div class="container mx-auto px-4 md:px-8 max-w-5xl">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span
+            class="text-[#fffffe] font-sedgwick text-xs uppercase tracking-[0.3em] font-bold block mb-2"
+            >RESERVA CON CRISTOPHER TAPIA</span
+          >
+          <h2
+            class="font-rockabye text-3xl md:text-5xl font-extrabold text-[#fffffe] mb-4"
+          >
+            AGENDA TU CITA AHORA
+          </h2>
+          <div class="w-16 h-px bg-gold-500/70 mx-auto mb-6"></div>
+          <p class="text-[#fffffe] text-sm md:text-base">
+            Selecciona tus servicios, elige horario y completa tus datos para
+            reservar con Cristopher.
+          </p>
         </div>
+
+        <!-- Auth Overlay for Guests (Hides Form until Logged In) -->
+        <div
+          id="booking-auth-overlay"
+          class="bg-dark-800 border-2 border-gold-500/30 rounded-3xl p-10 md:p-16 text-center max-w-2xl mx-auto shadow-[0_0_50px_rgba(0,0,0,0.8)] hidden"
+        >
+          <div
+            class="w-20 h-20 bg-dark-900 rounded-full flex items-center justify-center mx-auto mb-6 border border-gold-500/30"
+          >
+            <i class="fa-solid fa-lock text-3xl text-gold-500"></i>
+          </div>
+          <h3 class="font-sedgwick text-2xl md:text-3xl text-[#fffffe] mb-3">
+            Necesitas iniciar sesión para reservar tu cita
+          </h3>
+          <p class="text-gray-400 mb-8 font-oregano text-lg">
+            Crea tu cuenta en segundos para agendar tu cita con Cristopher.
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <button
+              onclick="
+                sessionStorage.setItem('pendingRedirect', 'booking');
+                loginWithGoogle();
+              "
+              class="btn-gold-primary px-6 py-3.5 rounded-xl font-bold flex items-center justify-center gap-3 transition-transform hover:scale-105"
+            >
+              <i class="fa-brands fa-google text-lg"></i> Iniciar sesión con
+              Google
+            </button>
+            <button
+              onclick="
+                sessionStorage.setItem('pendingRedirect', 'booking');
+                loginWithEmail();
+              "
+              class="bg-dark-900 border border-gray-600 text-[#fffffe] hover:border-gold-500 hover:text-gold-500 px-6 py-3.5 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-3"
+            >
+              <i class="fa-solid fa-envelope text-lg"></i> Iniciar con Email
+            </button>
+          </div>
+        </div>
+
+        <form
+          id="booking-form"
+          class="bg-dark-800 border-2 border-gold-500/30 rounded-3xl p-6 md:p-12 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative overflow-hidden hidden"
+        >
+          <div
+            class="absolute top-0 right-0 w-40 h-40 bg-gold-500/5 rounded-bl-full pointer-events-none"
+          ></div>
+
+          <!-- Barber Confirmation (fixed) -->
+          <div
+            class="mb-8 p-4 bg-dark-700/80 border border-gold-500/40 rounded-2xl flex items-center space-x-4"
+          >
+            <div
+              class="w-12 h-12 rounded-full bg-gold-500/20 border border-gold-500 flex items-center justify-center text-[#fffffe] font-bold text-lg"
+            >
+              <i class="fa-solid fa-cut"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-oregano font-bold text-[#fffffe] text-sm">
+                Barbero: Cristopher Tapia
+                <i class="fa-solid fa-check text-[#fffffe] text-xs ml-1"></i>
+              </h4>
+              <p class="text-xs text-[#fffffe]">Barbero Sénior / Creativo</p>
+            </div>
+          </div>
+
+          <!-- Hidden barber inputs for WhatsApp logic -->
+          <input
+            type="hidden"
+            id="hidden-barber-name"
+            value="Cristopher Tapia"
+          />
+          <input type="hidden" id="hidden-barber-phone" value="593991794503" />
+
+          <!-- PASO 1: SELECTOR MODULAR -->
+          <div class="mb-12">
+            <div class="flex items-center space-x-3 mb-6">
+              <span
+                class="w-8 h-8 rounded-full bg-gold-500 text-[#fffffe] font-bold font-cinzel flex items-center justify-center text-sm shadow-md"
+                >1</span
+              >
+              <h3
+                class="font-sedgwick text-xl md:text-2xl font-bold text-[#fffffe]"
+              >
+                Selecciona tus Servicios
+              </h3>
+            </div>
+
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+              id="services-checkbox-grid"
+            >
+              <!-- Option 1 -->
+              <div
+                class="service-checkbox-card relative cursor-pointer block p-5 rounded-2xl bg-dark-700/80 border-2 border-dark-600 hover:border-gold-500/50 select-none"
+              >
+                <input
+                  type="checkbox"
+                  name="services"
+                  value="Corte de Cabello General"
+                  data-price="6"
+                  class="service-checkbox hidden"
+                  checked
+                />
+                <div
+                  class="card-content flex flex-col justify-between h-full pointer-events-none"
+                >
+                  <div>
+                    <div class="flex items-center justify-between mb-3">
+                      <i class="fa-solid fa-cut text-[#fffffe] text-xl"></i>
+                      <div
+                        class="custom-check-icon w-6 h-6 rounded-full border border-gray-500 flex items-center justify-center transition-colors"
+                      >
+                        <i
+                          class="fa-solid fa-check text-xs text-[#fffffe] hidden"
+                        ></i>
+                      </div>
+                    </div>
+                    <h4
+                      class="font-oregano font-bold text-[#fffffe] text-sm mb-1"
+                    >
+                      Corte de Cabello General
+                    </h4>
+                    <p class="text-xs text-[#fffffe]">
+                      Lavado + Asesoría + Peinado
+                    </p>
+                  </div>
+                  <div
+                    class="mt-4 pt-3 border-t border-dark-600 flex justify-between items-baseline"
+                  >
+                    <span
+                      class="text-[10px] text-[#fffffe] uppercase font-oregano"
+                      >Precio</span
+                    >
+                    <span class="font-cinzel font-bold text-[#fffffe] text-lg"
+                      >$6 USD</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Option 2 -->
+              <div
+                class="service-checkbox-card relative cursor-pointer block p-5 rounded-2xl bg-dark-700/80 border-2 border-dark-600 hover:border-gold-500/50 select-none"
+              >
+                <input
+                  type="checkbox"
+                  name="services"
+                  value="Perfilado / Afeitado de Barba"
+                  data-price="2"
+                  class="service-checkbox hidden"
+                />
+                <div
+                  class="card-content flex flex-col justify-between h-full pointer-events-none"
+                >
+                  <div>
+                    <div class="flex items-center justify-between mb-3">
+                      <i
+                        class="fa-solid fa-user-ninja text-[#fffffe] text-xl"
+                      ></i>
+                      <div
+                        class="custom-check-icon w-6 h-6 rounded-full border border-gray-500 flex items-center justify-center transition-colors"
+                      >
+                        <i
+                          class="fa-solid fa-check text-xs text-[#fffffe] hidden"
+                        ></i>
+                      </div>
+                    </div>
+                    <h4
+                      class="font-oregano font-bold text-[#fffffe] text-sm mb-1"
+                    >
+                      Perfilado / Afeitado de Barba
+                    </h4>
+                    <p class="text-xs text-[#fffffe]">
+                      Toalla Caliente + Aceites
+                    </p>
+                  </div>
+                  <div
+                    class="mt-4 pt-3 border-t border-dark-600 flex justify-between items-baseline"
+                  >
+                    <span
+                      class="text-[10px] text-[#fffffe] uppercase font-oregano"
+                      >Precio</span
+                    >
+                    <span class="font-cinzel font-bold text-[#fffffe] text-lg"
+                      >$2 USD</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Option 3 -->
+              <div
+                class="service-checkbox-card relative cursor-pointer block p-5 rounded-2xl bg-dark-700/80 border-2 border-dark-600 hover:border-gold-500/50 select-none"
+              >
+                <input
+                  type="checkbox"
+                  name="services"
+                  value="Perfilado / Depilado de Cejas"
+                  data-price="2"
+                  class="service-checkbox hidden"
+                />
+                <div
+                  class="card-content flex flex-col justify-between h-full pointer-events-none"
+                >
+                  <div>
+                    <div class="flex items-center justify-between mb-3">
+                      <i class="fa-solid fa-eye text-[#fffffe] text-xl"></i>
+                      <div
+                        class="custom-check-icon w-6 h-6 rounded-full border border-gray-500 flex items-center justify-center transition-colors"
+                      >
+                        <i
+                          class="fa-solid fa-check text-xs text-[#fffffe] hidden"
+                        ></i>
+                      </div>
+                    </div>
+                    <h4
+                      class="font-oregano font-bold text-[#fffffe] text-sm mb-1"
+                    >
+                      Perfilado / Depilado de Cejas
+                    </h4>
+                    <p class="text-xs text-[#fffffe]">
+                      Diseño simétrico facial
+                    </p>
+                  </div>
+                  <div
+                    class="mt-4 pt-3 border-t border-dark-600 flex justify-between items-baseline"
+                  >
+                    <span
+                      class="text-[10px] text-[#fffffe] uppercase font-oregano"
+                      >Precio</span
+                    >
+                    <span class="font-cinzel font-bold text-[#fffffe] text-lg"
+                      >$2 USD</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Option 4 -->
+              <div
+                class="service-checkbox-card relative cursor-pointer block p-5 rounded-2xl bg-dark-700/80 border-2 border-dark-600 hover:border-gold-500/50 select-none"
+              >
+                <input
+                  type="checkbox"
+                  name="services"
+                  value="Pintado / Tinte"
+                  data-price="20"
+                  class="service-checkbox hidden"
+                />
+                <div
+                  class="card-content flex flex-col justify-between h-full pointer-events-none"
+                >
+                  <div>
+                    <div class="flex items-center justify-between mb-3">
+                      <i
+                        class="fa-solid fa-paint-roller text-[#fffffe] text-xl"
+                      ></i>
+                      <div
+                        class="custom-check-icon w-6 h-6 rounded-full border border-gray-500 flex items-center justify-center transition-colors"
+                      >
+                        <i
+                          class="fa-solid fa-check text-xs text-[#fffffe] hidden"
+                        ></i>
+                      </div>
+                    </div>
+                    <h4
+                      class="font-oregano font-bold text-[#fffffe] text-sm mb-1"
+                    >
+                      Pintado / Tinte Capilar
+                    </h4>
+                    <p class="text-xs text-[#fffffe]">
+                      Colorimetría & Pigmentación
+                    </p>
+                  </div>
+                  <div
+                    class="mt-4 pt-3 border-t border-dark-600 flex justify-between items-baseline"
+                  >
+                    <span
+                      class="text-[10px] text-[#fffffe] uppercase font-oregano"
+                      >Precio</span
+                    >
+                    <span class="font-cinzel font-bold text-[#fffffe] text-lg"
+                      >$20 USD</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- LIVE CALCULATOR -->
+            <div
+              class="mt-6 p-5 bg-gradient-to-r from-dark-900 via-dark-700 to-dark-900 rounded-2xl border border-gold-500/40 flex flex-col sm:flex-row items-center justify-between shadow-inner"
+            >
+              <div class="flex items-center space-x-3 mb-3 sm:mb-0">
+                <i class="fa-solid fa-calculator text-[#fffffe] text-2xl"></i>
+                <div>
+                  <span
+                    class="text-xs text-[#fffffe] font-oregano uppercase tracking-wider block"
+                    >Resumen en Tiempo Real</span
+                  >
+                  <span
+                    id="selected-count-text"
+                    class="text-xs font-semibold text-[#fffffe]"
+                    aria-live="polite"
+                    >1 servicio seleccionado</span
+                  >
+                </div>
+              </div>
+              <div class="flex items-baseline space-x-3">
+                <span class="text-sm font-oregano uppercase text-[#fffffe]"
+                  >Total a Pagar:</span
+                >
+                <span
+                  id="total-price-display"
+                  class="font-cinzel text-3xl md:text-4xl font-black text-[#fffffe]"
+                  aria-live="polite"
+                  >$6.00
+                  <span class="text-sm font-sans font-normal text-[#fffffe]"
+                    >USD</span
+                  ></span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 2: DATOS DEL CLIENTE -->
+          <div class="mb-10">
+            <div class="flex items-center space-x-3 mb-6">
+              <span
+                class="w-8 h-8 rounded-full bg-gold-500 text-[#fffffe] font-bold font-cinzel flex items-center justify-center text-sm shadow-md"
+                >2</span
+              >
+              <h3
+                class="font-sedgwick text-xl md:text-2xl font-bold text-[#fffffe]"
+              >
+                Ingresa tus Datos y Agenda Horario
+              </h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              <!-- Nombre -->
+              <div>
+                <label
+                  for="client-name"
+                  class="block text-xs font-oregano font-bold text-[#fffffe] uppercase mb-2"
+                  >Nombre Completo *</label
+                >
+                <div class="relative">
+                  <i
+                    class="fa-solid fa-user absolute left-4 top-3.5 text-[#fffffe] text-sm"
+                  ></i>
+                  <input
+                    type="text"
+                    id="client-name"
+                    name="client-name"
+                    required
+                    placeholder="Carlos Mendoza…"
+                    autocomplete="name"
+                    class="w-full bg-dark-900 border border-dark-600 rounded-xl py-3 pl-11 pr-4 text-sm text-[#fffffe] focus:outline-none focus:border-gold-500 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <!-- Teléfono/WhatsApp -->
+              <div>
+                <label
+                  for="client-phone"
+                  class="block text-xs font-oregano font-bold text-[#fffffe] uppercase mb-2"
+                  >Teléfono / WhatsApp *</label
+                >
+                <div class="relative">
+                  <i
+                    class="fa-brands fa-whatsapp absolute left-4 top-3.5 text-[#fffffe] text-sm"
+                  ></i>
+                  <input
+                    type="tel"
+                    id="client-phone"
+                    name="client-phone"
+                    required
+                    placeholder="098 326 7552…"
+                    autocomplete="tel"
+                    inputmode="tel"
+                    class="w-full bg-dark-900 border border-dark-600 rounded-xl py-3 pl-11 pr-4 text-sm text-[#fffffe] focus:outline-none focus:border-gold-500 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <!-- Correo Electrónico -->
+              <div>
+                <label
+                  for="client-email"
+                  class="block text-xs font-oregano font-bold text-[#fffffe] uppercase mb-2"
+                  >Correo Electrónico *</label
+                >
+                <div class="relative">
+                  <i
+                    class="fa-solid fa-envelope absolute left-4 top-3.5 text-[#fffffe] text-sm"
+                  ></i>
+                  <input
+                    type="email"
+                    id="client-email"
+                    name="client-email"
+                    required
+                    placeholder="correo@ejemplo.com…"
+                    autocomplete="email"
+                    spellcheck="false"
+                    class="w-full bg-dark-900 border border-dark-600 rounded-xl py-3 pl-11 pr-4 text-sm text-[#fffffe] focus:outline-none focus:border-gold-500 transition-colors"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <!-- Fecha de Cita -->
+              <div>
+                <label
+                  for="client-date"
+                  class="block text-xs font-oregano font-bold text-[#fffffe] uppercase mb-2"
+                  >Fecha de la Cita *</label
+                >
+                <div class="relative">
+                  <i
+                    class="fa-solid fa-calendar-day absolute left-4 top-3.5 text-[#fffffe] text-sm"
+                  ></i>
+                  <input
+                    type="date"
+                    id="client-date"
+                    name="client-date"
+                    required
+                    autocomplete="off"
+                    class="w-full bg-dark-900 border border-dark-600 rounded-xl py-3 pl-11 pr-4 text-sm text-[#fffffe] focus:outline-none focus:border-gold-500 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <!-- Selector de Horas -->
+              <div class="md:col-span-2">
+                <label
+                  class="block text-xs font-oregano font-bold text-[#fffffe] uppercase mb-2"
+                  >Selecciona un Bloque de Hora *</label
+                >
+                <div
+                  class="grid grid-cols-2 sm:grid-cols-4 gap-2"
+                  id="time-slots-container"
+                >
+                  <button
+                    type="button"
+                    class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl"
+                    data-time="09:00 AM"
+                  >
+                    09:00 AM
+                  </button>
+                  <button
+                    type="button"
+                    class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl"
+                    data-time="10:30 AM"
+                  >
+                    10:30 AM
+                  </button>
+                  <button
+                    type="button"
+                    class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl"
+                    data-time="12:00 PM"
+                  >
+                    12:00 PM
+                  </button>
+                  <button
+                    type="button"
+                    class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl"
+                    data-time="02:00 PM"
+                  >
+                    02:00 PM
+                  </button>
+                  <button
+                    type="button"
+                    class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl"
+                    data-time="03:30 PM"
+                  >
+                    03:30 PM
+                  </button>
+                  <button
+                    type="button"
+                    class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl"
+                    data-time="05:00 PM"
+                  >
+                    05:00 PM
+                  </button>
+                  <button
+                    type="button"
+                    class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl"
+                    data-time="06:30 PM"
+                  >
+                    06:30 PM
+                  </button>
+                  <button
+                    type="button"
+                    class="time-slot-btn border border-dark-600 bg-dark-900 text-[#fffffe] hover:border-gold-500 text-xs py-2.5 rounded-xl"
+                    data-time="08:00 PM"
+                  >
+                    08:00 PM
+                  </button>
+                </div>
+                <input
+                  type="hidden"
+                  id="selected-time"
+                  name="selected-time"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Inline Form Error -->
+          <div
+            id="form-error"
+            class="form-error-msg hidden"
+            role="alert"
+            aria-live="assertive"
+          >
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span></span>
+          </div>
+
+          <!-- Submit Button -->
+          <div
+            id="submit-section"
+            class="pt-4 border-t border-dark-700 flex justify-end hidden"
+          >
+            <button
+              type="submit"
+              disabled
+              id="submit-btn"
+              class="w-full sm:w-auto px-10 py-4 text-sm font-sedgwick font-bold uppercase tracking-wider text-[#fffffe] bg-gray-700 cursor-not-allowed rounded-2xl duration-300 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-check-circle mr-2 text-base"></i> Confirmar
+              Cita con Cristopher
+            </button>
+          </div>
+        </form>
+      </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-dark-900 border-t border-gold-500/20 pt-16 pb-12 text-[#fffffe] text-sm">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12 footer-stagger stagger-children">
-                <!-- Col 1: Branding -->
-                <div class="space-y-4 scroll-reveal">
-                    <h3 class="font-quicksilver text-xl text-[#fffffe]">THE BARBER SHOP</h3>
-                    <p class="text-xs text-[#fffffe] leading-relaxed">
-                        Definiendo el estándar en cuidado masculino. Barbería tradicional con el lujo y la vanguardia que mereces.
-                    </p>
-                    <div class="pt-2">
-                        <a href="https://wa.me/525551234567?text=Hola,%20quiero%20reservar%20una%20cita%20en%20THE%20BARBER%20SHOP" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-[#fffffe] font-oregano font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg duration-300">
-                            <i class="fa-brands fa-whatsapp text-lg"></i>
-                            <span>Reserva Directa por WhatsApp</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Col 2: Horarios -->
-                <div class="scroll-reveal">
-                    <h4 class="font-cinzel text-base font-bold text-[#fffffe] mb-4 border-b border-gold-500/30 pb-2 inline-block">HORARIOS DE ATENCIÓN</h4>
-                    <ul class="space-y-2.5 text-xs">
-                        <li class="flex justify-between">
-                            <span class="text-[#fffffe]">Lunes a Viernes:</span>
-                            <span class="text-[#fffffe] font-semibold">9:00 AM - 8:00 PM</span>
-                        </li>
-                        <li class="flex justify-between border-t border-dark-800 pt-2">
-                            <span class="text-[#fffffe]">Sábados:</span>
-                            <span class="text-[#fffffe] font-semibold">9:00 AM - 8:00 PM</span>
-                        </li>
-                        <li class="flex justify-between border-t border-dark-800 pt-2">
-                            <span class="text-[#fffffe]">Domingos:</span>
-                            <span class="text-[#fffffe] font-semibold">10:00 AM - 4:00 PM</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Col 3: Ubicación -->
-                <div class="scroll-reveal">
-                    <h4 class="font-cinzel text-base font-bold text-[#fffffe] mb-4 border-b border-gold-500/30 pb-2 inline-block">UBICACIÓN Y CONTACTO</h4>
-                    <ul class="space-y-3 text-xs">
-                        <li class="flex items-start space-x-3">
-                            <i class="fa-solid fa-location-dot text-[#fffffe] mt-0.5"></i>
-                            <span>Carapungo, Quito</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <i class="fa-solid fa-phone text-[#fffffe]"></i>
-                            <span data-phone-display="525551234567">+52 555 123 4567</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <i class="fa-solid fa-envelope text-[#fffffe]"></i>
-                            <span>contacto@thebarbershop.com</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Col 4: Redes Sociales -->
-                <div class="scroll-reveal">
-                    <h4 class="font-cinzel text-base font-bold text-[#fffffe] mb-4 border-b border-gold-500/30 pb-2 inline-block">SÍGUENOS</h4>
-                    <p class="text-xs text-[#fffffe] mb-4">Mira nuestros últimos trabajos y promociones diarias en redes.</p>
-                    <div class="flex space-x-3">
-                        <a href="#" class="social-icon-instagram w-10 h-10 rounded-xl bg-dark-800 border border-dark-700 text-[#fffffe] hover:bg-gold-500 hover:text-[#fffffe] flex items-center justify-center" aria-label="Instagram"><i class="fa-brands fa-instagram text-lg" aria-hidden="true"></i></a>
-                        <a href="#" class="social-icon-facebook w-10 h-10 rounded-xl bg-dark-800 border border-dark-700 text-[#fffffe] hover:bg-gold-500 hover:text-[#fffffe] flex items-center justify-center" aria-label="Facebook"><i class="fa-brands fa-facebook-f text-lg" aria-hidden="true"></i></a>
-                        <a href="#" class="social-icon-tiktok w-10 h-10 rounded-xl bg-dark-800 border border-dark-700 text-[#fffffe] hover:bg-gold-500 hover:text-[#fffffe] flex items-center justify-center" aria-label="TikTok"><i class="fa-brands fa-tiktok text-lg" aria-hidden="true"></i></a>
-                    </div>
-                </div>
+    <footer
+      class="bg-dark-900 border-t border-gold-500/20 pt-16 pb-12 text-[#fffffe] text-sm"
+    >
+      <div class="container mx-auto px-4 md:px-8">
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12 footer-stagger stagger-children"
+        >
+          <!-- Col 1: Branding -->
+          <div class="space-y-4 scroll-reveal">
+            <h3 class="font-quicksilver text-xl text-[#fffffe]">
+              THE BARBER SHOP
+            </h3>
+            <p class="text-xs text-[#fffffe] leading-relaxed">
+              Definiendo el estándar en cuidado masculino. Barbería tradicional
+              con el lujo y la vanguardia que mereces.
+            </p>
+            <div class="pt-2">
+              <a
+                href="https://wa.me/525551234567?text=Hola,%20quiero%20reservar%20una%20cita%20en%20THE%20BARBER%20SHOP"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-[#fffffe] font-oregano font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg duration-300"
+              >
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>Reserva Directa por WhatsApp</span>
+              </a>
             </div>
+          </div>
 
-            <!-- Bottom Copyright -->
-            <div class="pt-8 border-t border-dark-800 text-center text-xs text-[#fffffe] flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p>&copy; 2026 THE BARBER SHOP. Todos los derechos reservados.</p>
-                <div class="flex space-x-4">
-                    <a href="#" class="hover:text-[#fffffe]">Terminos y Condiciones</a>
-                    <a href="#" class="hover:text-[#fffffe]">Politica de Privacidad</a>
-                </div>
+          <!-- Col 2: Horarios -->
+          <div class="scroll-reveal">
+            <h4
+              class="font-cinzel text-base font-bold text-[#fffffe] mb-4 border-b border-gold-500/30 pb-2 inline-block"
+            >
+              HORARIOS DE ATENCIÓN
+            </h4>
+            <ul class="space-y-2.5 text-xs">
+              <li class="flex justify-between">
+                <span class="text-[#fffffe]">Lunes a Viernes:</span>
+                <span class="text-[#fffffe] font-semibold"
+                  >9:00 AM - 8:00 PM</span
+                >
+              </li>
+              <li class="flex justify-between border-t border-dark-800 pt-2">
+                <span class="text-[#fffffe]">Sábados:</span>
+                <span class="text-[#fffffe] font-semibold"
+                  >9:00 AM - 8:00 PM</span
+                >
+              </li>
+              <li class="flex justify-between border-t border-dark-800 pt-2">
+                <span class="text-[#fffffe]">Domingos:</span>
+                <span class="text-[#fffffe] font-semibold"
+                  >10:00 AM - 4:00 PM</span
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Ubicación -->
+          <div class="scroll-reveal">
+            <h4
+              class="font-cinzel text-base font-bold text-[#fffffe] mb-4 border-b border-gold-500/30 pb-2 inline-block"
+            >
+              UBICACIÓN Y CONTACTO
+            </h4>
+            <ul class="space-y-3 text-xs">
+              <li class="flex items-start space-x-3">
+                <i class="fa-solid fa-location-dot text-[#fffffe] mt-0.5"></i>
+                <span>Carapungo, Quito</span>
+              </li>
+              <li class="flex items-center space-x-3">
+                <i class="fa-solid fa-phone text-[#fffffe]"></i>
+                <span data-phone-display="525551234567">+52 555 123 4567</span>
+              </li>
+              <li class="flex items-center space-x-3">
+                <i class="fa-solid fa-envelope text-[#fffffe]"></i>
+                <span>contacto@thebarbershop.com</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Col 4: Redes Sociales -->
+          <div class="scroll-reveal">
+            <h4
+              class="font-cinzel text-base font-bold text-[#fffffe] mb-4 border-b border-gold-500/30 pb-2 inline-block"
+            >
+              SÍGUENOS
+            </h4>
+            <p class="text-xs text-[#fffffe] mb-4">
+              Mira nuestros últimos trabajos y promociones diarias en redes.
+            </p>
+            <div class="flex space-x-3">
+              <a
+                href="#"
+                class="social-icon-instagram w-10 h-10 rounded-xl bg-dark-800 border border-dark-700 text-[#fffffe] hover:bg-gold-500 hover:text-[#fffffe] flex items-center justify-center"
+                aria-label="Instagram"
+                ><i
+                  class="fa-brands fa-instagram text-lg"
+                  aria-hidden="true"
+                ></i
+              ></a>
+              <a
+                href="#"
+                class="social-icon-facebook w-10 h-10 rounded-xl bg-dark-800 border border-dark-700 text-[#fffffe] hover:bg-gold-500 hover:text-[#fffffe] flex items-center justify-center"
+                aria-label="Facebook"
+                ><i
+                  class="fa-brands fa-facebook-f text-lg"
+                  aria-hidden="true"
+                ></i
+              ></a>
+              <a
+                href="#"
+                class="social-icon-tiktok w-10 h-10 rounded-xl bg-dark-800 border border-dark-700 text-[#fffffe] hover:bg-gold-500 hover:text-[#fffffe] flex items-center justify-center"
+                aria-label="TikTok"
+                ><i class="fa-brands fa-tiktok text-lg" aria-hidden="true"></i
+              ></a>
             </div>
+          </div>
         </div>
+
+        <!-- Bottom Copyright -->
+        <div
+          class="pt-8 border-t border-dark-800 text-center text-xs text-[#fffffe] flex flex-col sm:flex-row items-center justify-between gap-4"
+        >
+          <p>&copy; 2026 THE BARBER SHOP. Todos los derechos reservados.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="hover:text-[#fffffe]">Terminos y Condiciones</a>
+            <a href="#" class="hover:text-[#fffffe]">Politica de Privacidad</a>
+          </div>
+        </div>
+      </div>
     </footer>
 
     <!-- MODAL DE CONFIRMACIÓN -->
-    <div id="confirmation-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden transition-opacity duration-300">
-        <div class="bg-dark-800 border-2 border-gold-500 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-[0_0_50px_rgba(212,175,55,0.4)] relative transform scale-95 transition-transform duration-300 overflow-hidden">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-gold-500/10 rounded-bl-full pointer-events-none"></div>
+    <div
+      id="confirmation-modal"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden transition-opacity duration-300"
+    >
+      <div
+        class="bg-dark-800 border-2 border-gold-500 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-[0_0_50px_rgba(212,175,55,0.4)] relative transform scale-95 transition-transform duration-300 overflow-hidden"
+      >
+        <div
+          class="absolute top-0 right-0 w-32 h-32 bg-gold-500/10 rounded-bl-full pointer-events-none"
+        ></div>
 
-            <div class="text-center mb-6">
-                <div class="w-16 h-16 rounded-full bg-gold-500 text-[#fffffe] flex items-center justify-center mx-auto text-3xl font-bold mb-4 shadow-[0_0_20px_rgba(212,175,55,0.6)]">
-                    <i class="fa-solid fa-check"></i>
-                </div>
-                <h3 class="font-cinzel text-2xl font-black text-[#fffffe]">¡RESERVA CONFIRMADA!</h3>
-                <p class="text-xs text-[#fffffe] font-oregano uppercase tracking-widest mt-1">Folio de Cita: <span id="modal-folio" class="font-bold text-[#fffffe]">TBS-94821</span></p>
-            </div>
-
-            <div class="bg-dark-900 border border-dark-700 rounded-2xl p-5 mb-6 text-xs space-y-3">
-                <div class="flex justify-between border-b border-dark-800 pb-2">
-                    <span class="text-[#fffffe]">Cliente:</span>
-                    <span id="modal-name" class="font-bold text-[#fffffe]">-</span>
-                </div>
-                <div class="flex justify-between border-b border-dark-800 pb-2">
-                    <span class="text-[#fffffe]">Barbero Atendedor:</span>
-                    <span id="modal-barber" class="font-bold text-[#fffffe]">Cristopher Tapia</span>
-                </div>
-                <div class="flex justify-between border-b border-dark-800 pb-2">
-                    <span class="text-[#fffffe]">Teléfono:</span>
-                    <span id="modal-phone" class="font-semibold text-[#fffffe]">-</span>
-                </div>
-                <div class="flex justify-between border-b border-dark-800 pb-2">
-                    <span class="text-[#fffffe]">Fecha y Hora:</span>
-                    <span id="modal-datetime" class="font-semibold text-[#fffffe]">-</span>
-                </div>
-                <div class="pt-2">
-                    <span class="text-[#fffffe] block mb-2 font-oregano font-bold uppercase text-[10px]">Servicios Contratados:</span>
-                    <ul id="modal-services-list" class="space-y-1.5 pl-2 text-[#fffffe] font-medium"></ul>
-                </div>
-                <div class="flex justify-between items-baseline pt-3 border-t border-gold-500/30 text-sm font-bold">
-                    <span class="text-[#fffffe]">Total Calculado:</span>
-                    <span id="modal-total" class="font-cinzel text-xl text-[#fffffe]">$0.00 USD</span>
-                </div>
-            </div>
-
-            <div class="flex flex-col sm:flex-row gap-3">
-                <a id="whatsapp-confirm-link" href="#" target="_blank" class="w-full sm:w-2/3 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-[#fffffe] font-oregano font-bold text-xs uppercase tracking-wider rounded-xl flex items-center justify-center shadow-lg">
-                    <i class="fa-brands fa-whatsapp text-base mr-2"></i> Enviar por WhatsApp
-                </a>
-                <button id="close-modal-btn" class="w-full sm:w-1/3 py-3 px-4 bg-dark-700 hover:bg-dark-600 text-[#fffffe] font-oregano font-bold text-xs uppercase tracking-wider rounded-xl border border-dark-600">
-                    Cerrar
-                </button>
-            </div>
+        <div class="text-center mb-6">
+          <div
+            class="w-16 h-16 rounded-full bg-gold-500 text-[#fffffe] flex items-center justify-center mx-auto text-3xl font-bold mb-4 shadow-[0_0_20px_rgba(212,175,55,0.6)]"
+          >
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <h3 class="font-cinzel text-2xl font-black text-[#fffffe]">
+            ¡RESERVA CONFIRMADA!
+          </h3>
+          <p
+            class="text-xs text-[#fffffe] font-oregano uppercase tracking-widest mt-1"
+          >
+            Folio de Cita:
+            <span id="modal-folio" class="font-bold text-[#fffffe]"
+              >TBS-94821</span
+            >
+          </p>
         </div>
+
+        <div
+          class="bg-dark-900 border border-dark-700 rounded-2xl p-5 mb-6 text-xs space-y-3"
+        >
+          <div class="flex justify-between border-b border-dark-800 pb-2">
+            <span class="text-[#fffffe]">Cliente:</span>
+            <span id="modal-name" class="font-bold text-[#fffffe]">-</span>
+          </div>
+          <div class="flex justify-between border-b border-dark-800 pb-2">
+            <span class="text-[#fffffe]">Barbero Atendedor:</span>
+            <span id="modal-barber" class="font-bold text-[#fffffe]"
+              >Cristopher Tapia</span
+            >
+          </div>
+          <div class="flex justify-between border-b border-dark-800 pb-2">
+            <span class="text-[#fffffe]">Teléfono:</span>
+            <span id="modal-phone" class="font-semibold text-[#fffffe]">-</span>
+          </div>
+          <div class="flex justify-between border-b border-dark-800 pb-2">
+            <span class="text-[#fffffe]">Fecha y Hora:</span>
+            <span id="modal-datetime" class="font-semibold text-[#fffffe]"
+              >-</span
+            >
+          </div>
+          <div class="pt-2">
+            <span
+              class="text-[#fffffe] block mb-2 font-oregano font-bold uppercase text-[10px]"
+              >Servicios Contratados:</span
+            >
+            <ul
+              id="modal-services-list"
+              class="space-y-1.5 pl-2 text-[#fffffe] font-medium"
+            ></ul>
+          </div>
+          <div
+            class="flex justify-between items-baseline pt-3 border-t border-gold-500/30 text-sm font-bold"
+          >
+            <span class="text-[#fffffe]">Total Calculado:</span>
+            <span id="modal-total" class="font-cinzel text-xl text-[#fffffe]"
+              >$0.00 USD</span
+            >
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a
+            id="whatsapp-confirm-link"
+            href="#"
+            target="_blank"
+            class="w-full sm:w-2/3 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-[#fffffe] font-oregano font-bold text-xs uppercase tracking-wider rounded-xl flex items-center justify-center shadow-lg"
+          >
+            <i class="fa-brands fa-whatsapp text-base mr-2"></i> Enviar por
+            WhatsApp
+          </a>
+          <button
+            id="close-modal-btn"
+            class="w-full sm:w-1/3 py-3 px-4 bg-dark-700 hover:bg-dark-600 text-[#fffffe] font-oregano font-bold text-xs uppercase tracking-wider rounded-xl border border-dark-600"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Firebase / Auth Logic (Module) -->
@@ -570,13 +1167,13 @@
     <!-- Main App Logic -->
     <script src="booking.js?v=4"></script>
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js?v=6').catch((err) => {
-                    console.warn('SW registration failed:', err);
-                });
-            });
-        }
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("sw.js?v=6").catch((err) => {
+            console.warn("SW registration failed:", err);
+          });
+        });
+      }
     </script>
-</body>
+  </body>
 </html>

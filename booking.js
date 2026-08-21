@@ -1,778 +1,863 @@
 // THE BARBER SHOP - Shared Booking Logic
 // Works for index.html (with barber selector), douglas.html, cristopher.html
 
-document.addEventListener('DOMContentLoaded', () => {
-    // -------------------------------------------------------------
-    // 0. SMART PHONE FORMAT (nacional vs extranjero)
-    // -------------------------------------------------------------
-    const clientPhoneInput = document.getElementById('client-phone');
+document.addEventListener("DOMContentLoaded", () => {
+  // -------------------------------------------------------------
+  // 0. SMART PHONE FORMAT (nacional vs extranjero)
+  // -------------------------------------------------------------
+  const clientPhoneInput = document.getElementById("client-phone");
 
-    function detectAndApplyPhoneFormat() {
-        const typed = clientPhoneInput ? clientPhoneInput.value : '';
-        let national = true;
-        try {
-            const mod = { isEcuadorianNumber: (n) => /^09\d{8}$/.test(n.replace(/[\s\-().+]/g, '')) || /^5939\d{8}$/.test(n.replace(/[\s\-().+]/g, '')) };
-            if (typed && typed.trim().length > 0) {
-                national = mod.isEcuadorianNumber(typed);
-            } else {
-                const locales = (navigator.languages || [navigator.language || '']).map(l => l.toLowerCase());
-                national = locales.some(l => l === 'es-ec' || l.startsWith('es-ec'));
-            }
-        } catch (e) { national = true; }
-
-        // Placeholder del input según el visitante
-        if (clientPhoneInput) {
-            clientPhoneInput.placeholder = national
-                ? '098 326 7552…'
-                : '+593 98 326 7552…';
-        }
-
-        // Actualiza todo elemento [data-phone-display] con el número formateado
-        document.querySelectorAll('[data-phone-display]').forEach(el => {
-            const raw = el.getAttribute('data-phone-display');
-            if (!raw) return;
-            const digits = raw.replace(/[\s\-().+]/g, '');
-            if (/^09\d{8}$/.test(digits)) {
-                const local = national
-                    ? `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`
-                    : `+593 ${digits.slice(1, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`;
-                el.textContent = local;
-            } else if (/^5939\d{8}$/.test(digits)) {
-                const nd = '0' + digits.slice(3);
-                const local = national
-                    ? `${nd.slice(0, 3)} ${nd.slice(3, 6)} ${nd.slice(6)}`
-                    : `+593 ${digits.slice(3, 5)} ${digits.slice(5, 8)} ${digits.slice(8)}`;
-                el.textContent = local;
-            } else {
-                el.textContent = raw;
-            }
-        });
+  function detectAndApplyPhoneFormat() {
+    const typed = clientPhoneInput ? clientPhoneInput.value : "";
+    let national = true;
+    try {
+      const mod = {
+        isEcuadorianNumber: (n) =>
+          /^09\d{8}$/.test(n.replace(/[\s\-().+]/g, "")) ||
+          /^5939\d{8}$/.test(n.replace(/[\s\-().+]/g, "")),
+      };
+      if (typed && typed.trim().length > 0) {
+        national = mod.isEcuadorianNumber(typed);
+      } else {
+        const locales = (navigator.languages || [navigator.language || ""]).map(
+          (l) => l.toLowerCase(),
+        );
+        national = locales.some((l) => l === "es-ec" || l.startsWith("es-ec"));
+      }
+    } catch (e) {
+      national = true;
     }
 
-    detectAndApplyPhoneFormat();
+    // Placeholder del input según el visitante
     if (clientPhoneInput) {
-        clientPhoneInput.addEventListener('input', detectAndApplyPhoneFormat);
+      clientPhoneInput.placeholder = national
+        ? "098 326 7552…"
+        : "+593 98 326 7552…";
     }
 
-    // -------------------------------------------------------------
-    // 1. SERVICE CALCULATOR
-    // -------------------------------------------------------------
-    const checkboxes = document.querySelectorAll('.service-checkbox');
-    const totalPriceDisplay = document.getElementById('total-price-display');
-    const selectedCountText = document.getElementById('selected-count-text');
-    const cards = document.querySelectorAll('.service-checkbox-card');
-
-    function calculateTotal() {
-        let total = 0;
-        let selectedCount = 0;
-
-        checkboxes.forEach((cb) => {
-            const card = cb.closest('.service-checkbox-card');
-            const price = parseFloat(cb.getAttribute('data-price')) || 0;
-
-            if (cb.checked) {
-                total += price;
-                selectedCount++;
-                if (card) card.classList.add('checked');
-            } else {
-                if (card) card.classList.remove('checked');
-            }
-        });
-
-        if (totalPriceDisplay) {
-            totalPriceDisplay.innerHTML = `$${total.toFixed(2)} <span class="text-sm font-sans font-normal text-gray-400">USD</span>`;
-        }
-
-        if (selectedCountText) {
-            selectedCountText.textContent = selectedCount === 1
-                ? '1 servicio seleccionado'
-                : `${selectedCount} servicios seleccionados`;
-        }
-    }
-
-    cards.forEach((card) => {
-        card.addEventListener('click', () => {
-            const cb = card.querySelector('.service-checkbox');
-            if (cb) {
-                cb.checked = !cb.checked;
-                calculateTotal();
-                checkFormComplete();
-            }
-        });
+    // Actualiza todo elemento [data-phone-display] con el número formateado
+    document.querySelectorAll("[data-phone-display]").forEach((el) => {
+      const raw = el.getAttribute("data-phone-display");
+      if (!raw) return;
+      const digits = raw.replace(/[\s\-().+]/g, "");
+      if (/^09\d{8}$/.test(digits)) {
+        const local = national
+          ? `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`
+          : `+593 ${digits.slice(1, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`;
+        el.textContent = local;
+      } else if (/^5939\d{8}$/.test(digits)) {
+        const nd = "0" + digits.slice(3);
+        const local = national
+          ? `${nd.slice(0, 3)} ${nd.slice(3, 6)} ${nd.slice(6)}`
+          : `+593 ${digits.slice(3, 5)} ${digits.slice(5, 8)} ${digits.slice(8)}`;
+        el.textContent = local;
+      } else {
+        el.textContent = raw;
+      }
     });
+  }
+
+  detectAndApplyPhoneFormat();
+  if (clientPhoneInput) {
+    clientPhoneInput.addEventListener("input", detectAndApplyPhoneFormat);
+  }
+
+  // -------------------------------------------------------------
+  // 1. SERVICE CALCULATOR
+  // -------------------------------------------------------------
+  const checkboxes = document.querySelectorAll(".service-checkbox");
+  const totalPriceDisplay = document.getElementById("total-price-display");
+  const selectedCountText = document.getElementById("selected-count-text");
+  const cards = document.querySelectorAll(".service-checkbox-card");
+
+  function calculateTotal() {
+    let total = 0;
+    let selectedCount = 0;
 
     checkboxes.forEach((cb) => {
-        cb.addEventListener('change', calculateTotal);
+      const card = cb.closest(".service-checkbox-card");
+      const price = parseFloat(cb.getAttribute("data-price")) || 0;
+
+      if (cb.checked) {
+        total += price;
+        selectedCount++;
+        if (card) card.classList.add("checked");
+      } else {
+        if (card) card.classList.remove("checked");
+      }
     });
+
+    if (totalPriceDisplay) {
+      totalPriceDisplay.innerHTML = `$${total.toFixed(2)} <span class="text-sm font-sans font-normal text-gray-400">USD</span>`;
+    }
+
+    if (selectedCountText) {
+      selectedCountText.textContent =
+        selectedCount === 1
+          ? "1 servicio seleccionado"
+          : `${selectedCount} servicios seleccionados`;
+    }
+  }
+
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      const cb = card.querySelector(".service-checkbox");
+      if (cb) {
+        cb.checked = !cb.checked;
+        calculateTotal();
+        checkFormComplete();
+      }
+    });
+  });
+
+  checkboxes.forEach((cb) => {
+    cb.addEventListener("change", calculateTotal);
+  });
+
+  calculateTotal();
+
+  // -------------------------------------------------------------
+  // 2A. INLINE FORM ERRORS (replace alert())
+  // -------------------------------------------------------------
+  const formErrorEl = document.getElementById("form-error");
+  let formErrorTimeout = null;
+
+  function showFormError(msg) {
+    if (!formErrorEl) return;
+    const span = formErrorEl.querySelector("span");
+    if (span) span.textContent = msg;
+    formErrorEl.classList.remove("hidden");
+    clearTimeout(formErrorTimeout);
+    formErrorTimeout = setTimeout(() => {
+      formErrorEl.classList.add("hidden");
+    }, 4000);
+  }
+
+  function hideFormError() {
+    if (formErrorEl) formErrorEl.classList.add("hidden");
+    clearTimeout(formErrorTimeout);
+  }
+
+  // -------------------------------------------------------------
+  // 2. QUICK SERVICE SELECTION (from service cards section)
+  // -------------------------------------------------------------
+  window.selectServiceInCalculator = function (serviceType) {
+    checkboxes.forEach((cb) => {
+      cb.checked = false;
+    });
+
+    if (serviceType === "corte") {
+      const cb = document.querySelector(
+        'input[value="Corte de Cabello General"]',
+      );
+      if (cb) cb.checked = true;
+    } else if (serviceType === "corte_barba") {
+      const cb1 = document.querySelector(
+        'input[value="Corte de Cabello General"]',
+      );
+      const cb2 = document.querySelector(
+        'input[value="Perfilado / Afeitado de Barba"]',
+      );
+      if (cb1) cb1.checked = true;
+      if (cb2) cb2.checked = true;
+    } else if (serviceType === "corte_barba_cejas") {
+      const cb1 = document.querySelector(
+        'input[value="Corte de Cabello General"]',
+      );
+      const cb2 = document.querySelector(
+        'input[value="Perfilado / Afeitado de Barba"]',
+      );
+      const cb3 = document.querySelector(
+        'input[value="Perfilado / Depilado de Cejas"]',
+      );
+      if (cb1) cb1.checked = true;
+      if (cb2) cb2.checked = true;
+      if (cb3) cb3.checked = true;
+    } else if (serviceType === "experiencia_total") {
+      checkboxes.forEach((cb) => (cb.checked = true));
+    }
 
     calculateTotal();
 
-    // -------------------------------------------------------------
-    // 2A. INLINE FORM ERRORS (replace alert())
-    // -------------------------------------------------------------
-    const formErrorEl = document.getElementById('form-error');
-    let formErrorTimeout = null;
-
-    function showFormError(msg) {
-        if (!formErrorEl) return;
-        const span = formErrorEl.querySelector('span');
-        if (span) span.textContent = msg;
-        formErrorEl.classList.remove('hidden');
-        clearTimeout(formErrorTimeout);
-        formErrorTimeout = setTimeout(() => {
-            formErrorEl.classList.add('hidden');
-        }, 4000);
+    const bookingSec = document.getElementById("reservas");
+    if (bookingSec) {
+      bookingSec.scrollIntoView({ behavior: "smooth" });
     }
+  };
 
-    function hideFormError() {
-        if (formErrorEl) formErrorEl.classList.add('hidden');
-        clearTimeout(formErrorTimeout);
-    }
+  // -------------------------------------------------------------
+  // 3. TIME SLOT SELECTOR & PREFERENCE TOGGLE
+  // -------------------------------------------------------------
+  const timeSlots = document.querySelectorAll(".time-slot-btn");
+  const selectedTimeInput = document.getElementById("selected-time");
+  const timeSlotsSection = document.getElementById("time-slots-section");
+  const sinPreferenciaSection = document.getElementById(
+    "sin-preferencia-section",
+  );
+  const timePreferenceBtns = document.querySelectorAll(".time-preference-btn");
+  const selectedPreferenceInput = document.getElementById(
+    "selected-preference",
+  );
 
-    // -------------------------------------------------------------
-    // 2. QUICK SERVICE SELECTION (from service cards section)
-    // -------------------------------------------------------------
-    window.selectServiceInCalculator = function(serviceType) {
-        checkboxes.forEach(cb => { cb.checked = false; });
+  timeSlots.forEach((slot) => {
+    slot.addEventListener("click", () => {
+      timeSlots.forEach((btn) => btn.classList.remove("active"));
+      slot.classList.add("active");
+      if (selectedTimeInput) {
+        selectedTimeInput.value = slot.getAttribute("data-time");
+      }
+    });
+  });
 
-        if (serviceType === 'corte') {
-            const cb = document.querySelector('input[value="Corte de Cabello General"]');
-            if (cb) cb.checked = true;
-        } else if (serviceType === 'corte_barba') {
-            const cb1 = document.querySelector('input[value="Corte de Cabello General"]');
-            const cb2 = document.querySelector('input[value="Perfilado / Afeitado de Barba"]');
-            if (cb1) cb1.checked = true;
-            if (cb2) cb2.checked = true;
-        } else if (serviceType === 'corte_barba_cejas') {
-            const cb1 = document.querySelector('input[value="Corte de Cabello General"]');
-            const cb2 = document.querySelector('input[value="Perfilado / Afeitado de Barba"]');
-            const cb3 = document.querySelector('input[value="Perfilado / Depilado de Cejas"]');
-            if (cb1) cb1.checked = true;
-            if (cb2) cb2.checked = true;
-            if (cb3) cb3.checked = true;
-        } else if (serviceType === 'experiencia_total') {
-            checkboxes.forEach(cb => cb.checked = true);
+  // Preference buttons (Mañana/Tarde/Noche)
+  timePreferenceBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const wasActive = btn.classList.contains("active");
+      timePreferenceBtns.forEach((b) => b.classList.remove("active"));
+      if (!wasActive) {
+        btn.classList.add("active");
+        if (selectedPreferenceInput) {
+          selectedPreferenceInput.value = btn.getAttribute("data-preference");
+        }
+      } else {
+        if (selectedPreferenceInput) {
+          selectedPreferenceInput.value = "";
+        }
+      }
+    });
+  });
+
+  function showTimeSlots() {
+    if (timeSlotsSection) timeSlotsSection.classList.remove("hidden");
+    if (sinPreferenciaSection) sinPreferenciaSection.classList.add("hidden");
+  }
+
+  function showSinPreferencia() {
+    if (timeSlotsSection) timeSlotsSection.classList.add("hidden");
+    if (sinPreferenciaSection) sinPreferenciaSection.classList.remove("hidden");
+  }
+
+  // -------------------------------------------------------------
+  // 4. DATE PICKER MIN DATE
+  // -------------------------------------------------------------
+  const dateInput = document.getElementById("client-date");
+  if (dateInput) {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    dateInput.min = `${year}-${month}-${day}`;
+    dateInput.value = `${year}-${month}-${day}`;
+  }
+
+  // -------------------------------------------------------------
+  // 5. BARBER SELECTION (index.html only)
+  // -------------------------------------------------------------
+  const bookingForm = document.getElementById("booking-form");
+  const step3Wrapper = document.getElementById("step-3-wrapper");
+  const submitSection = document.getElementById("submit-section");
+  const servicesSection = document.getElementById("services-section");
+  const barberCards = document.querySelectorAll(".barber-card");
+  const barberRadios = document.querySelectorAll(".barber-radio");
+  const cardDouglas = document.getElementById("card-douglas");
+  const cardCristopher = document.getElementById("card-cristopher");
+  const cardNone = document.getElementById("card-none");
+
+  if (barberCards.length > 0) {
+    barberCards.forEach((card) => {
+      card.addEventListener("click", (e) => {
+        if (e.target.closest("a")) return;
+        if (card.hasAttribute("data-nav")) {
+          window.location.href = card.getAttribute("data-nav");
+          return;
         }
 
-        calculateTotal();
+        const radio = card.querySelector(".barber-radio");
+        if (!radio) return;
 
-        const bookingSec = document.getElementById('reservas');
-        if (bookingSec) {
-            bookingSec.scrollIntoView({ behavior: 'smooth' });
+        // Toggle off if "Sin preferencia" is already selected
+        if (radio.checked) {
+          radio.checked = false;
+          card.classList.remove("checked");
+          lockStep3();
+          showTimeSlots();
+          // Restore Douglas & Cristopher cards
+          if (cardDouglas) cardDouglas.classList.remove("hidden");
+          if (cardCristopher) cardCristopher.classList.remove("hidden");
+          return;
         }
+
+        // Select this radio
+        barberRadios.forEach((r) => (r.checked = false));
+        barberCards.forEach((c) => c.classList.remove("checked"));
+        radio.checked = true;
+        card.classList.add("checked");
+        unlockStep3();
+        toggleTimeSection(radio.value);
+
+        // If "Sin preferencia": hide Douglas & Cristopher
+        if (radio.value.includes("Sin preferencia")) {
+          if (cardDouglas) cardDouglas.classList.add("hidden");
+          if (cardCristopher) cardCristopher.classList.add("hidden");
+        } else {
+          if (cardDouglas) cardDouglas.classList.remove("hidden");
+          if (cardCristopher) cardCristopher.classList.remove("hidden");
+        }
+      });
+    });
+
+    barberRadios.forEach((radio) => {
+      radio.addEventListener("change", () => {
+        barberCards.forEach((card) => {
+          const r = card.querySelector(".barber-radio");
+          if (r && r.checked) {
+            card.classList.add("checked");
+          } else {
+            card.classList.remove("checked");
+          }
+        });
+      });
+    });
+  }
+
+  function toggleTimeSection(barberValue) {
+    if (barberValue && barberValue.includes("Sin preferencia")) {
+      showSinPreferencia();
+    } else {
+      showTimeSlots();
+    }
+  }
+
+  function unlockStep3() {
+    if (step3Wrapper) step3Wrapper.classList.remove("hidden");
+    if (servicesSection) servicesSection.classList.remove("hidden");
+    checkFormComplete();
+  }
+
+  function lockStep3() {
+    if (step3Wrapper) step3Wrapper.classList.add("hidden");
+    if (submitSection) submitSection.classList.add("hidden");
+    if (servicesSection) servicesSection.classList.add("hidden");
+  }
+
+  // -------------------------------------------------------------
+  // 6. FORM SUBMISSION & MODAL
+  // -------------------------------------------------------------
+  const modal = document.getElementById("confirmation-modal");
+  const closeModalBtn = document.getElementById("close-modal-btn");
+  const modalFolio = document.getElementById("modal-folio");
+  const modalName = document.getElementById("modal-name");
+  const modalBarber = document.getElementById("modal-barber");
+  const modalPhone = document.getElementById("modal-phone");
+  const modalDateTime = document.getElementById("modal-datetime");
+  const modalServicesList = document.getElementById("modal-services-list");
+  const modalTotal = document.getElementById("modal-total");
+  const whatsappConfirmLink = document.getElementById("whatsapp-confirm-link");
+
+  if (bookingForm) {
+    bookingForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const selectedServices = [];
+      let totalAmount = 0;
+
+      checkboxes.forEach((cb) => {
+        if (cb.checked) {
+          const price = parseFloat(cb.getAttribute("data-price")) || 0;
+          selectedServices.push({ name: cb.value, price: price });
+          totalAmount += price;
+        }
+      });
+
+      if (selectedServices.length === 0) {
+        showFormError("Selecciona al menos un servicio para continuar.");
+        return;
+      }
+
+      const name = document.getElementById("client-name").value.trim();
+      const phone = document.getElementById("client-phone").value.trim();
+      const date = document.getElementById("client-date").value;
+      const time = selectedTimeInput ? selectedTimeInput.value : "";
+      const preference = selectedPreferenceInput
+        ? selectedPreferenceInput.value
+        : "";
+
+      // Determine barber: from radio selection or hidden input
+      let barberName, barberPhone;
+      const selectedBarberRadio = document.querySelector(
+        'input[name="barber"]:checked',
+      );
+      const hiddenBarber = document.getElementById("hidden-barber-name");
+      const hiddenPhone = document.getElementById("hidden-barber-phone");
+
+      if (selectedBarberRadio) {
+        barberName = selectedBarberRadio.value;
+        barberPhone =
+          selectedBarberRadio.getAttribute("data-phone") || "525551234567";
+      } else if (hiddenBarber) {
+        barberName = hiddenBarber.value;
+        barberPhone = hiddenPhone ? hiddenPhone.value : "525551234567";
+      } else {
+        barberName = "Sin preferencia / Cualquiera disponible";
+        barberPhone = "525551234567";
+      }
+
+      const isSinPreferencia = barberName.includes("Sin preferencia");
+
+      // Validate time only if specific barber selected
+      if (!isSinPreferencia && !time) {
+        showFormError("Selecciona un bloque de hora para continuar.");
+        return;
+      }
+
+      const randomFolio = "TBS-" + Math.floor(10000 + Math.random() * 90000);
+
+      // Build date/time display for modal
+      let dateTimeText;
+      if (isSinPreferencia) {
+        dateTimeText = preference
+          ? `${date} — Horario: por confirmar (${preference})`
+          : `${date} — Horario: por confirmar (según disponibilidad)`;
+      } else {
+        dateTimeText = `${date} a las ${time}`;
+      }
+
+      // Build WhatsApp time text
+      let waTimeText;
+      if (isSinPreferencia) {
+        waTimeText = preference
+          ? `Por confirmar (preferencia: ${preference})`
+          : "Por confirmar (según disponibilidad)";
+      } else {
+        waTimeText = time;
+      }
+
+      if (modalFolio) modalFolio.textContent = randomFolio;
+      if (modalName) modalName.textContent = name;
+      if (modalBarber) modalBarber.textContent = barberName;
+      if (modalPhone) modalPhone.textContent = phone;
+      if (modalDateTime) modalDateTime.textContent = dateTimeText;
+      if (modalTotal) modalTotal.textContent = `$${totalAmount.toFixed(2)} USD`;
+
+      if (modalServicesList) {
+        modalServicesList.innerHTML = "";
+        selectedServices.forEach((item) => {
+          const li = document.createElement("li");
+          li.className =
+            "flex justify-between items-center text-xs border-b border-dark-800 pb-1";
+          li.innerHTML = `<span><i class="fa-solid fa-check text-gold-500 mr-2"></i>${item.name}</span> <span class="text-gold-400 font-bold">$${item.price} USD</span>`;
+          modalServicesList.appendChild(li);
+        });
+      }
+
+      const serviceNamesText = selectedServices
+        .map((s) => `• ${s.name} ($${s.price} USD)`)
+        .join("\n");
+      let greeting = `¡Hola ${barberName}!`;
+      if (isSinPreferencia) {
+        greeting = `¡Hola THE BARBER SHOP!`;
+      }
+
+      const waMessage = `${greeting} Quiero reservar una cita en THE BARBER SHOP:\n\n*Folio:* ${randomFolio}\n*Cliente:* ${name}\n*Barbero Elegido:* ${barberName}\n*Teléfono:* ${phone}\n*Fecha:* ${date}\n*Hora:* ${waTimeText}\n\n*Servicios Elegidos:*\n${serviceNamesText}\n\n*Total a pagar:* $${totalAmount.toFixed(2)} USD`;
+
+      if (whatsappConfirmLink) {
+        whatsappConfirmLink.href = `https://wa.me/${barberPhone}?text=${encodeURIComponent(waMessage)}`;
+      }
+
+      // ---------------------------------------------------------
+      // 6B. POST RESERVA AL BACKEND (Firebase)
+      // No bloquea el flujo: si falla, la cita sigue por WhatsApp.
+      // ---------------------------------------------------------
+      (async () => {
+        try {
+          const payload = {
+            folio: randomFolio,
+            name,
+            phone,
+            email:
+              (document.getElementById("client-email") || {}).value?.trim?.() ||
+              "",
+            date,
+            time,
+            preference,
+            barber: barberName,
+            services: selectedServices.map((s) => s.name),
+            total: totalAmount,
+            user_id: window.currentUserId || null,
+          };
+
+          if (window.saveBookingToFirestore) {
+            await window.saveBookingToFirestore(payload);
+          } else {
+            console.warn("Firebase auth module not fully loaded yet.");
+          }
+        } catch (err) {
+          console.warn(
+            "Error al guardar reserva en backend:",
+            err.message || err,
+          );
+        }
+      })();
+
+      if (modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("show");
+      }
+    });
+  }
+
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener("click", () => {
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("show");
+      }
+    });
+  }
+
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("show");
+      }
+    });
+  }
+
+  // -------------------------------------------------------------
+  // 7. SUBMIT BUTTON VALIDATION (enabled when all fields filled)
+  // -------------------------------------------------------------
+  const submitBtn = document.getElementById("submit-btn");
+  const clientName = document.getElementById("client-name");
+  const clientPhone = document.getElementById("client-phone");
+  const clientEmail = document.getElementById("client-email");
+  const clientDate = document.getElementById("client-date");
+
+  function checkFormComplete() {
+    if (!submitBtn) return;
+    const nameOk = clientName && clientName.value.trim().length > 0;
+    const phoneOk = clientPhone && clientPhone.value.trim().length > 0;
+    const emailOk =
+      clientEmail &&
+      clientEmail.value.trim().length > 0 &&
+      clientEmail.value.includes("@");
+    const dateOk = clientDate && clientDate.value.length > 0;
+    const servicesOk = Array.from(checkboxes).some((cb) => cb.checked);
+    const allValid = nameOk && phoneOk && emailOk && dateOk && servicesOk;
+
+    if (allValid) {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove(
+        "bg-gray-700",
+        "text-gray-500",
+        "cursor-not-allowed",
+      );
+      submitBtn.classList.add(
+        "bg-gradient-to-r",
+        "from-gold-400",
+        "via-gold-500",
+        "to-gold-600",
+        "text-black",
+        "hover:from-gold-300",
+        "hover:to-gold-500",
+        "shadow-[0_0_30px_rgba(212,175,55,0.5)]",
+        "hover:scale-105",
+        "active:scale-95",
+      );
+      submitBtn.querySelector("i").classList.remove("fa-lock");
+      submitBtn.querySelector("i").classList.add("fa-check-circle");
+    } else {
+      submitBtn.disabled = true;
+      submitBtn.classList.add(
+        "bg-gray-700",
+        "text-gray-500",
+        "cursor-not-allowed",
+      );
+      submitBtn.classList.remove(
+        "bg-gradient-to-r",
+        "from-gold-400",
+        "via-gold-500",
+        "to-gold-600",
+        "text-black",
+        "hover:from-gold-300",
+        "hover:to-gold-500",
+        "shadow-[0_0_30px_rgba(212,175,55,0.5)]",
+        "hover:scale-105",
+        "active:scale-95",
+      );
+      submitBtn.querySelector("i").classList.add("fa-lock");
+      submitBtn.querySelector("i").classList.remove("fa-check-circle");
+    }
+
+    if (submitSection) {
+      if (allValid) {
+        submitSection.classList.remove("hidden");
+      } else {
+        submitSection.classList.add("hidden");
+      }
+    }
+  }
+
+  [clientName, clientPhone, clientEmail, clientDate].forEach((input) => {
+    if (input) input.addEventListener("input", checkFormComplete);
+  });
+  checkboxes.forEach((cb) => cb.addEventListener("change", checkFormComplete));
+
+  // -------------------------------------------------------------
+  // 8. MOBILE MENU (index.html only)
+  // -------------------------------------------------------------
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const menuIcon = document.getElementById("menu-icon");
+
+  if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+      if (menuIcon) {
+        menuIcon.className = mobileMenu.classList.contains("hidden")
+          ? "fa-solid fa-bars text-2xl"
+          : "fa-solid fa-xmark text-2xl text-gold-500";
+      }
+    });
+
+    document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.add("hidden");
+        if (menuIcon) menuIcon.className = "fa-solid fa-bars text-2xl";
+      });
+    });
+  }
+
+  // -------------------------------------------------------------
+  // 8.5 AUTH MENU (index.html only)
+  // -------------------------------------------------------------
+  const authMenuBtn = document.getElementById("auth-menu-btn");
+  const authDropdown = document.getElementById("auth-dropdown");
+
+  if (authMenuBtn && authDropdown) {
+    // Toggle the menu
+    authMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isHidden = authDropdown.classList.contains("hidden");
+
+      if (isHidden) {
+        authDropdown.classList.remove("hidden");
+        // Small timeout to allow display:block to apply before transition
+        setTimeout(() => {
+          authDropdown.classList.remove("opacity-0", "scale-95");
+          authDropdown.classList.add("opacity-100", "scale-100");
+          authMenuBtn.classList.add("text-gold-500");
+        }, 10);
+      } else {
+        closeAuthMenu();
+      }
+    });
+
+    const closeAuthMenu = () => {
+      authDropdown.classList.remove("opacity-100", "scale-100");
+      authDropdown.classList.add("opacity-0", "scale-95");
+      authMenuBtn.classList.remove("text-gold-500");
+      // Wait for transition to finish before hiding
+      setTimeout(() => {
+        authDropdown.classList.add("hidden");
+      }, 200);
     };
 
-    // -------------------------------------------------------------
-    // 3. TIME SLOT SELECTOR & PREFERENCE TOGGLE
-    // -------------------------------------------------------------
-    const timeSlots = document.querySelectorAll('.time-slot-btn');
-    const selectedTimeInput = document.getElementById('selected-time');
-    const timeSlotsSection = document.getElementById('time-slots-section');
-    const sinPreferenciaSection = document.getElementById('sin-preferencia-section');
-    const timePreferenceBtns = document.querySelectorAll('.time-preference-btn');
-    const selectedPreferenceInput = document.getElementById('selected-preference');
-
-    timeSlots.forEach((slot) => {
-        slot.addEventListener('click', () => {
-            timeSlots.forEach(btn => btn.classList.remove('active'));
-            slot.classList.add('active');
-            if (selectedTimeInput) {
-                selectedTimeInput.value = slot.getAttribute('data-time');
-            }
-        });
+    // Close when clicking outside
+    document.addEventListener("click", (e) => {
+      if (
+        !authDropdown.classList.contains("hidden") &&
+        !authDropdown.contains(e.target) &&
+        !authMenuBtn.contains(e.target)
+      ) {
+        closeAuthMenu();
+      }
     });
 
-    // Preference buttons (Mañana/Tarde/Noche)
-    timePreferenceBtns.forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const wasActive = btn.classList.contains('active');
-            timePreferenceBtns.forEach(b => b.classList.remove('active'));
-            if (!wasActive) {
-                btn.classList.add('active');
-                if (selectedPreferenceInput) {
-                    selectedPreferenceInput.value = btn.getAttribute('data-preference');
-                }
-            } else {
-                if (selectedPreferenceInput) {
-                    selectedPreferenceInput.value = '';
-                }
-            }
-        });
+    // Close when selecting an option
+    authDropdown.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        closeAuthMenu();
+      });
+    });
+  }
+
+  // -------------------------------------------------------------
+  // 8. GALLERY LIGHTBOX (index.html only)
+  // -------------------------------------------------------------
+  const galleryItems = document.querySelectorAll(".gallery-item");
+  const lightbox = document.getElementById("gallery-lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const lightboxTitle = document.getElementById("lightbox-title");
+  const closeLightboxBtn = document.getElementById("close-lightbox-btn");
+
+  galleryItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const img = item.querySelector("img");
+      const title = item.querySelector("h4");
+      if (img && lightbox && lightboxImg) {
+        lightboxImg.src = img.src;
+        if (lightboxTitle && title)
+          lightboxTitle.textContent = title.textContent;
+        lightbox.classList.remove("hidden");
+        lightbox.classList.add("flex");
+      }
+    });
+  });
+
+  if (closeLightboxBtn && lightbox) {
+    closeLightboxBtn.addEventListener("click", () => {
+      lightbox.classList.add("hidden");
+      lightbox.classList.remove("flex");
     });
 
-    function showTimeSlots() {
-        if (timeSlotsSection) timeSlotsSection.classList.remove('hidden');
-        if (sinPreferenciaSection) sinPreferenciaSection.classList.add('hidden');
-    }
-
-    function showSinPreferencia() {
-        if (timeSlotsSection) timeSlotsSection.classList.add('hidden');
-        if (sinPreferenciaSection) sinPreferenciaSection.classList.remove('hidden');
-    }
-
-    // -------------------------------------------------------------
-    // 4. DATE PICKER MIN DATE
-    // -------------------------------------------------------------
-    const dateInput = document.getElementById('client-date');
-    if (dateInput) {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const day = String(today.getDate()).padStart(2, '0');
-        dateInput.min = `${year}-${month}-${day}`;
-        dateInput.value = `${year}-${month}-${day}`;
-    }
-
-    // -------------------------------------------------------------
-    // 5. BARBER SELECTION (index.html only)
-    // -------------------------------------------------------------
-    const bookingForm = document.getElementById('booking-form');
-    const step3Wrapper = document.getElementById('step-3-wrapper');
-    const submitSection = document.getElementById('submit-section');
-    const servicesSection = document.getElementById('services-section');
-    const barberCards = document.querySelectorAll('.barber-card');
-    const barberRadios = document.querySelectorAll('.barber-radio');
-    const cardDouglas = document.getElementById('card-douglas');
-    const cardCristopher = document.getElementById('card-cristopher');
-    const cardNone = document.getElementById('card-none');
-
-    if (barberCards.length > 0) {
-        barberCards.forEach((card) => {
-            card.addEventListener('click', (e) => {
-                if (e.target.closest('a')) return;
-                if (card.hasAttribute('data-nav')) {
-                    window.location.href = card.getAttribute('data-nav');
-                    return;
-                }
-
-                const radio = card.querySelector('.barber-radio');
-                    if (!radio) return;
-
-                    // Toggle off if "Sin preferencia" is already selected
-                    if (radio.checked) {
-                        radio.checked = false;
-                        card.classList.remove('checked');
-                        lockStep3();
-                        showTimeSlots();
-                        // Restore Douglas & Cristopher cards
-                        if (cardDouglas) cardDouglas.classList.remove('hidden');
-                        if (cardCristopher) cardCristopher.classList.remove('hidden');
-                        return;
-                    }
-
-                    // Select this radio
-                    barberRadios.forEach(r => r.checked = false);
-                    barberCards.forEach(c => c.classList.remove('checked'));
-                    radio.checked = true;
-                    card.classList.add('checked');
-                    unlockStep3();
-                    toggleTimeSection(radio.value);
-
-                    // If "Sin preferencia": hide Douglas & Cristopher
-                    if (radio.value.includes('Sin preferencia')) {
-                        if (cardDouglas) cardDouglas.classList.add('hidden');
-                        if (cardCristopher) cardCristopher.classList.add('hidden');
-                    } else {
-                        if (cardDouglas) cardDouglas.classList.remove('hidden');
-                        if (cardCristopher) cardCristopher.classList.remove('hidden');
-                    }
-            });
-        });
-
-        barberRadios.forEach((radio) => {
-            radio.addEventListener('change', () => {
-                barberCards.forEach((card) => {
-                    const r = card.querySelector('.barber-radio');
-                    if (r && r.checked) {
-                        card.classList.add('checked');
-                    } else {
-                        card.classList.remove('checked');
-                    }
-                });
-            });
-        });
-    }
-
-    function toggleTimeSection(barberValue) {
-        if (barberValue && barberValue.includes('Sin preferencia')) {
-            showSinPreferencia();
-        } else {
-            showTimeSlots();
-        }
-    }
-
-    function unlockStep3() {
-        if (step3Wrapper) step3Wrapper.classList.remove('hidden');
-        if (servicesSection) servicesSection.classList.remove('hidden');
-        checkFormComplete();
-    }
-
-    function lockStep3() {
-        if (step3Wrapper) step3Wrapper.classList.add('hidden');
-        if (submitSection) submitSection.classList.add('hidden');
-        if (servicesSection) servicesSection.classList.add('hidden');
-    }
-
-    // -------------------------------------------------------------
-    // 6. FORM SUBMISSION & MODAL
-    // -------------------------------------------------------------
-    const modal = document.getElementById('confirmation-modal');
-    const closeModalBtn = document.getElementById('close-modal-btn');
-    const modalFolio = document.getElementById('modal-folio');
-    const modalName = document.getElementById('modal-name');
-    const modalBarber = document.getElementById('modal-barber');
-    const modalPhone = document.getElementById('modal-phone');
-    const modalDateTime = document.getElementById('modal-datetime');
-    const modalServicesList = document.getElementById('modal-services-list');
-    const modalTotal = document.getElementById('modal-total');
-    const whatsappConfirmLink = document.getElementById('whatsapp-confirm-link');
-
-    if (bookingForm) {
-        bookingForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const selectedServices = [];
-            let totalAmount = 0;
-
-            checkboxes.forEach((cb) => {
-                if (cb.checked) {
-                    const price = parseFloat(cb.getAttribute('data-price')) || 0;
-                    selectedServices.push({ name: cb.value, price: price });
-                    totalAmount += price;
-                }
-            });
-
-            if (selectedServices.length === 0) {
-                showFormError('Selecciona al menos un servicio para continuar.');
-                return;
-            }
-
-            const name = document.getElementById('client-name').value.trim();
-            const phone = document.getElementById('client-phone').value.trim();
-            const date = document.getElementById('client-date').value;
-            const time = selectedTimeInput ? selectedTimeInput.value : '';
-            const preference = selectedPreferenceInput ? selectedPreferenceInput.value : '';
-
-            // Determine barber: from radio selection or hidden input
-            let barberName, barberPhone;
-            const selectedBarberRadio = document.querySelector('input[name="barber"]:checked');
-            const hiddenBarber = document.getElementById('hidden-barber-name');
-            const hiddenPhone = document.getElementById('hidden-barber-phone');
-
-            if (selectedBarberRadio) {
-                barberName = selectedBarberRadio.value;
-                barberPhone = selectedBarberRadio.getAttribute('data-phone') || '525551234567';
-            } else if (hiddenBarber) {
-                barberName = hiddenBarber.value;
-                barberPhone = hiddenPhone ? hiddenPhone.value : '525551234567';
-            } else {
-                barberName = 'Sin preferencia / Cualquiera disponible';
-                barberPhone = '525551234567';
-            }
-
-            const isSinPreferencia = barberName.includes('Sin preferencia');
-
-            // Validate time only if specific barber selected
-            if (!isSinPreferencia && !time) {
-                showFormError('Selecciona un bloque de hora para continuar.');
-                return;
-            }
-
-            const randomFolio = 'TBS-' + Math.floor(10000 + Math.random() * 90000);
-
-            // Build date/time display for modal
-            let dateTimeText;
-            if (isSinPreferencia) {
-                dateTimeText = preference
-                    ? `${date} — Horario: por confirmar (${preference})`
-                    : `${date} — Horario: por confirmar (según disponibilidad)`;
-            } else {
-                dateTimeText = `${date} a las ${time}`;
-            }
-
-            // Build WhatsApp time text
-            let waTimeText;
-            if (isSinPreferencia) {
-                waTimeText = preference
-                    ? `Por confirmar (preferencia: ${preference})`
-                    : 'Por confirmar (según disponibilidad)';
-            } else {
-                waTimeText = time;
-            }
-
-            if (modalFolio) modalFolio.textContent = randomFolio;
-            if (modalName) modalName.textContent = name;
-            if (modalBarber) modalBarber.textContent = barberName;
-            if (modalPhone) modalPhone.textContent = phone;
-            if (modalDateTime) modalDateTime.textContent = dateTimeText;
-            if (modalTotal) modalTotal.textContent = `$${totalAmount.toFixed(2)} USD`;
-
-            if (modalServicesList) {
-                modalServicesList.innerHTML = '';
-                selectedServices.forEach(item => {
-                    const li = document.createElement('li');
-                    li.className = 'flex justify-between items-center text-xs border-b border-dark-800 pb-1';
-                    li.innerHTML = `<span><i class="fa-solid fa-check text-gold-500 mr-2"></i>${item.name}</span> <span class="text-gold-400 font-bold">$${item.price} USD</span>`;
-                    modalServicesList.appendChild(li);
-                });
-            }
-
-            const serviceNamesText = selectedServices.map(s => `• ${s.name} ($${s.price} USD)`).join('\n');
-            let greeting = `¡Hola ${barberName}!`;
-            if (isSinPreferencia) {
-                greeting = `¡Hola THE BARBER SHOP!`;
-            }
-
-            const waMessage = `${greeting} Quiero reservar una cita en THE BARBER SHOP:\n\n*Folio:* ${randomFolio}\n*Cliente:* ${name}\n*Barbero Elegido:* ${barberName}\n*Teléfono:* ${phone}\n*Fecha:* ${date}\n*Hora:* ${waTimeText}\n\n*Servicios Elegidos:*\n${serviceNamesText}\n\n*Total a pagar:* $${totalAmount.toFixed(2)} USD`;
-
-            if (whatsappConfirmLink) {
-                whatsappConfirmLink.href = `https://wa.me/${barberPhone}?text=${encodeURIComponent(waMessage)}`;
-            }
-
-            // ---------------------------------------------------------
-            // 6B. POST RESERVA AL BACKEND (Firebase)
-            // No bloquea el flujo: si falla, la cita sigue por WhatsApp.
-            // ---------------------------------------------------------
-            (async () => {
-                try {
-                    const payload = {
-                        folio: randomFolio,
-                        name,
-                        phone,
-                        email: (document.getElementById('client-email') || {}).value?.trim?.() || '',
-                        date,
-                        time,
-                        preference,
-                        barber: barberName,
-                        services: selectedServices.map(s => s.name),
-                        total: totalAmount,
-                        user_id: window.currentUserId || null
-                    };
-                    
-                    if (window.saveBookingToFirestore) {
-                        await window.saveBookingToFirestore(payload);
-                    } else {
-                        console.warn('Firebase auth module not fully loaded yet.');
-                    }
-                } catch (err) {
-                    console.warn('Error al guardar reserva en backend:', err.message || err);
-                }
-            })();
-
-            if (modal) {
-                modal.classList.remove('hidden');
-                modal.classList.add('show');
-            }
-        });
-    }
-
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', () => {
-            if (modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('show');
-            }
-        });
-    }
-
-    if (modal) {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('show');
-            }
-        });
-    }
-
-    // -------------------------------------------------------------
-    // 7. SUBMIT BUTTON VALIDATION (enabled when all fields filled)
-    // -------------------------------------------------------------
-    const submitBtn = document.getElementById('submit-btn');
-    const clientName = document.getElementById('client-name');
-    const clientPhone = document.getElementById('client-phone');
-    const clientEmail = document.getElementById('client-email');
-    const clientDate = document.getElementById('client-date');
-
-    function checkFormComplete() {
-        if (!submitBtn) return;
-        const nameOk = clientName && clientName.value.trim().length > 0;
-        const phoneOk = clientPhone && clientPhone.value.trim().length > 0;
-        const emailOk = clientEmail && clientEmail.value.trim().length > 0 && clientEmail.value.includes('@');
-        const dateOk = clientDate && clientDate.value.length > 0;
-        const servicesOk = Array.from(checkboxes).some(cb => cb.checked);
-        const allValid = nameOk && phoneOk && emailOk && dateOk && servicesOk;
-
-        if (allValid) {
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('bg-gray-700', 'text-gray-500', 'cursor-not-allowed');
-            submitBtn.classList.add('bg-gradient-to-r', 'from-gold-400', 'via-gold-500', 'to-gold-600', 'text-black', 'hover:from-gold-300', 'hover:to-gold-500', 'shadow-[0_0_30px_rgba(212,175,55,0.5)]', 'hover:scale-105', 'active:scale-95');
-            submitBtn.querySelector('i').classList.remove('fa-lock');
-            submitBtn.querySelector('i').classList.add('fa-check-circle');
-        } else {
-            submitBtn.disabled = true;
-            submitBtn.classList.add('bg-gray-700', 'text-gray-500', 'cursor-not-allowed');
-            submitBtn.classList.remove('bg-gradient-to-r', 'from-gold-400', 'via-gold-500', 'to-gold-600', 'text-black', 'hover:from-gold-300', 'hover:to-gold-500', 'shadow-[0_0_30px_rgba(212,175,55,0.5)]', 'hover:scale-105', 'active:scale-95');
-            submitBtn.querySelector('i').classList.add('fa-lock');
-            submitBtn.querySelector('i').classList.remove('fa-check-circle');
-        }
-
-        if (submitSection) {
-            if (allValid) {
-                submitSection.classList.remove('hidden');
-            } else {
-                submitSection.classList.add('hidden');
-            }
-        }
-    }
-
-    [clientName, clientPhone, clientEmail, clientDate].forEach(input => {
-        if (input) input.addEventListener('input', checkFormComplete);
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.add("hidden");
+        lightbox.classList.remove("flex");
+      }
     });
-    checkboxes.forEach(cb => cb.addEventListener('change', checkFormComplete));
+  }
 
-    // -------------------------------------------------------------
-    // 8. MOBILE MENU (index.html only)
-    // -------------------------------------------------------------
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const menuIcon = document.getElementById('menu-icon');
+  // -------------------------------------------------------------
+  // 9. SCROLLSPY (index.html only)
+  // -------------------------------------------------------------
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav-link");
 
-    if (mobileMenuBtn && mobileMenu) {
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            if (menuIcon) {
-                menuIcon.className = mobileMenu.classList.contains('hidden')
-                    ? 'fa-solid fa-bars text-2xl'
-                    : 'fa-solid fa-xmark text-2xl text-gold-500';
-            }
-        });
+  window.addEventListener("scroll", () => {
+    let current = "";
+    const scrollPosition = window.scrollY + 120;
 
-        document.querySelectorAll('.mobile-nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                if (menuIcon) menuIcon.className = 'fa-solid fa-bars text-2xl';
-            });
-        });
-    }
-
-    // -------------------------------------------------------------
-    // 8.5 AUTH MENU (index.html only)
-    // -------------------------------------------------------------
-    const authMenuBtn = document.getElementById('auth-menu-btn');
-    const authDropdown = document.getElementById('auth-dropdown');
-
-    if (authMenuBtn && authDropdown) {
-        // Toggle the menu
-        authMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isHidden = authDropdown.classList.contains('hidden');
-            
-            if (isHidden) {
-                authDropdown.classList.remove('hidden');
-                // Small timeout to allow display:block to apply before transition
-                setTimeout(() => {
-                    authDropdown.classList.remove('opacity-0', 'scale-95');
-                    authDropdown.classList.add('opacity-100', 'scale-100');
-                    authMenuBtn.classList.add('text-gold-500');
-                }, 10);
-            } else {
-                closeAuthMenu();
-            }
-        });
-
-        const closeAuthMenu = () => {
-            authDropdown.classList.remove('opacity-100', 'scale-100');
-            authDropdown.classList.add('opacity-0', 'scale-95');
-            authMenuBtn.classList.remove('text-gold-500');
-            // Wait for transition to finish before hiding
-            setTimeout(() => {
-                authDropdown.classList.add('hidden');
-            }, 200);
-        };
-
-        // Close when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!authDropdown.classList.contains('hidden') && 
-                !authDropdown.contains(e.target) && 
-                !authMenuBtn.contains(e.target)) {
-                closeAuthMenu();
-            }
-        });
-
-        // Close when selecting an option
-        authDropdown.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                closeAuthMenu();
-            });
-        });
-    }
-
-    // -------------------------------------------------------------
-    // 8. GALLERY LIGHTBOX (index.html only)
-    // -------------------------------------------------------------
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    const lightbox = document.getElementById('gallery-lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxTitle = document.getElementById('lightbox-title');
-    const closeLightboxBtn = document.getElementById('close-lightbox-btn');
-
-    galleryItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const img = item.querySelector('img');
-            const title = item.querySelector('h4');
-            if (img && lightbox && lightboxImg) {
-                lightboxImg.src = img.src;
-                if (lightboxTitle && title) lightboxTitle.textContent = title.textContent;
-                lightbox.classList.remove('hidden');
-                lightbox.classList.add('flex');
-            }
-        });
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      if (
+        scrollPosition >= sectionTop &&
+        scrollPosition < sectionTop + sectionHeight
+      ) {
+        current = section.getAttribute("id");
+      }
     });
 
-    if (closeLightboxBtn && lightbox) {
-        closeLightboxBtn.addEventListener('click', () => {
-            lightbox.classList.add('hidden');
-            lightbox.classList.remove('flex');
-        });
-
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) {
-                lightbox.classList.add('hidden');
-                lightbox.classList.remove('flex');
-            }
-        });
-    }
-
-    // -------------------------------------------------------------
-    // 9. SCROLLSPY (index.html only)
-    // -------------------------------------------------------------
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    window.addEventListener('scroll', () => {
-        let current = '';
-        const scrollPosition = window.scrollY + 120;
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
+    navLinks.forEach((link) => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === `#${current}`) {
+        link.classList.add("active");
+      }
     });
+  });
 
-    // -------------------------------------------------------------
-    // 10. INIT: unlock/lock step 3 (AFTER all variables are declared)
-    // -------------------------------------------------------------
-    if (barberCards.length === 0) {
-        unlockStep3();
-    } else {
-        lockStep3();
-    }
+  // -------------------------------------------------------------
+  // 10. INIT: unlock/lock step 3 (AFTER all variables are declared)
+  // -------------------------------------------------------------
+  if (barberCards.length === 0) {
+    unlockStep3();
+  } else {
+    lockStep3();
+  }
 
-    // -------------------------------------------------------------
-    // 11. SCROLL REVEAL (IntersectionObserver)
-    // -------------------------------------------------------------
-    const scrollRevealElements = document.querySelectorAll('.scroll-reveal, .animate-divider');
-    if (scrollRevealElements.length > 0 && 'IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-        scrollRevealElements.forEach(el => observer.observe(el));
-    } else {
-        scrollRevealElements.forEach(el => el.classList.add('visible'));
-    }
-
-    // -------------------------------------------------------------
-    // 12. NAV HEADER SCROLL EFFECT (shrink on scroll)
-    // -------------------------------------------------------------
-    const mainHeader = document.getElementById('main-header');
-    if (mainHeader) {
-        let lastScroll = 0;
-        const onScroll = () => {
-            const y = window.scrollY;
-            if (y > 50) {
-                mainHeader.classList.add('header-scrolled');
-            } else {
-                mainHeader.classList.remove('header-scrolled');
-            }
-            lastScroll = y;
-        };
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-    }
-
-    // -------------------------------------------------------------
-    // 13. PARALLAX TILT (barber cards — desktop only)
-    // -------------------------------------------------------------
-    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        const tiltCards = document.querySelectorAll('.tilt-card');
-        const MAX_TILT = 8;
-
-        tiltCards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -MAX_TILT;
-                const rotateY = ((x - centerX) / centerX) * MAX_TILT;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
-            });
+  // -------------------------------------------------------------
+  // 11. SCROLL REVEAL (IntersectionObserver)
+  // -------------------------------------------------------------
+  const scrollRevealElements = document.querySelectorAll(
+    ".scroll-reveal, .animate-divider",
+  );
+  if (scrollRevealElements.length > 0 && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
         });
-    }
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+    );
 
-    // -------------------------------------------------------------
-    // 14. SPOTLIGHT BORDER (service cards — CSS variable tracking)
-    // -------------------------------------------------------------
-    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        const spotlightCards = document.querySelectorAll('.spotlight-card');
-        spotlightCards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', x + 'px');
-                card.style.setProperty('--mouse-y', y + 'px');
-            });
-        });
-    }
+    scrollRevealElements.forEach((el) => observer.observe(el));
+  } else {
+    scrollRevealElements.forEach((el) => el.classList.add("visible"));
+  }
 
-    // -------------------------------------------------------------
-    // 15. MAGNETIC BUTTON (CTA header)
-    // -------------------------------------------------------------
-    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        const magneticBtns = document.querySelectorAll('.magnetic-btn');
-        magneticBtns.forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px) scale(1.03)`;
-            });
+  // -------------------------------------------------------------
+  // 12. NAV HEADER SCROLL EFFECT (shrink on scroll)
+  // -------------------------------------------------------------
+  const mainHeader = document.getElementById("main-header");
+  if (mainHeader) {
+    let lastScroll = 0;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > 50) {
+        mainHeader.classList.add("header-scrolled");
+      } else {
+        mainHeader.classList.remove("header-scrolled");
+      }
+      lastScroll = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
 
-            btn.addEventListener('mouseleave', () => {
-                btn.style.transform = 'translate(0px, 0px) scale(1)';
-            });
-        });
-    }
+  // -------------------------------------------------------------
+  // 13. PARALLAX TILT (barber cards — desktop only)
+  // -------------------------------------------------------------
+  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    const tiltCards = document.querySelectorAll(".tilt-card");
+    const MAX_TILT = 8;
+
+    tiltCards.forEach((card) => {
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -MAX_TILT;
+        const rotateY = ((x - centerX) / centerX) * MAX_TILT;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+      });
+
+      card.addEventListener("mouseleave", () => {
+        card.style.transform =
+          "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
+      });
+    });
+  }
+
+  // -------------------------------------------------------------
+  // 14. SPOTLIGHT BORDER (service cards — CSS variable tracking)
+  // -------------------------------------------------------------
+  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    const spotlightCards = document.querySelectorAll(".spotlight-card");
+    spotlightCards.forEach((card) => {
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty("--mouse-x", x + "px");
+        card.style.setProperty("--mouse-y", y + "px");
+      });
+    });
+  }
+
+  // -------------------------------------------------------------
+  // 15. MAGNETIC BUTTON (CTA header)
+  // -------------------------------------------------------------
+  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    const magneticBtns = document.querySelectorAll(".magnetic-btn");
+    magneticBtns.forEach((btn) => {
+      btn.addEventListener("mousemove", (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px) scale(1.03)`;
+      });
+
+      btn.addEventListener("mouseleave", () => {
+        btn.style.transform = "translate(0px, 0px) scale(1)";
+      });
+    });
+  }
 });

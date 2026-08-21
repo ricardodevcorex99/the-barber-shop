@@ -1,6 +1,0 @@
-{
-  "name": "The Barber Shop",
-  "description": "Admin schedule and dashboard for The Barber Shop.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}

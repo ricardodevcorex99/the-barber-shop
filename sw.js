@@ -3,48 +3,59 @@
  * Cache-first for static assets, network-first for API + pages.
  */
 
-const CACHE_NAME = 'tbs-cache-v8';
+const CACHE_NAME = "tbs-cache-v8";
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/douglas.html',
-  '/cristopher.html',
-  '/galeria.html',
-  '/styles.css',
-  '/booking.js',
-  '/auth.js',
-  '/script.js',
-  '/manifest.webmanifest'
+  "/",
+  "/index.html",
+  "/douglas.html",
+  "/cristopher.html",
+  "/galeria.html",
+  "/styles.css",
+  "/booking.js",
+  "/auth.js",
+  "/script.js",
+  "/manifest.webmanifest",
 ];
 
 // Install: pre-cache core assets
-self.addEventListener('install', (event) => {
+self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
+    caches
+      .open(CACHE_NAME)
       .then((cache) => cache.addAll(STATIC_ASSETS))
-      .then(() => self.skipWaiting())
+      .then(() => self.skipWaiting()),
   );
 });
 
 // Activate: clean old caches
-self.addEventListener('activate', (event) => {
+self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
-      ))
-      .then(() => self.clients.claim())
+    caches
+      .keys()
+      .then((keys) =>
+        Promise.all(
+          keys
+            .filter((key) => key !== CACHE_NAME)
+            .map((key) => caches.delete(key)),
+        ),
+      )
+      .then(() => self.clients.claim()),
   );
 });
 
 // Fetch: Network-first for everything (good for development and frequent updates)
-self.addEventListener('fetch', (event) => {
+self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
   // Skip non-GET and cross-origin calls
-  if (request.method !== 'GET') return;
-  if (url.origin !== location.origin && !url.origin.includes('gstatic.com') && !url.origin.includes('googleapis.com')) return;
+  if (request.method !== "GET") return;
+  if (
+    url.origin !== location.origin &&
+    !url.origin.includes("gstatic.com") &&
+    !url.origin.includes("googleapis.com")
+  )
+    return;
 
   event.respondWith(
     fetch(request)
@@ -55,6 +66,6 @@ self.addEventListener('fetch', (event) => {
         }
         return res;
       })
-      .catch(() => caches.match(request))
+      .catch(() => caches.match(request)),
   );
 });
