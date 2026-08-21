@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // ---------------------------------------------------------
-            // 6B. POST RESERVA AL BACKEND (/api/bookings)
+            // 6B. POST RESERVA AL BACKEND (Firebase)
             // No bloquea el flujo: si falla, la cita sigue por WhatsApp.
             // ---------------------------------------------------------
             (async () => {
@@ -445,19 +445,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         preference,
                         barber: barberName,
                         services: selectedServices.map(s => s.name),
+                        total: totalAmount,
                         user_id: window.currentUserId || null
                     };
-                    const res = await fetch('/api/bookings', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!res.ok) {
-                        const body = await res.json().catch(() => ({}));
-                        console.warn('Booking API:', res.status, body.error || '');
+                    
+                    if (window.saveBookingToFirestore) {
+                        await window.saveBookingToFirestore(payload);
+                    } else {
+                        console.warn('Firebase auth module not fully loaded yet.');
                     }
                 } catch (err) {
-                    console.warn('Booking API no disponible (modo offline/estático):', err.message || err);
+                    console.warn('Error al guardar reserva en backend:', err.message || err);
                 }
             })();
 
