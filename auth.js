@@ -3,7 +3,7 @@
 // ==========================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // REEMPLAZAR CON LAS CLAVES DE TU PROYECTO FIREBASE
@@ -55,16 +55,53 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-// Función: Login con Google
+// Función: Login con Google (Usando Redirect para evitar bloqueos de popups)
 window.loginWithGoogle = async function() {
+    console.log("Dominio actual detectado por el navegador:", window.location.hostname);
     try {
         const provider = new GoogleAuthProvider();
-        await signInWithPopup(auth, provider);
+        // Redirect clears the current page, so we don't await anything here
+        signInWithRedirect(auth, provider).catch(error => {
+            console.error('Error al iniciar redirección con Google:', error.code, error.message);
+            alert(`Error de Firebase [${error.code}]: ${error.message}\n\nAsegúrate de que el dominio ${window.location.hostname} está en Firebase > Auth > Settings > Authorized Domains.`);
+        });
     } catch (error) {
-        console.error('Error al iniciar sesión con Google:', error.message);
-        alert('Hubo un error al conectar con Google. Por favor intenta de nuevo.');
+        console.error('Excepción al iniciar sesión con Google:', error);
     }
 }
+
+// Función auxiliar para guardar el perfil en Firestore
+async function saveUserProfile(user) {
+    try {
+        const { doc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+        const userRef = doc(db, "profiles", user.uid);
+        
+        await setDoc(userRef, {
+            id: user.uid,
+            full_name: user.displayName || user.email.split('@')[0],
+            email: user.email,
+            avatar_url: user.photoURL || null,
+            last_login: new Date().toISOString()
+        }, { merge: true }); // Merge true updates existing fields without overwriting everything
+        
+        console.log("Perfil de usuario actualizado en la base de datos.");
+    } catch (error) {
+        console.error("Error guardando el perfil del usuario:", error);
+    }
+}
+
+// Escuchar el resultado cuando regresa de Google
+getRedirectResult(auth)
+    .then((result) => {
+        if (result) {
+            console.log("Login exitoso con Google:", result.user.email);
+            saveUserProfile(result.user);
+        }
+    })
+    .catch((error) => {
+        console.error("Error al regresar de Google Redirect:", error.code, error.message);
+        alert(`Error al volver de Google [${error.code}]: ${error.message}\n\nDomino detectado: ${window.location.hostname}`);
+    });
 
 // Función: Login con Email (Magic Link)
 window.loginWithEmail = async function() {
@@ -97,6 +134,7 @@ if (isSignInWithEmailLink(auth, window.location.href)) {
         .then((result) => {
             window.localStorage.removeItem('emailForSignIn');
             // Login successful
+            saveUserProfile(result.user);
         })
         .catch((error) => {
             console.error('Error in Magic Link auth', error);
