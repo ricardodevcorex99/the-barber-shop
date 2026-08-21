@@ -48,6 +48,13 @@ onAuthStateChanged(auth, (user) => {
 
         // Guardar el user_id globalmente para que booking.js lo use al hacer una reserva
         window.currentUserId = user.uid;
+
+        // Si venimos de un login explícito, redirigir
+        if (sessionStorage.getItem('pendingRedirect') === 'true') {
+            sessionStorage.removeItem('pendingRedirect');
+            // Check if profile exists, if not create it, then redirect
+            saveUserProfile(user); 
+        }
     } else {
         // Usuario no logueado (Invitado)
         if (guestView) guestView.classList.remove('hidden');
@@ -60,13 +67,16 @@ onAuthStateChanged(auth, (user) => {
 window.loginWithGoogle = async function() {
     console.log("Dominio actual detectado por el navegador:", window.location.hostname);
     try {
+        sessionStorage.setItem('pendingRedirect', 'true');
         const provider = new GoogleAuthProvider();
         // Redirect clears the current page, so we don't await anything here
         signInWithRedirect(auth, provider).catch(error => {
+            sessionStorage.removeItem('pendingRedirect');
             console.error('Error al iniciar redirección con Google:', error.code, error.message);
             alert(`Error de Firebase [${error.code}]: ${error.message}\n\nAsegúrate de que el dominio ${window.location.hostname} está en Firebase > Auth > Settings > Authorized Domains.`);
         });
     } catch (error) {
+        sessionStorage.removeItem('pendingRedirect');
         console.error('Excepción al iniciar sesión con Google:', error);
     }
 }
