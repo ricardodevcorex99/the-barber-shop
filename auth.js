@@ -57,13 +57,19 @@ window.handleMiPerfilClick = function() {
 onAuthStateChanged(auth, (user) => {
     if (user) {
         // Usuario logueado
-        if (document.getElementById('auth-user-view')) document.getElementById('auth-user-view').classList.remove('hidden');
-        if (document.getElementById('auth-guest-view')) document.getElementById('auth-guest-view').classList.add('hidden');
+        if (document.getElementById('auth-user-info-panel')) {
+            document.getElementById('auth-user-info-panel').style.display = 'block';
+        }
         
         // Mobile menu specific toggles (ocultar login options, mostrar logout)
         if (document.getElementById('mobile-btn-google')) document.getElementById('mobile-btn-google').classList.add('hidden');
         if (document.getElementById('mobile-btn-email')) document.getElementById('mobile-btn-email').classList.add('hidden');
         if (document.getElementById('mobile-btn-logout')) document.getElementById('mobile-btn-logout').classList.remove('hidden');
+
+        // Desktop Auth menu toggles
+        if (document.getElementById('auth-btn-google')) document.getElementById('auth-btn-google').classList.add('hidden');
+        if (document.getElementById('auth-btn-email')) document.getElementById('auth-btn-email').classList.add('hidden');
+        if (document.getElementById('auth-btn-logout')) document.getElementById('auth-btn-logout').classList.remove('hidden');
 
         if (document.getElementById('auth-user-name')) document.getElementById('auth-user-name').textContent = user.displayName || 'Usuario';
         if (document.getElementById('auth-user-email')) document.getElementById('auth-user-email').textContent = user.email;
@@ -82,13 +88,19 @@ onAuthStateChanged(auth, (user) => {
         }
     } else {
         // UI de Usuario Desconectado
-        if (document.getElementById('auth-user-view')) document.getElementById('auth-user-view').classList.add('hidden');
-        if (document.getElementById('auth-guest-view')) document.getElementById('auth-guest-view').classList.remove('hidden');
+        if (document.getElementById('auth-user-info-panel')) {
+            document.getElementById('auth-user-info-panel').style.display = 'none';
+        }
         
         // Mobile menu specific toggles (mostrar login options, ocultar logout)
         if (document.getElementById('mobile-btn-google')) document.getElementById('mobile-btn-google').classList.remove('hidden');
         if (document.getElementById('mobile-btn-email')) document.getElementById('mobile-btn-email').classList.remove('hidden');
         if (document.getElementById('mobile-btn-logout')) document.getElementById('mobile-btn-logout').classList.add('hidden');
+
+        // Desktop Auth menu toggles
+        if (document.getElementById('auth-btn-google')) document.getElementById('auth-btn-google').classList.remove('hidden');
+        if (document.getElementById('auth-btn-email')) document.getElementById('auth-btn-email').classList.remove('hidden');
+        if (document.getElementById('auth-btn-logout')) document.getElementById('auth-btn-logout').classList.add('hidden');
 
         window.currentUserId = null;
     }
