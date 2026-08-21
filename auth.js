@@ -26,13 +26,13 @@ import {
 // REEMPLAZAR CON LAS CLAVES DE TU PROYECTO FIREBASE
 // (Ve a la consola de Firebase -> Configuración del Proyecto -> General -> Tus Apps -> Firebase SDK snippet)
 const firebaseConfig = {
-  apiKey: "AIzaSyAze6d99BTVCZrKTLzZU7k2VDBQvCOVbRI",
-  authDomain: "barber-shop-7b7a1.firebaseapp.com",
-  projectId: "barber-shop-7b7a1",
-  storageBucket: "barber-shop-7b7a1.firebasestorage.app",
-  messagingSenderId: "1012462347255",
-  appId: "1:1012462347255:web:8943921ae053b120ff04f2",
-  measurementId: "G-F5NVKXM1KB",
+  apiKey: "AIzaSyDAFdX6z1nDs00E7IczMqEmp-TDxoSVOuI",
+  authDomain: "the-barber-shop-c623b.firebaseapp.com",
+  projectId: "the-barber-shop-c623b",
+  storageBucket: "the-barber-shop-c623b.firebasestorage.app",
+  messagingSenderId: "152427609851",
+  appId: "1:152427609851:web:3501eb66b9674d300d3a5e",
+  measurementId: "G-36E3YG6P20",
 };
 
 // Initialize Firebase
