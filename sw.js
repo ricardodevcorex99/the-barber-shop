@@ -3,7 +3,7 @@
  * Cache-first for static assets, network-first for API + pages.
  */
 
-const CACHE_NAME = 'tbs-cache-v1';
+const CACHE_NAME = 'tbs-cache-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -12,6 +12,7 @@ const STATIC_ASSETS = [
   '/galeria.html',
   '/styles.css',
   '/booking.js',
+  '/auth.js',
   '/script.js',
   '/manifest.webmanifest'
 ];
@@ -36,40 +37,24 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch: stale-while-revalidate for static, network-first for API
+// Fetch: Network-first for everything (good for development and frequent updates)
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip non-GET and cross-origin API calls
+  // Skip non-GET and cross-origin calls
   if (request.method !== 'GET') return;
-  if (url.origin !== location.origin) return;
-  if (url.pathname.startsWith('/api/')) {
-    event.respondWith(
-      fetch(request)
-        .then((res) => {
+  if (url.origin !== location.origin && !url.origin.includes('gstatic.com') && !url.origin.includes('googleapis.com')) return;
+
+  event.respondWith(
+    fetch(request)
+      .then((res) => {
+        if (res && res.status === 200) {
           const copy = res.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-          return res;
-        })
-        .catch(() => caches.match(request))
-    );
-    return;
-  }
-
-  // Stale-while-revalidate for HTML/static
-  event.respondWith(
-    caches.match(request).then((cached) => {
-      const network = fetch(request)
-        .then((res) => {
-          if (res && res.status === 200) {
-            const copy = res.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-          }
-          return res;
-        })
-        .catch(() => cached);
-      return cached || network;
-    })
+        }
+        return res;
+      })
+      .catch(() => caches.match(request))
   );
 });
