@@ -9,12 +9,13 @@ import { getFirestore, collection, query, where, getDocs, orderBy } from "https:
 // REEMPLAZAR CON LAS CLAVES DE TU PROYECTO FIREBASE
 // (Ve a la consola de Firebase -> Configuración del Proyecto -> General -> Tus Apps -> Firebase SDK snippet)
 const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_PROYECTO.firebaseapp.com",
-    projectId: "TU_PROYECTO",
-    storageBucket: "TU_PROYECTO.appspot.com",
-    messagingSenderId: "TU_SENDER_ID",
-    appId: "TU_APP_ID"
+    apiKey: "AIzaSyAze6d99BTVCZrKTLzZU7k2VDBQvCOVbRI",
+    authDomain: "barber-shop-7b7a1.firebaseapp.com",
+    projectId: "barber-shop-7b7a1",
+    storageBucket: "barber-shop-7b7a1.firebasestorage.app",
+    messagingSenderId: "1012462347255",
+    appId: "1:1012462347255:web:8943921ae053b120ff04f2",
+    measurementId: "G-F5NVKXM1KB"
 };
 
 // Initialize Firebase
