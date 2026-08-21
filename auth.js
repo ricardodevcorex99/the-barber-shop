@@ -50,6 +50,7 @@ window.handleMiPerfilClick = function() {
         }
     } else {
         // NO está logueado: Redirige al login de Google inmediatamente
+        sessionStorage.setItem('pendingRedirect', 'true');
         window.loginWithGoogle();
     }
 };
@@ -71,6 +72,13 @@ onAuthStateChanged(auth, (user) => {
         if (document.getElementById('auth-btn-email')) document.getElementById('auth-btn-email').classList.add('hidden');
         if (document.getElementById('auth-btn-logout')) document.getElementById('auth-btn-logout').classList.remove('hidden');
 
+        // Booking Form Protection
+        if (document.getElementById('booking-auth-overlay')) document.getElementById('booking-auth-overlay').classList.add('hidden');
+        if (document.getElementById('booking-form')) {
+            document.getElementById('booking-form').style.display = 'block';
+            document.getElementById('booking-form').classList.remove('hidden');
+        }
+
         if (document.getElementById('auth-user-name')) document.getElementById('auth-user-name').textContent = user.displayName || 'Usuario';
         if (document.getElementById('auth-user-email')) document.getElementById('auth-user-email').textContent = user.email;
 
@@ -80,10 +88,18 @@ onAuthStateChanged(auth, (user) => {
         // Cargar datos en el modal
         loadMiPerfilYHistorial(user);
 
-        // Si venimos de un login explícito, redirigir
-        if (sessionStorage.getItem('pendingRedirect') === 'true') {
+        // Si venimos de un login explícito (ej. booking redirect), manejarlo
+        if (sessionStorage.getItem('pendingRedirect') === 'booking') {
             sessionStorage.removeItem('pendingRedirect');
-            // Check if profile exists, if not create it, then open modal
+            saveUserProfile(user); // Asegura que se cree el perfil
+            // Scroll to reservas
+            if (window.location.pathname.includes('douglas.html') || window.location.pathname.includes('cristopher.html')) {
+                window.location.hash = '#booking-form';
+            } else {
+                window.location.hash = '#reservas';
+            }
+        } else if (sessionStorage.getItem('pendingRedirect') === 'true') {
+            sessionStorage.removeItem('pendingRedirect');
             saveUserProfile(user); 
         }
     } else {
@@ -101,6 +117,16 @@ onAuthStateChanged(auth, (user) => {
         if (document.getElementById('auth-btn-google')) document.getElementById('auth-btn-google').classList.remove('hidden');
         if (document.getElementById('auth-btn-email')) document.getElementById('auth-btn-email').classList.remove('hidden');
         if (document.getElementById('auth-btn-logout')) document.getElementById('auth-btn-logout').classList.add('hidden');
+
+        // Booking Form Protection
+        if (document.getElementById('booking-auth-overlay')) {
+            document.getElementById('booking-auth-overlay').classList.remove('hidden');
+            document.getElementById('booking-auth-overlay').style.display = 'block';
+        }
+        if (document.getElementById('booking-form')) {
+            document.getElementById('booking-form').style.display = 'none';
+            document.getElementById('booking-form').classList.add('hidden');
+        }
 
         window.currentUserId = null;
     }
