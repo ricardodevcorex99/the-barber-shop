@@ -64,6 +64,7 @@ function toDb(booking) {
     status: booking.status || 'pending',
     whatsapp_message: booking.whatsappMessage || null,
     whatsapp_phone: booking.whatsappPhone || null,
+    user_id: booking.user_id || null,
     created_at: booking.createdAt || new Date().toISOString(),
     updated_at: booking.updatedAt || new Date().toISOString()
   };

@@ -444,7 +444,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         time,
                         preference,
                         barber: barberName,
-                        services: selectedServices.map(s => s.name)
+                        services: selectedServices.map(s => s.name),
+                        user_id: window.currentUserId || null
                     };
                     const res = await fetch('/api/bookings', {
                         method: 'POST',

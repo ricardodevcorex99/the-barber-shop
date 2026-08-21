@@ -97,13 +97,30 @@
                         <i class="fa-solid fa-bars text-xl md:text-2xl"></i>
                     </button>
                     <!-- Auth Dropdown Panel -->
-                    <div id="auth-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-dark-900 border border-gold-500/30 rounded-lg shadow-[0_5px_25px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col py-2 z-50 transform opacity-0 scale-95 transition-all duration-200 origin-top-right font-oregano">
-                        <a href="/agenda/" class="px-4 py-2.5 text-sm md:text-base text-[#fffffe] hover:bg-gold-500/10 hover:text-gold-400 transition-colors flex items-center">
-                            <i class="fa-solid fa-right-to-bracket mr-3 w-4 text-center"></i> Iniciar sesión
-                        </a>
-                        <a href="#registro" class="px-4 py-2.5 text-sm md:text-base text-[#fffffe] hover:bg-gold-500/10 hover:text-gold-400 transition-colors flex items-center">
-                            <i class="fa-solid fa-user-plus mr-3 w-4 text-center"></i> Registrarse
-                        </a>
+                    <div id="auth-dropdown" class="hidden absolute right-0 mt-3 w-56 bg-dark-900 border border-gold-500/30 rounded-lg shadow-[0_5px_25px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col py-2 z-50 transform opacity-0 scale-95 transition-all duration-200 origin-top-right font-oregano">
+                        <!-- Guest State -->
+                        <div id="auth-guest-view" class="flex flex-col">
+                            <button onclick="loginWithGoogle()" class="px-4 py-2.5 text-sm md:text-base text-[#fffffe] hover:bg-gold-500/10 hover:text-gold-400 transition-colors flex items-center text-left w-full">
+                                <i class="fa-brands fa-google mr-3 w-4 text-center"></i> Iniciar con Google
+                            </button>
+                            <button onclick="loginWithEmail()" class="px-4 py-2.5 text-sm md:text-base text-[#fffffe] hover:bg-gold-500/10 hover:text-gold-400 transition-colors flex items-center text-left w-full">
+                                <i class="fa-solid fa-envelope mr-3 w-4 text-center"></i> Continuar con Email
+                            </button>
+                        </div>
+                        
+                        <!-- Authenticated State (Hidden by default) -->
+                        <div id="auth-user-view" class="hidden flex flex-col">
+                            <div class="px-4 py-2 border-b border-gray-800 mb-1">
+                                <p id="auth-user-name" class="text-sm font-bold text-gold-500 truncate">Usuario</p>
+                                <p id="auth-user-email" class="text-xs text-gray-400 truncate">email@example.com</p>
+                            </div>
+                            <a href="#mis-citas" class="px-4 py-2.5 text-sm md:text-base text-[#fffffe] hover:bg-gold-500/10 hover:text-gold-400 transition-colors flex items-center">
+                                <i class="fa-solid fa-calendar-check mr-3 w-4 text-center"></i> Mis Citas
+                            </a>
+                            <button onclick="logout()" class="px-4 py-2.5 text-sm md:text-base text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors flex items-center text-left w-full mt-1">
+                                <i class="fa-solid fa-right-from-bracket mr-3 w-4 text-center"></i> Cerrar sesión
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -952,10 +969,29 @@
         </div>
     </div>
 
-    <!-- Script JS -->
-    <script src="booking.js?v=3"></script>
+    <!-- MIS CITAS MODAL -->
+    <div id="mis-citas-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-dark-900 border border-gold-500/30 w-full max-w-2xl rounded-2xl shadow-[0_10px_40px_rgba(212,175,55,0.15)] overflow-hidden flex flex-col max-h-[80vh]">
+            <div class="px-6 py-4 border-b border-gold-500/20 flex justify-between items-center bg-dark-800">
+                <h3 class="font-cinzel text-xl text-gold-500 font-bold tracking-wider"><i class="fa-solid fa-calendar-check mr-2"></i> Mis Citas</h3>
+                <button onclick="document.getElementById('mis-citas-modal').classList.add('hidden')" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto flex-1 font-sans text-sm" id="mis-citas-list">
+                <!-- Citas se cargan aquí -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Auth Logic -->
+    <script src="auth.js?v=1"></script>
+    <!-- Main App Logic -->
+    <script src="booking.js?v=4"></script>
     <script>
-        // PWA: register service worker (only on https / localhost)
+        // PWA: register service worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js').catch((err) => {

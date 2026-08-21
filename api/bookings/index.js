@@ -63,6 +63,7 @@ async function createBooking(req, res) {
     status: BookingStatus.PENDING,
     whatsappMessage: buildWhatsAppMessage({ ...data, folio }),
     whatsappPhone: getBarberPhone(data.barber),
+    user_id: data.user_id || null,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
