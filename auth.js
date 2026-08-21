@@ -74,18 +74,36 @@ window.loginWithGoogle = async function() {
 // Función auxiliar para guardar el perfil en Firestore
 async function saveUserProfile(user) {
     try {
-        const { doc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+        const { doc, getDoc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
         const userRef = doc(db, "profiles", user.uid);
+        const docSnap = await getDoc(userRef);
         
-        await setDoc(userRef, {
-            id: user.uid,
-            full_name: user.displayName || user.email.split('@')[0],
-            email: user.email,
-            avatar_url: user.photoURL || null,
-            last_login: new Date().toISOString()
-        }, { merge: true }); // Merge true updates existing fields without overwriting everything
+        if (docSnap.exists()) {
+            // Usuario recurrente, solo actualizar last_login y foto si cambió
+            await setDoc(userRef, {
+                last_login: new Date().toISOString(),
+                avatar_url: user.photoURL || docSnap.data().avatar_url
+            }, { merge: true });
+            console.log("Perfil de usuario actualizado en la base de datos.");
+        } else {
+            // Usuario nuevo, generar username
+            const generatedUsername = user.email ? user.email.split('@')[0] : `user_${user.uid.substring(0, 5)}`;
+            await setDoc(userRef, {
+                id: user.uid,
+                username: generatedUsername,
+                full_name: user.displayName || generatedUsername,
+                email: user.email,
+                avatar_url: user.photoURL || null,
+                created_at: new Date().toISOString(),
+                last_login: new Date().toISOString()
+            });
+            console.log("Nuevo perfil creado en la base de datos.");
+        }
         
-        console.log("Perfil de usuario actualizado en la base de datos.");
+        // Redirigir a Mi Cuenta si estamos en el inicio
+        if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+            window.location.href = '/mi-cuenta.html';
+        }
     } catch (error) {
         console.error("Error guardando el perfil del usuario:", error);
     }

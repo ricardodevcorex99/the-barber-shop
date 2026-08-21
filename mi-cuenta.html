@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuenta | THE BARBER SHOP</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Permanent+Marker&family=Sedgwick+Ave&family=Oregano:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS (Local Build) -->
+    <link href="./styles.css?v=3" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Firebase / Auth Script -->
+    <script type="module" src="auth.js?v=4"></script>
+    
+    <script type="module">
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const auth = getAuth();
+            const db = window.firebaseDb; // defined in auth.js
+            
+            // Protect Route
+            onAuthStateChanged(auth, async (user) => {
+                if (!user) {
+                    window.location.href = '/index.html';
+                    return;
+                }
+                
+                // Fetch User Profile
+                const userRef = doc(db, 'profiles', user.uid);
+                const docSnap = await getDoc(userRef);
+                
+                if (docSnap.exists()) {
+                    const profile = docSnap.data();
+                    
+                    document.getElementById('profile-avatar').src = profile.avatar_url || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(profile.full_name || 'User') + '&background=d4af37&color=0b0b0b';
+                    document.getElementById('profile-name').textContent = profile.full_name || 'Usuario';
+                    document.getElementById('profile-email').textContent = profile.email || '';
+                    document.getElementById('profile-username').textContent = '@' + (profile.username || 'user');
+                    
+                    document.getElementById('edit-full-name').value = profile.full_name || '';
+                    document.getElementById('edit-username').value = profile.username || '';
+                }
+
+                // Load Appointments (using the global function we defined in auth.js)
+                if (typeof window.loadMisCitas === 'function') {
+                    window.loadMisCitas(document.getElementById('history-list'));
+                }
+            });
+
+            // Edit Profile Toggle
+            const btnEdit = document.getElementById('btn-edit-profile');
+            const btnCancelEdit = document.getElementById('btn-cancel-edit');
+            const formEdit = document.getElementById('form-edit-profile');
+            const viewProfile = document.getElementById('view-profile-info');
+            
+            btnEdit.addEventListener('click', () => {
+                viewProfile.classList.add('hidden');
+                formEdit.classList.remove('hidden');
+            });
+            
+            btnCancelEdit.addEventListener('click', () => {
+                formEdit.classList.add('hidden');
+                viewProfile.classList.remove('hidden');
+            });
+
+            // Save Profile
+            document.getElementById('form-edit-profile').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const newName = document.getElementById('edit-full-name').value.trim();
+                const newUsername = document.getElementById('edit-username').value.trim();
+                
+                const btnSave = document.getElementById('btn-save-profile');
+                btnSave.disabled = true;
+                btnSave.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando...';
+
+                try {
+                    const user = auth.currentUser;
+                    const userRef = doc(db, 'profiles', user.uid);
+                    await updateDoc(userRef, {
+                        full_name: newName,
+                        username: newUsername
+                    });
+                    
+                    // Update UI
+                    document.getElementById('profile-name').textContent = newName;
+                    document.getElementById('profile-username').textContent = '@' + newUsername;
+                    
+                    formEdit.classList.add('hidden');
+                    viewProfile.classList.remove('hidden');
+                    
+                    // Show small toast
+                    alert("¡Perfil actualizado con éxito!");
+                } catch (error) {
+                    console.error("Error al actualizar perfil:", error);
+                    alert("Hubo un error al guardar los cambios.");
+                } finally {
+                    btnSave.disabled = false;
+                    btnSave.innerHTML = 'Guardar Cambios';
+                }
+            });
+        });
+    </script>
+</head>
+<body class="bg-[#0b0b0b] text-[#fffffe] font-sans antialiased bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')]">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-40 bg-dark-900/90 backdrop-blur-md border-b border-gold-500/20 shadow-lg">
+        <div class="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
+            <a href="/index.html" class="flex flex-col items-center group">
+                <h1 class="font-sedgwick text-2xl md:text-3xl text-gold-500 tracking-wider group-hover:text-white transition-colors">THE BARBER SHOP</h1>
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="/index.html#reservas" class="hidden md:inline-block px-4 py-2 bg-gold-600 hover:bg-gold-500 text-dark-900 font-cinzel font-bold text-sm tracking-wider rounded-lg transition-colors">
+                    Nueva Cita
+                </a>
+                <button onclick="window.logout()" class="text-gray-400 hover:text-white transition-colors p-2" aria-label="Cerrar sesión">
+                    <i class="fa-solid fa-right-from-bracket text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pt-32 pb-20 max-w-5xl">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Column: Profile Card -->
+            <div class="lg:col-span-1">
+                <div class="bg-dark-800 border border-gold-500/30 rounded-2xl p-6 shadow-[0_10px_40px_rgba(212,175,55,0.05)] sticky top-28">
+                    <!-- Loading State / Content -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="relative w-28 h-28 mb-4">
+                            <img id="profile-avatar" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D4AF37'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E" alt="Avatar" class="w-full h-full rounded-full object-cover border-2 border-gold-500 p-1 shadow-lg">
+                        </div>
+                        
+                        <div id="view-profile-info" class="w-full">
+                            <h2 id="profile-name" class="font-cinzel font-bold text-2xl text-[#fffffe] mb-1">Cargando...</h2>
+                            <p id="profile-username" class="text-gold-500 font-oregano tracking-wider text-lg mb-2">@...</p>
+                            <p id="profile-email" class="text-gray-400 text-sm mb-6"></p>
+                            
+                            <button id="btn-edit-profile" class="w-full py-2 bg-dark-700 hover:bg-dark-600 border border-gray-600 text-white rounded-lg text-sm font-medium transition-colors">
+                                <i class="fa-solid fa-pen mr-2"></i> Editar Perfil
+                            </button>
+                        </div>
+
+                        <!-- Edit Form -->
+                        <form id="form-edit-profile" class="hidden w-full text-left mt-2">
+                            <div class="mb-4">
+                                <label class="block text-xs text-gray-400 mb-1">Nombre Completo</label>
+                                <input type="text" id="edit-full-name" class="w-full bg-dark-900 border border-gray-700 rounded p-2 text-white focus:outline-none focus:border-gold-500 text-sm" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-xs text-gray-400 mb-1">Nombre de Usuario (Username)</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-2.5 text-gray-500">@</span>
+                                    <input type="text" id="edit-username" class="w-full bg-dark-900 border border-gray-700 rounded p-2 pl-8 text-white focus:outline-none focus:border-gold-500 text-sm" required pattern="[a-zA-Z0-9_]+" title="Solo letras, números y guiones bajos">
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button type="submit" id="btn-save-profile" class="flex-1 bg-gold-600 hover:bg-gold-500 text-dark-900 font-bold py-2 rounded-lg text-sm transition-colors">Guardar Cambios</button>
+                                <button type="button" id="btn-cancel-edit" class="flex-1 bg-transparent border border-gray-600 hover:bg-dark-700 text-white py-2 rounded-lg text-sm transition-colors">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: History -->
+            <div class="lg:col-span-2">
+                <div class="bg-dark-900 border border-gray-800 rounded-2xl p-6 md:p-8">
+                    <h3 class="font-cinzel text-2xl text-gold-500 font-bold mb-6 pb-4 border-b border-gray-800">
+                        <i class="fa-solid fa-clock-rotate-left mr-2"></i> Historial de Reservas
+                    </h3>
+                    
+                    <div id="history-list" class="space-y-4">
+                        <!-- Loaded dynamically -->
+                        <div class="text-center text-gold-500 py-10">
+                            <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3"></i>
+                            <p>Cargando tu historial...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-950 py-6 border-t border-gold-500/20 text-center text-gray-500 text-sm">
+        <p>&copy; 2026 THE BARBER SHOP. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
