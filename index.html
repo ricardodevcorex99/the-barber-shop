@@ -22,7 +22,7 @@
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%82%EF%B8%8F%3C/text%3E%3C/svg%3E"
     />
     <link rel="apple-touch-icon" href="img/icon-192.png" />
-
+    <link rel="stylesheet" href="chatbot.css" />
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -2362,6 +2362,29 @@
         </div>
       </div>
     </div>
+
+    <!-- Chatbot IA Widget -->
+    <div id="ai-chatbot-widget">
+      <button id="chat-bubble-btn">
+        <i class="fa-solid fa-robot"></i>
+      </button>
+      
+      <div id="chat-window">
+        <div id="chat-header">
+          <h3><i class="fa-solid fa-shield-halved"></i> IA Asistente</h3>
+          <button id="close-chat-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="chat-messages">
+          <div class="message bot">Hola, soy el asistente inteligente de THE BARBER SHOP. ¿En qué te puedo ayudar hoy?</div>
+        </div>
+        <div id="chat-input-container">
+          <input type="text" id="chat-input" placeholder="Pregunta algo..." autocomplete="off">
+          <button id="chat-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </div>
+    
+    <script src="chatbot.js"></script>
 
     <!-- Firebase / Auth Logic (Module) -->
     <script type="module" src="auth.js?v=8"></script>
