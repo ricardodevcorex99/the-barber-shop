@@ -4,10 +4,10 @@ export default async function handler(req, res) {
   }
 
   const { message } = req.body;
-  const API_KEY = process.env.GEMINI_API_KEY;
+  const API_KEY = process.env.GEMINI_API_KEY || process.env.STITCH_API_KEY;
 
   if (!API_KEY) {
-    return res.status(500).json({ error: 'API key not configured in Vercel' });
+    return res.status(500).json({ error: 'La API Key de Gemini no está configurada en las variables de entorno de Vercel (GEMINI_API_KEY o STITCH_API_KEY).' });
   }
 
   try {
@@ -27,6 +27,6 @@ export default async function handler(req, res) {
     const data = await response.json();
     return res.status(200).json(data);
   } catch (error) {
-    return res.status(500).json({ error: 'Failed to fetch from Gemini' });
+    return res.status(500).json({ error: `Fallo interno al conectar con Gemini: ${error.message}` });
   }
 }

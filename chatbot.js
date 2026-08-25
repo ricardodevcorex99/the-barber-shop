@@ -83,10 +83,15 @@ document.addEventListener('DOMContentLoaded', () => {
       removeTyping();
 
       if (response.ok) {
-        const respuestaIA = data.candidates[0].content.parts[0].text;
-        appendMessage(respuestaIA, 'bot');
+        if (data.candidates && data.candidates.length > 0) {
+          const respuestaIA = data.candidates[0].content.parts[0].text;
+          appendMessage(respuestaIA, 'bot');
+        } else {
+          appendMessage("Error: La IA no devolvió ninguna respuesta.", 'bot');
+        }
       } else {
-        appendMessage("Error de conexión con el servidor.", 'bot');
+        const errMsg = data.error || data.error?.message || "Error desconocido del servidor.";
+        appendMessage(`Error de servidor: ${errMsg}`, 'bot');
       }
     } catch (error) {
       removeTyping();
