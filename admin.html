@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="styles.css?v=19" />
     <link rel="stylesheet" href="src/styles/tokens.css" />
     <link rel="stylesheet" href="src/styles/components.css" />
+      <link rel="stylesheet" href="chatbot.css" />
   </head>
   <body
     class="bg-dark-900 text-[#fffffe] font-oregano antialiased min-h-screen"
@@ -311,5 +312,166 @@
     ></div>
 
     <script src="src/admin.js"></script>
+  
+    <!-- MI PERFIL MODAL -->
+    <div
+      id="mi-perfil-modal"
+      class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4"
+    >
+      <div
+        class="bg-dark-900 border border-gold-500/30 w-full max-w-4xl rounded-2xl shadow-[0_10px_40px_rgba(212,175,55,0.15)] overflow-hidden flex flex-col max-h-[90vh]"
+      >
+        <div
+          class="px-6 py-4 border-b border-gold-500/20 flex justify-between items-center bg-dark-800"
+        >
+          <h3
+            class="font-cinzel text-xl text-gold-500 font-bold tracking-wider"
+          >
+            <i class="fa-solid fa-user-astronaut mr-2"></i> Mi Perfil
+          </h3>
+            <button
+            onclick="
+              document.getElementById('mi-perfil-modal').style.display = 'none';
+              document.getElementById('mi-perfil-modal').classList.add('hidden');
+            "
+            class="text-gray-400 hover:text-white transition-colors"
+          >
+            <i class="fa-solid fa-xmark text-xl"></i>
+          </button>
+        </div>
+
+        <div
+          class="p-6 overflow-y-auto flex-1 font-sans grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
+          <!-- Columna Izquierda: Perfil -->
+          <div class="md:col-span-1 border-r border-gray-800 pr-0 md:pr-6">
+            <div class="flex flex-col items-center text-center">
+              <div class="relative w-24 h-24 mb-4">
+                <img
+                  id="modal-profile-avatar"
+                  src=""
+                  alt="Avatar"
+                  class="w-full h-full rounded-full object-cover border-2 border-gold-500 p-1 shadow-lg"
+                />
+              </div>
+              <div id="modal-view-profile-info" class="w-full">
+                <h2
+                  id="modal-profile-name"
+                  class="font-cinzel font-bold text-xl text-[#fffffe] mb-1"
+                >
+                  Cargando...
+                </h2>
+                <p
+                  id="modal-profile-username"
+                  class="text-gold-500 font-oregano tracking-wider text-base mb-2"
+                >
+                  @...
+                </p>
+                <p
+                  id="modal-profile-email"
+                  class="text-gray-400 text-xs mb-6"
+                ></p>
+
+                <button
+                  id="modal-btn-edit-profile"
+                  class="w-full py-2 bg-dark-700 hover:bg-dark-600 border border-gray-600 text-white rounded-lg text-sm font-medium transition-colors"
+                >
+                  <i class="fa-solid fa-pen mr-2"></i> Editar Perfil
+                </button>
+              </div>
+
+              <!-- Edit Form -->
+              <form
+                id="modal-form-edit-profile"
+                class="hidden w-full text-left mt-2"
+              >
+                <div class="mb-4">
+                  <label class="block text-xs text-gray-400 mb-1"
+                    >Nombre Completo</label
+                  >
+                  <input
+                    type="text"
+                    id="modal-edit-full-name"
+                    class="w-full bg-dark-950 border border-gray-700 rounded p-2 text-white focus:outline-none focus:border-gold-500 text-sm"
+                    required
+                  />
+                </div>
+                <div class="mb-4">
+                  <label class="block text-xs text-gray-400 mb-1"
+                    >Username</label
+                  >
+                  <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-gray-500">@</span>
+                    <input
+                      type="text"
+                      id="modal-edit-username"
+                      class="w-full bg-dark-950 border border-gray-700 rounded p-2 pl-8 text-white focus:outline-none focus:border-gold-500 text-sm"
+                      required
+                      pattern="[a-zA-Z0-9_]+"
+                    />
+                  </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <button
+                    type="submit"
+                    id="modal-btn-save-profile"
+                    class="w-full bg-gold-600 hover:bg-gold-500 text-dark-900 font-bold py-2 rounded-lg text-sm transition-colors"
+                  >
+                    Guardar
+                  </button>
+                  <button
+                    type="button"
+                    id="modal-btn-cancel-edit"
+                    class="w-full bg-transparent border border-gray-600 hover:bg-dark-700 text-white py-2 rounded-lg text-sm transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Historial -->
+          <div class="md:col-span-2">
+            <h4
+              class="font-cinzel text-lg text-gold-500 font-bold mb-4 pb-2 border-b border-gray-800"
+            >
+              <i class="fa-solid fa-clock-rotate-left mr-2"></i> Historial de
+              Reservas
+            </h4>
+            <div id="modal-history-list" class="space-y-3">
+              <div class="text-center text-gold-500 py-6">
+                <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i>
+                <p class="text-sm">Cargando tu historial...</p>
+              </div>
+            </div>
+          </div>
+
+    <!-- Chatbot IA Widget -->
+    <div id="ai-chatbot-widget">
+      <button id="chat-bubble-btn">
+        <i class="fa-solid fa-robot"></i>
+      </button>
+      
+      <div id="chat-window">
+        <div id="chat-header">
+          <h3><i class="fa-solid fa-shield-halved"></i> IA Asistente</h3>
+          <button id="close-chat-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="chat-messages">
+          <div class="message bot">Hola, soy el asistente inteligente de THE BARBER SHOP. ¿En qué te puedo ayudar hoy?</div>
+        </div>
+        <div id="chat-input-container">
+          <input type="text" id="chat-input" placeholder="Pregunta algo..." autocomplete="off">
+          <button id="chat-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </div>
+    
+    <script src="chatbot.js"></script>
+
+    <!-- Firebase / Auth Logic (Module) -->
+    <script type="module" src="auth.js?v=8"></script>
+
   </body>
 </html>

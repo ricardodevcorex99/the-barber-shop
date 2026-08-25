@@ -41,6 +41,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwind.config.js"></script>
     <link rel="stylesheet" href="styles.css?v=17" />
+      <link rel="stylesheet" href="chatbot.css" />
   </head>
   <body
     class="bg-dark-900 text-[#fffffe] font-oregano antialiased overflow-x-hidden"
@@ -58,7 +59,7 @@
       >
         <!-- Logo -->
         <a
-          href="index.html"
+          href="index.html#hero"
           class="font-quicksilver text-2xl text-[#fffffe] tracking-wider hover:text-gold-500 transition-colors"
           >THE BARBER SHOP</a
         >
@@ -68,7 +69,7 @@
           class="hidden lg:flex items-center space-x-8 text-sm font-oregano font-medium tracking-wide"
         >
           <a
-            href="index.html"
+            href="index.html#hero"
             class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500"
             >Inicio</a
           >
@@ -83,7 +84,7 @@
             >Conócenos</a
           >
           <a
-            href="index.html#galeria"
+            href="galeria.html"
             class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500"
             >Galería</a
           >
@@ -93,26 +94,103 @@
             >Servicios y Precios</a
           >
           <a
-            href="#reservas"
+            href="index.html#reservas"
             class="nav-link text-[#fffffe] hover:text-[#fffffe] transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500"
             >Reservar Cita</a
           >
         </nav>
 
-        <!-- CTA Header Button -->
-        <div class="hidden sm:flex items-center space-x-4">
+        <!-- CTA Header Button & Auth Menu -->
+        <div class="flex items-center space-x-2 md:space-x-4">
           <a
-            href="#reservas"
-            class="relative inline-flex items-center justify-center px-6 py-2.5 text-xs md:text-sm font-sedgwick font-bold uppercase tracking-wider text-[#fffffe] bg-gold-500 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.7)] hover:scale-105 active:scale-95 duration-300"
+            href="index.html#reservas"
+            class="hidden sm:inline-flex magnetic-btn relative items-center justify-center px-6 py-2.5 text-xs md:text-sm font-sedgwick font-bold uppercase tracking-wider text-dark-900 bg-gold-500 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.7)] active:scale-95 transition-all duration-300"
           >
-            <i class="fa-solid fa-cut mr-2"></i> Reservar con Cristopher
+            <i class="fa-solid fa-cut mr-2"></i> Reservar Cita
           </a>
+
+          <!-- New Auth Hamburger Menu -->
+          <div class="relative">
+            <button
+              id="auth-menu-btn"
+              class="text-[#fffffe] hover:text-gold-500 focus:outline-none p-2 rounded-lg transition-colors flex items-center justify-center"
+              aria-label="Opciones de cuenta"
+            >
+              <i class="fa-solid fa-bars text-xl md:text-2xl"></i>
+            </button>
+            <!-- Auth Dropdown Panel -->
+            <div
+              id="auth-dropdown"
+              class="hidden absolute right-0 mt-3 w-56 bg-dark-900 border border-gold-500/30 rounded-lg shadow-[0_5px_25px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col py-2 z-50 transform opacity-0 scale-95 transition-all duration-200 origin-top-right font-oregano"
+            >
+              <div
+                class="px-4 py-2 border-b border-gray-800 mb-1"
+                id="auth-user-info-panel"
+                style="display: none"
+              >
+                <p
+                  id="auth-user-name"
+                  class="text-sm font-bold text-gold-500 truncate"
+                >
+                  Usuario
+                </p>
+                <p id="auth-user-email" class="text-xs text-gray-400 truncate">
+                  email@example.com
+                </p>
+              </div>
+
+              <!-- 1. Mi Perfil -->
+              <button
+                onclick="handleMiPerfilClick()"
+                class="px-4 py-2.5 text-base text-[#fffffe] hover:bg-gold-500/10 hover:text-gold-400 transition-colors flex items-center text-left w-full font-bold"
+              >
+                <i
+                  class="fa-solid fa-user-astronaut mr-3 w-4 text-center text-gold-500"
+                ></i>
+                Mi Perfil
+              </button>
+
+              <!-- 2. Registrarse con Google -->
+              <button
+                id="auth-btn-google"
+                onclick="loginWithGoogle()"
+                class="px-4 py-2.5 text-base text-gold-500 hover:bg-gold-500/10 hover:text-gold-400 transition-colors flex items-center text-left w-full font-bold"
+              >
+                <i class="fa-brands fa-google mr-3 w-4 text-center"></i>
+                Registrarse con Google
+              </button>
+
+              <!-- 3. Registrarse con Gmail -->
+              <button
+                id="auth-btn-email"
+                onclick="loginWithEmail()"
+                class="px-4 py-2.5 text-base text-gray-300 hover:bg-white/10 hover:text-white transition-colors flex items-center text-left w-full font-bold"
+              >
+                <i
+                  class="fa-solid fa-envelope mr-3 w-4 text-center text-red-500"
+                ></i>
+                Registrarse con Gmail
+              </button>
+
+              <!-- Botón de Cerrar Sesión -->
+              <button
+                id="auth-btn-logout"
+                onclick="logout()"
+                class="hidden px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 transition-colors flex items-center text-left w-full mt-2 border-t border-gray-800"
+              >
+                <i
+                  class="fa-solid fa-right-from-bracket mr-3 w-4 text-center"
+                ></i>
+                Cerrar sesión
+              </button>
+            </div>
+          </div>
         </div>
 
-        <!-- Hamburger Button Mobile -->
+        <!-- Main Hamburger Button Mobile (Keep existing) -->
         <button
           id="mobile-menu-btn"
-          class="lg:hidden text-[#fffffe] hover:text-[#fffffe] focus:outline-none p-2 rounded-lg"
+          class="lg:hidden text-[#fffffe] hover:text-[#fffffe] focus:outline-none p-2 rounded-lg ml-2"
           aria-label="Abrir menú"
         >
           <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
@@ -126,7 +204,7 @@
       >
         <div class="flex flex-col space-y-4 font-oregano text-base text-center">
           <a
-            href="index.html"
+            href="index.html#hero"
             class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800"
             >Inicio</a
           >
@@ -141,7 +219,7 @@
             >Conócenos</a
           >
           <a
-            href="index.html#galeria"
+            href="galeria.html"
             class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800"
             >Galería</a
           >
@@ -151,16 +229,62 @@
             >Servicios y Precios</a
           >
           <a
-            href="#reservas"
+            href="index.html#reservas"
             class="mobile-nav-link text-[#fffffe] hover:text-[#fffffe] py-2 border-b border-gray-800"
             >Reservar Cita</a
           >
+
+          <!-- Sección de Cliente (Móvil) Exactamente como pidió el usuario -->
+          <div
+            class="flex flex-col space-y-2 pt-2 pb-2 border-b border-gray-800"
+          >
+            <!-- 1. Mi Perfil -->
+            <button
+              onclick="handleMiPerfilClick()"
+              class="text-[#fffffe] hover:text-gold-400 py-2 flex items-center justify-center font-bold text-lg"
+            >
+              <i class="fa-solid fa-user-astronaut mr-2 text-gold-500"></i> Mi
+              Perfil
+            </button>
+            <!-- 2. Registrarse con Google -->
+            <button
+              id="mobile-btn-google"
+              onclick="loginWithGoogle()"
+              class="text-gold-500 hover:text-gold-400 py-2 flex items-center justify-center font-bold"
+            >
+              <i class="fa-brands fa-google mr-2"></i> Registrarse con Google
+            </button>
+            <!-- 3. Registrarse con Gmail -->
+            <button
+              id="mobile-btn-email"
+              onclick="loginWithEmail()"
+              class="text-gray-300 hover:text-white py-2 flex items-center justify-center font-bold"
+            >
+              <i class="fa-solid fa-envelope mr-2 text-red-500"></i> Registrarse
+              con Gmail
+            </button>
+
+            <!-- Botón de Cerrar Sesión (Oculto por defecto, se muestra por JS si hay sesión) -->
+            <button
+              id="mobile-btn-logout"
+              onclick="logout()"
+              class="hidden text-red-400 hover:text-red-300 py-2 flex items-center justify-center text-sm mt-4"
+            >
+              <i class="fa-solid fa-right-from-bracket mr-2"></i> Cerrar sesión
+            </button>
+          </div>
+
+          <a
+            href="/agenda/"
+            class="mobile-nav-link text-gray-500 hover:text-gray-400 py-2 border-b border-gray-800 text-sm"
+            ><i class="fa-solid fa-lock mr-2"></i> Iniciar Sesión (Staff)</a
+          >
           <div class="pt-2">
             <a
-              href="#reservas"
-              class="mobile-nav-link w-full inline-block py-3 text-center text-sm font-sedgwick font-bold uppercase tracking-wider text-[#fffffe] bg-gold-500 rounded-lg shadow-md"
+              href="index.html#reservas"
+              class="mobile-nav-link w-full inline-block py-3 text-center text-sm font-sedgwick font-bold uppercase tracking-wider text-dark-900 bg-gold-500 rounded-lg shadow-md"
             >
-              <i class="fa-solid fa-cut mr-2"></i> Reservar con Cristopher
+              <i class="fa-solid fa-cut mr-2"></i> Reservar Cita Ahora
             </a>
           </div>
         </div>
@@ -1138,5 +1262,163 @@
         });
       }
     </script>
+  
+    <!-- MI PERFIL MODAL -->
+    <div
+      id="mi-perfil-modal"
+      class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4"
+    >
+      <div
+        class="bg-dark-900 border border-gold-500/30 w-full max-w-4xl rounded-2xl shadow-[0_10px_40px_rgba(212,175,55,0.15)] overflow-hidden flex flex-col max-h-[90vh]"
+      >
+        <div
+          class="px-6 py-4 border-b border-gold-500/20 flex justify-between items-center bg-dark-800"
+        >
+          <h3
+            class="font-cinzel text-xl text-gold-500 font-bold tracking-wider"
+          >
+            <i class="fa-solid fa-user-astronaut mr-2"></i> Mi Perfil
+          </h3>
+            <button
+            onclick="
+              document.getElementById('mi-perfil-modal').style.display = 'none';
+              document.getElementById('mi-perfil-modal').classList.add('hidden');
+            "
+            class="text-gray-400 hover:text-white transition-colors"
+          >
+            <i class="fa-solid fa-xmark text-xl"></i>
+          </button>
+        </div>
+
+        <div
+          class="p-6 overflow-y-auto flex-1 font-sans grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
+          <!-- Columna Izquierda: Perfil -->
+          <div class="md:col-span-1 border-r border-gray-800 pr-0 md:pr-6">
+            <div class="flex flex-col items-center text-center">
+              <div class="relative w-24 h-24 mb-4">
+                <img
+                  id="modal-profile-avatar"
+                  src=""
+                  alt="Avatar"
+                  class="w-full h-full rounded-full object-cover border-2 border-gold-500 p-1 shadow-lg"
+                />
+              </div>
+              <div id="modal-view-profile-info" class="w-full">
+                <h2
+                  id="modal-profile-name"
+                  class="font-cinzel font-bold text-xl text-[#fffffe] mb-1"
+                >
+                  Cargando...
+                </h2>
+                <p
+                  id="modal-profile-username"
+                  class="text-gold-500 font-oregano tracking-wider text-base mb-2"
+                >
+                  @...
+                </p>
+                <p
+                  id="modal-profile-email"
+                  class="text-gray-400 text-xs mb-6"
+                ></p>
+
+                <button
+                  id="modal-btn-edit-profile"
+                  class="w-full py-2 bg-dark-700 hover:bg-dark-600 border border-gray-600 text-white rounded-lg text-sm font-medium transition-colors"
+                >
+                  <i class="fa-solid fa-pen mr-2"></i> Editar Perfil
+                </button>
+              </div>
+
+              <!-- Edit Form -->
+              <form
+                id="modal-form-edit-profile"
+                class="hidden w-full text-left mt-2"
+              >
+                <div class="mb-4">
+                  <label class="block text-xs text-gray-400 mb-1"
+                    >Nombre Completo</label
+                  >
+                  <input
+                    type="text"
+                    id="modal-edit-full-name"
+                    class="w-full bg-dark-950 border border-gray-700 rounded p-2 text-white focus:outline-none focus:border-gold-500 text-sm"
+                    required
+                  />
+                </div>
+                <div class="mb-4">
+                  <label class="block text-xs text-gray-400 mb-1"
+                    >Username</label
+                  >
+                  <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-gray-500">@</span>
+                    <input
+                      type="text"
+                      id="modal-edit-username"
+                      class="w-full bg-dark-950 border border-gray-700 rounded p-2 pl-8 text-white focus:outline-none focus:border-gold-500 text-sm"
+                      required
+                      pattern="[a-zA-Z0-9_]+"
+                    />
+                  </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <button
+                    type="submit"
+                    id="modal-btn-save-profile"
+                    class="w-full bg-gold-600 hover:bg-gold-500 text-dark-900 font-bold py-2 rounded-lg text-sm transition-colors"
+                  >
+                    Guardar
+                  </button>
+                  <button
+                    type="button"
+                    id="modal-btn-cancel-edit"
+                    class="w-full bg-transparent border border-gray-600 hover:bg-dark-700 text-white py-2 rounded-lg text-sm transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Historial -->
+          <div class="md:col-span-2">
+            <h4
+              class="font-cinzel text-lg text-gold-500 font-bold mb-4 pb-2 border-b border-gray-800"
+            >
+              <i class="fa-solid fa-clock-rotate-left mr-2"></i> Historial de
+              Reservas
+            </h4>
+            <div id="modal-history-list" class="space-y-3">
+              <div class="text-center text-gold-500 py-6">
+                <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i>
+                <p class="text-sm">Cargando tu historial...</p>
+              </div>
+            </div>
+          </div>
+
+    <!-- Chatbot IA Widget -->
+    <div id="ai-chatbot-widget">
+      <button id="chat-bubble-btn">
+        <i class="fa-solid fa-robot"></i>
+      </button>
+      
+      <div id="chat-window">
+        <div id="chat-header">
+          <h3><i class="fa-solid fa-shield-halved"></i> IA Asistente</h3>
+          <button id="close-chat-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="chat-messages">
+          <div class="message bot">Hola, soy el asistente inteligente de THE BARBER SHOP. ¿En qué te puedo ayudar hoy?</div>
+        </div>
+        <div id="chat-input-container">
+          <input type="text" id="chat-input" placeholder="Pregunta algo..." autocomplete="off">
+          <button id="chat-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </div>
+    
+    <script src="chatbot.js"></script>
+
   </body>
 </html>
