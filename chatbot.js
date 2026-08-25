@@ -23,7 +23,30 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('barberChatOpen', chatWindow.classList.contains('active'));
   }
 
+  function cleanLoginWarning() {
+    if (window.currentUserId) {
+        let removed = false;
+        const msgs = chatMessages.querySelectorAll('.message.bot');
+        msgs.forEach(msg => {
+            if (msg.textContent.includes("Iniciar Sesión")) {
+                msg.remove();
+                removed = true;
+            }
+        });
+        
+        if (removed) {
+            // Si quedó vacío, insertamos el saludo de bienvenida normal
+            if (chatMessages.children.length === 0) {
+                appendMessage("Hola, soy el asistente inteligente de THE BARBER SHOP. ¿En qué te puedo ayudar hoy?", 'bot');
+            } else {
+                saveChatState();
+            }
+        }
+    }
+  }
+
   function showGreetingIfNeeded() {
+    cleanLoginWarning();
     if (chatWindow.classList.contains('active') && chatMessages.children.length === 0) {
         if (!window.currentUserId) {
             appendMessage("👋 ¡Hola! Para conversar conmigo y ayudarte con tus reservas, primero necesitas **Iniciar Sesión** usando el menú de arriba a la derecha. ¡Te espero!", 'bot');
@@ -77,6 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function sendMessage(text, retryCount = 0) {
+    cleanLoginWarning();
+    
     if (!text) {
       text = chatInput.value.trim();
       if (!text) return;
