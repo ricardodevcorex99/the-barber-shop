@@ -11,6 +11,20 @@ export default async function handler(req, res) {
   }
 
   try {
+    // 1. Enviar LOG a Firebase (Fire-and-forget) para que el Módulo 3 lo audite en tiempo real
+    fetch(`https://firestore.googleapis.com/v1/projects/the-barber-shop-c623b/databases/(default)/documents/firewall_logs`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fields: {
+          mensaje: { stringValue: message },
+          timestamp: { timestampValue: new Date().toISOString() },
+          estado: { stringValue: "PENDIENTE" }
+        }
+      })
+    }).catch(e => console.error("Error logging to firestore", e));
+
+    // 2. Procesar respuesta de la IA
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${API_KEY}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
