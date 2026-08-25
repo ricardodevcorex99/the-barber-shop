@@ -69,6 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
       chatInput.value = '';
     }
     
+    // Verificación de Autenticación
+    if (!window.currentUserId) {
+      appendMessage("👋 ¡Hola! Para conversar conmigo y ayudarte con tus reservas, primero necesitas **Iniciar Sesión** usando el menú de arriba a la derecha. ¡Te espero!", 'bot');
+      return;
+    }
+    
     // 2. Mostrar indicador de "escribiendo..."
     showTyping();
 
