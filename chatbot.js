@@ -27,9 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
   chatBubbleBtn.addEventListener('click', () => {
     chatWindow.classList.toggle('active');
     
-    // Si se acaba de abrir, no está logueado y el chat está vacío, mostrar advertencia de inmediato
-    if (chatWindow.classList.contains('active') && !window.currentUserId && chatMessages.children.length === 0) {
-        appendMessage("👋 ¡Hola! Para conversar conmigo y ayudarte con tus reservas, primero necesitas Iniciar Sesión usando el menú de arriba a la derecha. ¡Te espero!", 'bot');
+    // Si se acaba de abrir y el chat está vacío, mostrar el mensaje inicial adecuado
+    if (chatWindow.classList.contains('active') && chatMessages.children.length === 0) {
+        if (!window.currentUserId) {
+            appendMessage("👋 ¡Hola! Para conversar conmigo y ayudarte con tus reservas, primero necesitas **Iniciar Sesión** usando el menú de arriba a la derecha. ¡Te espero!", 'bot');
+        } else {
+            appendMessage("Hola, soy el asistente inteligente de THE BARBER SHOP. ¿En qué te puedo ayudar hoy?", 'bot');
+        }
     }
     
     saveChatState();
