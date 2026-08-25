@@ -24,8 +24,8 @@ export default async function handler(req, res) {
       })
     }).catch(e => console.error("Error logging to firestore", e));
 
-    // 2. Procesar respuesta de la IA
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${API_KEY}`, {
+    // 2. Procesar respuesta de la IA (Usando modelo Lite para mayor cuota y menor latencia)
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${API_KEY}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -104,8 +104,18 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if ((isServerBusy || isRateLimit) && retryCount < 3) {
            showTyping();
-           // Si es límite de cuota, esperamos 4 segundos porque Google pide ~3.15s. Si es saturación, 2.5s.
-           const delay = isRateLimit ? 4000 : 2500; 
+           
+           let delay = 3000;
+           if (isRateLimit) {
+               // Google a veces dice "retry in 43.31s". Vamos a extraer ese número para esperar el tiempo exacto.
+               const match = errMsg.match(/retry in ([\d\.]+)s/);
+               if (match && match[1]) {
+                   delay = (parseFloat(match[1]) * 1000) + 1000; // Extraer segundos + 1 seg de margen
+               } else {
+                   delay = 5000;
+               }
+           }
+           
            setTimeout(() => {
                removeTyping();
                sendMessage(text, retryCount + 1);
