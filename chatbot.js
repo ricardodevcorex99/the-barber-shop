@@ -98,13 +98,18 @@ document.addEventListener('DOMContentLoaded', () => {
           else errMsg = JSON.stringify(data.error);
         }
         
-        // Auto-Retry para errores de saturación (high demand / 503)
-        if ((errMsg.toLowerCase().includes("high demand") || errMsg.toLowerCase().includes("503")) && retryCount < 3) {
+        // Auto-Retry para errores de saturación (high demand, 503) y límites de cuota (429, quota exceeded)
+        const isRateLimit = errMsg.toLowerCase().includes("quota exceeded") || errMsg.toLowerCase().includes("429");
+        const isServerBusy = errMsg.toLowerCase().includes("high demand") || errMsg.toLowerCase().includes("503");
+        
+        if ((isServerBusy || isRateLimit) && retryCount < 3) {
            showTyping();
+           // Si es límite de cuota, esperamos 4 segundos porque Google pide ~3.15s. Si es saturación, 2.5s.
+           const delay = isRateLimit ? 4000 : 2500; 
            setTimeout(() => {
                removeTyping();
                sendMessage(text, retryCount + 1);
-           }, 2500); // Esperar 2.5 segundos antes de reintentar
+           }, delay);
            return;
         }
 
