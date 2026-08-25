@@ -6,13 +6,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatSendBtn = document.getElementById('chat-send-btn');
   const chatMessages = document.getElementById('chat-messages');
 
+  // Load history from session storage
+  const savedHistory = sessionStorage.getItem('barberChatHistory');
+  if (savedHistory) {
+    chatMessages.innerHTML = savedHistory;
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  // Load chat window state
+  if (sessionStorage.getItem('barberChatOpen') === 'true') {
+    chatWindow.classList.add('active');
+  }
+
+  function saveChatState() {
+    sessionStorage.setItem('barberChatHistory', chatMessages.innerHTML);
+    sessionStorage.setItem('barberChatOpen', chatWindow.classList.contains('active'));
+  }
+
   // Toggle chat window
   chatBubbleBtn.addEventListener('click', () => {
     chatWindow.classList.toggle('active');
+    saveChatState();
   });
 
   closeChatBtn.addEventListener('click', () => {
     chatWindow.classList.remove('active');
+    saveChatState();
   });
 
   function appendMessage(text, sender) {
@@ -21,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     msgDiv.textContent = text;
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+    saveChatState();
   }
 
   function showTyping() {
@@ -34,7 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function removeTyping() {
     const typingDiv = document.getElementById('typing-indicator');
-    if (typingDiv) typingDiv.remove();
+    if (typingDiv) {
+      typingDiv.remove();
+      saveChatState();
+    }
   }
 
   async function sendMessage() {
