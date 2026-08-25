@@ -7,27 +7,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatMessages = document.getElementById('chat-messages');
 
   // Load history from session storage
-  const savedHistory = sessionStorage.getItem('barberChatHistory');
+  const savedHistory = localStorage.getItem('barberChatHistory');
   if (savedHistory) {
     chatMessages.innerHTML = savedHistory;
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
   // Load chat window state
-  if (sessionStorage.getItem('barberChatOpen') === 'true') {
+  if (localStorage.getItem('barberChatOpen') === 'true') {
     chatWindow.classList.add('active');
   }
 
   function saveChatState() {
-    sessionStorage.setItem('barberChatHistory', chatMessages.innerHTML);
-    sessionStorage.setItem('barberChatOpen', chatWindow.classList.contains('active'));
+    localStorage.setItem('barberChatHistory', chatMessages.innerHTML);
+    localStorage.setItem('barberChatOpen', chatWindow.classList.contains('active'));
   }
 
-  // Toggle chat window
-  chatBubbleBtn.addEventListener('click', () => {
-    chatWindow.classList.toggle('active');
-    
-    // Si se acaba de abrir y el chat está vacío, mostrar el mensaje inicial adecuado
+  function showGreetingIfNeeded() {
     if (chatWindow.classList.contains('active') && chatMessages.children.length === 0) {
         if (!window.currentUserId) {
             appendMessage("👋 ¡Hola! Para conversar conmigo y ayudarte con tus reservas, primero necesitas **Iniciar Sesión** usando el menú de arriba a la derecha. ¡Te espero!", 'bot');
@@ -35,9 +31,19 @@ document.addEventListener('DOMContentLoaded', () => {
             appendMessage("Hola, soy el asistente inteligente de THE BARBER SHOP. ¿En qué te puedo ayudar hoy?", 'bot');
         }
     }
-    
+  }
+
+  // Toggle chat window
+  chatBubbleBtn.addEventListener('click', () => {
+    chatWindow.classList.toggle('active');
+    showGreetingIfNeeded();
     saveChatState();
   });
+
+  // Si la ventana se abrió automáticamente por persistencia, revisar saludo tras 1s (esperando a Firebase Auth)
+  if (chatWindow.classList.contains('active')) {
+      setTimeout(showGreetingIfNeeded, 1000);
+  }
 
   closeChatBtn.addEventListener('click', () => {
     chatWindow.classList.remove('active');
