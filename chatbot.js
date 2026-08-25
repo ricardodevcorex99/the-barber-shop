@@ -90,7 +90,12 @@ document.addEventListener('DOMContentLoaded', () => {
           appendMessage("Error: La IA no devolvió ninguna respuesta.", 'bot');
         }
       } else {
-        const errMsg = data.error || data.error?.message || "Error desconocido del servidor.";
+        let errMsg = "Error desconocido del servidor.";
+        if (data.error) {
+          if (typeof data.error === 'string') errMsg = data.error;
+          else if (data.error.message) errMsg = data.error.message;
+          else errMsg = JSON.stringify(data.error);
+        }
         appendMessage(`Error de servidor: ${errMsg}`, 'bot');
       }
     } catch (error) {
