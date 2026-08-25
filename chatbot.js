@@ -60,18 +60,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  async function sendMessage() {
-    const text = chatInput.value.trim();
-    if (!text) return;
-
-    // 1. Mostrar el mensaje del usuario
-    appendMessage(text, 'user');
-    chatInput.value = '';
+  async function sendMessage(text, retryCount = 0) {
+    if (!text) {
+      text = chatInput.value.trim();
+      if (!text) return;
+      // 1. Mostrar el mensaje del usuario solo la primera vez
+      appendMessage(text, 'user');
+      chatInput.value = '';
+    }
     
     // 2. Mostrar indicador de "escribiendo..."
     showTyping();
 
-    // 3. Conexión Segura al Backend (Vercel Serverless Function)
+    // 3. Conexión Segura al Backend con Retry Automático
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -96,6 +97,17 @@ document.addEventListener('DOMContentLoaded', () => {
           else if (data.error.message) errMsg = data.error.message;
           else errMsg = JSON.stringify(data.error);
         }
+        
+        // Auto-Retry para errores de saturación (high demand / 503)
+        if ((errMsg.toLowerCase().includes("high demand") || errMsg.toLowerCase().includes("503")) && retryCount < 3) {
+           showTyping();
+           setTimeout(() => {
+               removeTyping();
+               sendMessage(text, retryCount + 1);
+           }, 2500); // Esperar 2.5 segundos antes de reintentar
+           return;
+        }
+
         appendMessage(`Error de servidor: ${errMsg}`, 'bot');
       }
     } catch (error) {
@@ -104,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  chatSendBtn.addEventListener('click', sendMessage);
+  chatSendBtn.addEventListener('click', () => sendMessage());
   
   chatInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
