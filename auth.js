@@ -137,6 +137,7 @@ onAuthStateChanged(auth, (user) => {
 
     // Guardar el user_id globalmente para que booking.js lo use al hacer una reserva
     window.currentUserId = user.uid;
+    if(typeof window.updateChatbotAuth === 'function') window.updateChatbotAuth();
 
     // Cargar datos en el modal
     loadMiPerfilYHistorial(user);
@@ -197,6 +198,7 @@ onAuthStateChanged(auth, (user) => {
     }
 
     window.currentUserId = null;
+    if(typeof window.updateChatbotAuth === 'function') window.updateChatbotAuth();
   }
 });
 

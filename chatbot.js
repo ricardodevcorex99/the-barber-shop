@@ -6,67 +6,44 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatSendBtn = document.getElementById('chat-send-btn');
   const chatMessages = document.getElementById('chat-messages');
 
-  // Load history from session storage
-  const savedHistory = localStorage.getItem('barberChatHistory');
-  if (savedHistory) {
-    chatMessages.innerHTML = savedHistory;
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
   // Load chat window state
   if (localStorage.getItem('barberChatOpen') === 'true') {
     chatWindow.classList.add('active');
   }
 
   function saveChatState() {
-    localStorage.setItem('barberChatHistory', chatMessages.innerHTML);
+    if (window.currentUserId) {
+        localStorage.setItem('barberChatHistory_' + window.currentUserId, chatMessages.innerHTML);
+    }
     localStorage.setItem('barberChatOpen', chatWindow.classList.contains('active'));
   }
 
-  function cleanLoginWarning() {
+  window.updateChatbotAuth = function() {
     if (window.currentUserId) {
-        let removed = false;
-        const msgs = chatMessages.querySelectorAll('.message.bot');
-        msgs.forEach(msg => {
-            if (msg.textContent.includes("Iniciar Sesión")) {
-                msg.remove();
-                removed = true;
-            }
-        });
-        
-        if (removed) {
-            // Si quedó vacío, insertamos el saludo de bienvenida normal
-            if (chatMessages.children.length === 0) {
-                appendMessage("Hola, soy el asistente inteligente de THE BARBER SHOP. ¿En qué te puedo ayudar hoy?", 'bot');
-            } else {
-                saveChatState();
-            }
-        }
-    }
-  }
-
-  function showGreetingIfNeeded() {
-    cleanLoginWarning();
-    if (chatWindow.classList.contains('active') && chatMessages.children.length === 0) {
-        if (!window.currentUserId) {
-            appendMessage("👋 ¡Hola! Para conversar conmigo y ayudarte con tus reservas, primero necesitas **Iniciar Sesión** usando el menú de arriba a la derecha. ¡Te espero!", 'bot');
+        // Load user-specific history
+        const savedHistory = localStorage.getItem('barberChatHistory_' + window.currentUserId);
+        if (savedHistory) {
+            chatMessages.innerHTML = savedHistory;
         } else {
+            chatMessages.innerHTML = '';
             appendMessage("Hola, soy el asistente inteligente de THE BARBER SHOP. ¿En qué te puedo ayudar hoy?", 'bot');
         }
+    } else {
+        // Logged out
+        chatMessages.innerHTML = '';
+        appendMessage("👋 ¡Hola! Para conversar conmigo y ayudarte con tus reservas, primero necesitas **Iniciar Sesión** usando el menú de arriba a la derecha. ¡Te espero!", 'bot');
     }
-  }
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  };
+
+  // Se llamará desde auth.js, pero por si acaso cargamos aquí
+  setTimeout(() => { if(window.currentUserId) window.updateChatbotAuth(); }, 1500);
 
   // Toggle chat window
   chatBubbleBtn.addEventListener('click', () => {
     chatWindow.classList.toggle('active');
-    showGreetingIfNeeded();
     saveChatState();
   });
-
-  // Si la ventana se abrió automáticamente por persistencia, revisar saludo tras 1s (esperando a Firebase Auth)
-  if (chatWindow.classList.contains('active')) {
-      setTimeout(showGreetingIfNeeded, 1000);
-  }
 
   closeChatBtn.addEventListener('click', () => {
     chatWindow.classList.remove('active');
@@ -100,8 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function sendMessage(text, retryCount = 0) {
-    cleanLoginWarning();
-    
     if (!text) {
       text = chatInput.value.trim();
       if (!text) return;
