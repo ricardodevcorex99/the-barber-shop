@@ -99,7 +99,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
+        body: JSON.stringify({ 
+          message: text,
+          userId: window.currentUserId 
+        })
       });
 
       const data = await response.json();

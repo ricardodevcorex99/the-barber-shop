@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { message } = req.body;
+  const { message, userId } = req.body;
   const API_KEY = process.env.GEMINI_API_KEY || process.env.STITCH_API_KEY;
 
   if (!API_KEY) {
@@ -18,6 +18,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         fields: {
           mensaje: { stringValue: message },
+          usuario: { stringValue: userId || "Desconocido" },
           timestamp: { timestampValue: new Date().toISOString() },
           estado: { stringValue: "PENDIENTE" }
         }
