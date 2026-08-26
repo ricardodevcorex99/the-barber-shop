@@ -13,27 +13,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function saveChatState() {
     if (window.currentUserId) {
-        localStorage.setItem('barberChatHistory_' + window.currentUserId, chatMessages.innerHTML);
+        // OWASP FIX: Guardar como JSON, no como HTML crudo
+        const msgs = [];
+        const messageElements = chatMessages.querySelectorAll('.message');
+        messageElements.forEach(el => {
+            msgs.push({
+                sender: el.classList.contains('bot') ? 'bot' : 'user',
+                text: el.textContent
+            });
+        });
+        localStorage.setItem('barberChatHistory_' + window.currentUserId, JSON.stringify(msgs));
     }
     localStorage.setItem('barberChatOpen', chatWindow.classList.contains('active'));
   }
 
-  window.updateChatbotAuth = function() {
-    if (window.currentUserId) {
-        // Load user-specific history
-        const savedHistory = localStorage.getItem('barberChatHistory_' + window.currentUserId);
-        if (savedHistory) {
-            chatMessages.innerHTML = savedHistory;
+  function renderMessages(messagesArray) {
+      chatMessages.innerHTML = ''; // Limpiar seguro
+      messagesArray.forEach(msg => {
+          const msgDiv = document.createElement('div');
+          msgDiv.classList.add('message', msg.sender);
+          msgDiv.textContent = msg.text; // Seguro contra XSS
+          chatMessages.appendChild(msgDiv);
+      });
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  window.updateChatbotAuth = function(uidOverride = null) {
+    const uid = uidOverride || window.currentUserId;
+    if (uid) {
+        const savedData = localStorage.getItem('barberChatHistory_' + uid);
+        if (savedData) {
+            try {
+                // OWASP FIX: Parsear JSON seguro
+                const messagesArray = JSON.parse(savedData);
+                renderMessages(messagesArray);
+            } catch (e) {
+                // Si estaba en el formato HTML antiguo, borrarlo
+                renderMessages([]);
+                appendMessage("Hola, soy el asistente inteligente de THE BARBER SHOP. ¿En qué te puedo ayudar hoy?", 'bot');
+            }
         } else {
-            chatMessages.innerHTML = '';
+            renderMessages([]);
             appendMessage("Hola, soy el asistente inteligente de THE BARBER SHOP. ¿En qué te puedo ayudar hoy?", 'bot');
         }
     } else {
-        // Logged out
-        chatMessages.innerHTML = '';
+        renderMessages([]);
         appendMessage("👋 ¡Hola! Para conversar conmigo y ayudarte con tus reservas, primero necesitas **Iniciar Sesión** usando el menú de arriba a la derecha. ¡Te espero!", 'bot');
     }
-    chatMessages.scrollTop = chatMessages.scrollHeight;
   };
 
   // Se llamará desde auth.js, pero por si acaso cargamos aquí
