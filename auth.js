@@ -122,11 +122,13 @@ onAuthStateChanged(auth, (user) => {
       document.getElementById("auth-btn-logout").classList.remove("hidden");
 
     // Booking Form Protection
-    if (document.getElementById("booking-auth-overlay"))
+    if (document.getElementById("booking-auth-overlay")) {
       document.getElementById("booking-auth-overlay").classList.add("hidden");
+      document.getElementById("booking-auth-overlay").style.display = "none";
+    }
     if (document.getElementById("booking-form")) {
-      document.getElementById("booking-form").style.display = "block";
       document.getElementById("booking-form").classList.remove("hidden");
+      document.getElementById("booking-form").style.display = "block";
     }
 
     if (document.getElementById("auth-user-name"))
